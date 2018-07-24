@@ -3,25 +3,42 @@
 namespace App\Controller;
 
 
+use App\Entity\User;
 use App\User\UserManager;
 use App\User\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 class UserController extends Controller
 {
 
     /**
-     * @Route()
+     * @Route("/register", name="register")
      * @param UserManager $userManager
      * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function userRegistration(UserManager $userManager, Request $request)
     {
-        $form = $this->createForm(UserType::class);
+        $user = new User();
 
+        $form = $this->createForm(UserType::class, $user)->handleRequest($request);
 
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            # Enregistrement de l'utilisateur
+            $message = $userManager->addNewUser($user);
+
+            # Redirection
+            return $this->render('index/index', [
+                'message' => $message
+            ]);
+        }
+
+        return $this->render('index/register.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 
 

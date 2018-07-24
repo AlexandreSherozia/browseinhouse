@@ -3,19 +3,27 @@
 namespace App\User;
 
 
+use App\Entity\User;
+use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManager;
 
 class UserManager
 {
 
-    public function addNewUser(EntityManager $entityManager, UserType $userType)
-    {
-        #recupérer les infos du formulaire
-        #créer un objet User
-        #remplir le User avec les infos
+    private $objectManager;
 
-        # persist
-        # flush
+    public function __construct(ObjectManager $om)
+    {
+        $this->objectManager = $om;
+    }
+
+    public function addNewUser(User $user)
+    {
+
+        $this->objectManager->persist($user);
+        $this->objectManager->flush();
+
+        return 'Yes, ça marche !';
     }
 
 }
