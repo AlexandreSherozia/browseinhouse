@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class User
 {
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -25,6 +26,11 @@ class User
      * @ORM\Column(type="string", length=80)
      */
     private $email;
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private $pseudo;
 
     /**
      * @ORM\Column(type="string", length=80)
@@ -61,6 +67,12 @@ class User
      */
     private $comments;
 
+    public function __construct($role = 'ROLE_USER')
+    {
+        $this->registrationDate = new \DateTime;
+        $this->roles[] = $role;
+    }
+
     public function getId()
     {
         return $this->id;
@@ -89,6 +101,24 @@ class User
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getPseudo()
+    {
+        return $this->pseudo;
+    }
+
+    /**
+     * @param mixed $pseudo
+     */
+    public function setPseudo($pseudo): void
+    {
+        $this->pseudo = $pseudo;
+    }
+
+
 
     public function getPassword(): ?string
     {
