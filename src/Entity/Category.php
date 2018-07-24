@@ -26,6 +26,11 @@ class Category
      */
     private $section;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Advert", mappedBy="category")
+     */
+    private $adverts;
+
     public function getId()
     {
         return $this->id;

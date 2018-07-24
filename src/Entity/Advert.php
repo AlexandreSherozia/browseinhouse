@@ -41,6 +41,28 @@ class Advert
      */
     private $slug;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Photo", mappedBy="advert")
+     */
+    private $photos;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="adverts")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $category;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="advert")
+     */
+    private $comments;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="comments")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
     public function getId()
     {
         return $this->id;

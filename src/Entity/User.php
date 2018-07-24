@@ -56,6 +56,11 @@ class User
      */
     private $roles;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="user")
+     */
+    private $comments;
+
     public function getId()
     {
         return $this->id;

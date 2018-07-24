@@ -26,6 +26,18 @@ class Comment
      */
     private $postDate;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Advert", inversedBy="comments")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $advert;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="comments")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
     public function getId()
     {
         return $this->id;
