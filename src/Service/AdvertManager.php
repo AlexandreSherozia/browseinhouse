@@ -1,0 +1,44 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: pc
+ * Date: 25/07/2018
+ * Time: 07:28
+ */
+
+namespace App\Service;
+
+
+use App\Entity\Advert;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
+
+class AdvertManager
+{
+    private $em, $repository;
+
+    /**
+     * AdvertManager constructor.
+     * @param $em
+     */
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em           = $em;
+        $this->repository   = $em->getRepository(Advert::class);
+    }
+
+    /*public function getAdvertByUser($user)
+    {
+
+    }*/
+
+
+    public function persist(Advert $advert)
+    {
+
+        $this->em->persist($advert);
+        $this->em->flush();
+
+        return $advert;
+    }
+}
