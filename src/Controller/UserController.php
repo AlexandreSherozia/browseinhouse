@@ -12,7 +12,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 class UserController extends Controller
 {
-
     /**
      * @Route("/register", name="register")
      * @param UserManager $userManager
@@ -22,17 +21,15 @@ class UserController extends Controller
     public function userRegistration(UserManager $userManager, Request $request)
     {
         $user = new User();
-
         $form = $this->createForm(UserType::class, $user)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            # Enregistrement de l'utilisateur
+            # Enregistrement de l'utilisateur :
             $message = $userManager->addNewUser($user);
 
             $this->addFlash('success', $message);
 
-            # Redirection
             return $this->redirectToRoute('index');
         }
 
@@ -40,7 +37,5 @@ class UserController extends Controller
             'form' => $form->createView(),
         ]);
     }
-
-
 
 }
