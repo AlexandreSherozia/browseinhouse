@@ -23,7 +23,7 @@ class UserManager
         $this->objectManager->persist($user);
         $this->objectManager->flush();
 
-        return 'Yes, ça marche !';
+        return 'Congratulation ! You have been registered !';
     }
 
 }

@@ -30,10 +30,10 @@ class UserController extends Controller
             # Enregistrement de l'utilisateur
             $message = $userManager->addNewUser($user);
 
+            $this->addFlash('success', $message);
+
             # Redirection
-            return $this->render('index/index', [
-                'message' => $message
-            ]);
+            return $this->redirectToRoute('index');
         }
 
         return $this->render('index/register.html.twig', [

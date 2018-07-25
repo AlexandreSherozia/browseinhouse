@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -24,16 +25,25 @@ class User
 
     /**
      * @ORM\Column(type="string", length=80)
+     * @Assert\NotBlank(message="asserts.email.notblank")
+     * @Assert\Length(max="80", maxMessage="asserts.email.toolong")
+     * @Assert\Email(message="asserts.email.wrongtype")
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(message="asserts.pseudo.notblank")
+     * @Assert\Length(min="5", minMessage="asserts.pseudo.tooshort",
+     *                max="50", maxMessage="asserts.pseudo.toolong")
      */
     private $pseudo;
 
     /**
      * @ORM\Column(type="string", length=80)
+     * @Assert\NotBlank(message="asserts.password.notblank")
+     * @Assert\Length(min="8", minMessage="asserts.password.tooshort",
+     *                max="80", maxMessage="asserts.password.toolong")
      */
     private $password;
 
