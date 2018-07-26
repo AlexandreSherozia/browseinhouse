@@ -10,6 +10,7 @@ namespace App\Service;
 
 
 use App\Entity\Advert;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -33,8 +34,9 @@ class AdvertManager
     }*/
 
 
-    public function persist(Advert $advert)
+    public function myPersist(Advert $advert)
     {
+
 
         $this->em->persist($advert);
         $this->em->flush();

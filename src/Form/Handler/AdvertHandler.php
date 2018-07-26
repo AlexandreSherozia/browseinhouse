@@ -25,11 +25,11 @@ class AdvertHandler
      * @param $form
      * @param $request
      */
-    public function __construct(Form $form, Request $request)
+    public function __construct(Form $form, Request $request, AdvertManager $advertManager)
     {
         $this->form             = $form;
         $this->request          = $request;
-        $this->advertManager    = new AdvertManager();
+        $this->advertManager    = $advertManager;
 
     }
 
@@ -37,8 +37,11 @@ class AdvertHandler
     {
         $this->form->handleRequest($this->request);
 
-        if ($this->form->isSubmitted() and $this->form->isValid()) {
-          
+        if ($this->form->isSubmitted() && $this->form->isValid()) {
+
+            $this->onSuccess();
+
+            return true;
         }
 
         return false;
@@ -50,15 +53,26 @@ class AdvertHandler
         return $this->advert;
     }
 
+    /**
+     * @return Form
+     * Advert controller doesn't have "form" anymore to build the form by
+     * "form->createview", "getFrom" method provides him with it
+     */
     public function getForm()
     {
         return $this->form;
     }
 
+    /**
+     * Protected method, gets filled form data and
+     *  "myPersist" method, which persists and flushes by native Doctrine methods
+     *  of AdvertManager
+     */
     protected function onSuccess()
     {
+
         $advert = $this->form->getData();
-        $this->advert = $this->advertManager->persist($advert);
+        $this->advert = $this->advertManager->myPersist($advert);
 
     }
 
