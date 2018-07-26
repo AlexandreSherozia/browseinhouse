@@ -3,12 +3,15 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class User
+class User implements UserInterface
 {
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -23,11 +26,25 @@ class User
 
     /**
      * @ORM\Column(type="string", length=80)
+     * @Assert\NotBlank(message="asserts.email.notblank")
+     * @Assert\Length(max="80", maxMessage="asserts.email.toolong")
+     * @Assert\Email(message="asserts.email.wrongtype")
      */
     private $email;
 
     /**
+     * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(message="asserts.pseudo.notblank")
+     * @Assert\Length(min="5", minMessage="asserts.pseudo.tooshort",
+     *                max="50", maxMessage="asserts.pseudo.toolong")
+     */
+    private $pseudo;
+
+    /**
      * @ORM\Column(type="string", length=80)
+     * @Assert\NotBlank(message="asserts.password.notblank")
+     * @Assert\Length(min="8", minMessage="asserts.password.tooshort",
+     *                max="80", maxMessage="asserts.password.toolong")
      */
     private $password;
 
@@ -61,6 +78,12 @@ class User
      */
     private $comments;
 
+    public function __construct($role = 'ROLE_USER')
+    {
+        $this->registrationDate = new \DateTime;
+        $this->roles[] = $role;
+    }
+
     public function getId()
     {
         return $this->id;
@@ -89,6 +112,24 @@ class User
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getPseudo()
+    {
+        return $this->pseudo;
+    }
+
+    /**
+     * @param mixed $pseudo
+     */
+    public function setPseudo($pseudo): void
+    {
+        $this->pseudo = $pseudo;
+    }
+
+
 
     public function getPassword(): ?string
     {
@@ -160,5 +201,38 @@ class User
         $this->roles = $roles;
 
         return $this;
+    }
+
+    /**
+     * Returns the salt that was originally used to encode the password.
+     *
+     * This can return null if the password was not encoded using a salt.
+     *
+     * @return string|null The salt
+     */
+    public function getSalt()
+    {
+        // TODO: Implement getSalt() method.
+    }
+
+    /**
+     * Returns the username used to authenticate the user.
+     *
+     * @return string The username
+     */
+    public function getUsername()
+    {
+        // TODO: Implement getUsername() method.
+    }
+
+    /**
+     * Removes sensitive data from the user.
+     *
+     * This is important if, at any given point, sensitive information like
+     * the plain-text password is stored on this object.
+     */
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
     }
 }
