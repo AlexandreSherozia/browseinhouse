@@ -18,27 +18,31 @@ class AdvertController extends Controller
     /**
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     * @Route("create_advert/", name="create_advert")
+     * @Route("create-advert/", name="create-advert")
      */
-    public function addNewAdvert(Request $request, AdvertManager $manager)
+    public function addNewAdvert(Request $request,
+                                 AdvertManager $manager)
     {
 
-        $formHandler = new AdvertHandler($this->createForm(AdvertType::class, new Advert())
-            ,$request, $manager);
+        $formHandler = new AdvertHandler($this->createForm(AdvertType::class,
+            new Advert()),
+            $request,
+            $manager);
 
 
         if ($formHandler->process()) {
 
-            /*$em = $this->getDoctrine()->getManager();
-
-            $em->persist($formHandler->getForm()->getData());
-            $em->flush();*/
             return $this->redirectToRoute("index");
         }
 
         return $this->render('form/registerForm.html.twig',[
             'form' => $formHandler->getForm()->createView()
         ]);
+
+    }
+
+    public function showBuyingCategories()
+    {
 
     }
 
