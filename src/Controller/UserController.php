@@ -10,6 +10,7 @@ use App\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class UserController extends Controller
 {
@@ -24,6 +25,31 @@ class UserController extends Controller
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
+
+        $formHandler = new UserHandler($form, $request, $userManager);
+
+        if ($formHandler->process()) {
+
+            $this->addFlash('success', 'Congratulation, you have been registered !');
+
+            return $this->redirectToRoute('index');
+        }
+
+        return $this->render('index/register.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * Login form page
+     * @Route("/login", name="login")
+     * @param UserManager $userManager
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function userLogin(Request $request, AuthenticationUtils $authenticationUtils)
+    {
+        $form = $this->createForm(LoginType::class, $user);
 
         $formHandler = new UserHandler($form, $request, $userManager);
 
