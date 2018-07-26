@@ -47,8 +47,9 @@ class AdvertManager
     /*public function getAll($user)*/
 
 
-    public function myPersist(Advert $advert)
+    public function myPersist(Advert $advert, $user)
     {
+        $advert->setUser($user);
 
         $this->em->persist($advert);
         $this->em->flush();

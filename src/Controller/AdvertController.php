@@ -24,8 +24,7 @@ class AdvertController extends Controller
                                  AdvertManager $manager)
     {
 
-        $formHandler = new AdvertHandler($this->createForm(AdvertType::class,
-            new Advert()),
+        $formHandler = new AdvertHandler($this->createForm(AdvertType::class, new Advert()),
             $request,
             $manager);
 

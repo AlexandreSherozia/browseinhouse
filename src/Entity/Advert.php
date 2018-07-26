@@ -127,4 +127,21 @@ class Advert
 
         return $this;
     }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser(User $user): void
+    {
+        $this->user = $user;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
 }

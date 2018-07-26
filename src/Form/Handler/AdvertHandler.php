@@ -9,27 +9,34 @@
 namespace App\Form\Handler;
 
 
+use App\Entity\Advert;
+use App\Entity\User;
 use App\Service\AdvertManager;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class AdvertHandler
 {
     protected   $form,
                 $advert,
-                $request,
-                $advertManager;
+                $security,
+                $advertManager,
+                $security;
+
 
     /**
      * AdvertHandler constructor.
      * @param $form
      * @param $request
      */
-    public function __construct(Form $form, Request $request, AdvertManager $advertManager)
+    public function __construct(Form $form, Request $request, AdvertManager $advertManager, Security $security)
     {
         $this->form             = $form;
         $this->request          = $request;
         $this->advertManager    = $advertManager;
+        $this->security         = $security;
 
     }
 
@@ -48,10 +55,10 @@ class AdvertHandler
 
     }
 
-    public function getAdvert()
+    /*public function getAdvert()
     {
         return $this->advert;
-    }
+    }*/
 
     /**
      * @return Form
@@ -70,9 +77,9 @@ class AdvertHandler
      */
     protected function onSuccess()
     {
-
         $advert = $this->form->getData();
-        $this->advert = $this->advertManager->myPersist($advert);
+        $user = $this->security->getUser();
+        $this->advert = $this->advertManager->myPersist($advert, $user);
 
     }
 
