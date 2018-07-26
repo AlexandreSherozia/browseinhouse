@@ -18,7 +18,7 @@ class AdvertController extends Controller
     /**
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     * @Route("register/", name="register")
+     * @Route("create_advert/", name="create_advert")
      */
     public function addNewAdvert(Request $request, AdvertManager $manager)
     {
