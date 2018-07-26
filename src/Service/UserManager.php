@@ -13,6 +13,11 @@ class UserManager
     private $repository;
     private $encoder;
 
+    /**
+     * UserManager constructor.
+     * @param EntityManagerInterface $em
+     * @param UserPasswordEncoderInterface $encoder
+     */
     public function __construct(EntityManagerInterface $em, UserPasswordEncoderInterface $encoder)
     {
         $this->em = $em;
@@ -20,7 +25,11 @@ class UserManager
         $this->encoder = $encoder;
     }
 
-    public function myPersist(User $user)
+    /**
+     * Encode password and insert new user in db
+     * @param User $user
+     */
+    public function addNewUserToDb(User $user)
     {
         $user->setPassword($this->encoder->encodePassword($user, $user->getPassword()));
         $this->em->persist($user);

@@ -14,8 +14,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends Controller
 {
     /**
+     * Registration form page and process of a new user after submit
      * @Route("/register", name="register")
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param UserManager $userManager
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function userRegistration(UserManager $userManager, Request $request)
     {
@@ -35,5 +38,4 @@ class UserController extends Controller
             'form' => $form->createView(),
         ]);
     }
-
 }
