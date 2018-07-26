@@ -24,7 +24,14 @@ class Advert
     /**
      * @ORM\Column(type="text")
      */
-    private $content;
+    private $description;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $price;
+
+    private $;
 
     public function getId()
     {
@@ -43,14 +50,14 @@ class Advert
         return $this;
     }
 
-    public function getContent(): ?string
+    public function getDescription(): ?string
     {
-        return $this->content;
+        return $this->description;
     }
 
-    public function setContent(string $content): self
+    public function setDescription(string $description): self
     {
-        $this->content = $content;
+        $this->description = $description;
 
         return $this;
     }

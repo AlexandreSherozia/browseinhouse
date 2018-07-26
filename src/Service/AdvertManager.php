@@ -28,19 +28,33 @@ class AdvertManager
         $this->repository   = $em->getRepository(Advert::class);
     }
 
+    public function getBuyingCategories()
+    {
+        $this->repository->getBuyingCategories();
+    }
+
+
+    /**
+     * @param $user
+     * @return mixed
+     * Returns  all adverts of user
+     */
     /*public function getAdvertByUser($user)
     {
-
+        return $this->repository->getAll($user);
     }*/
+
+    /*public function getAll($user)*/
 
 
     public function myPersist(Advert $advert)
     {
-
 
         $this->em->persist($advert);
         $this->em->flush();
 
         return $advert;
     }
+
+
 }

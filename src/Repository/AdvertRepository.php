@@ -19,6 +19,17 @@ class AdvertRepository extends ServiceEntityRepository
         parent::__construct($registry, Advert::class);
     }
 
+
+    public function getBuyingCategories()
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.category = :val')
+            ->setParameter('val', 'buy')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 //    /**
 //     * @return Advert[] Returns an array of Advert objects
 //     */
