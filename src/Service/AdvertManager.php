@@ -10,6 +10,7 @@ namespace App\Service;
 
 
 use App\Entity\Advert;
+use App\Entity\User;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,8 +27,13 @@ class AdvertManager
     {
         $this->em           = $em;
         $this->repository   = $em->getRepository(Advert::class);
+
     }
 
+    /**
+     * Returns all categories of the section "Buying"
+     * called by showBuyingCategories()
+     */
     public function getBuyingCategories()
     {
         $this->repository->getBuyingCategories();
@@ -47,9 +53,15 @@ class AdvertManager
     /*public function getAll($user)*/
 
 
-    public function myPersist(Advert $advert, $user)
+    public function myPersist(Advert $advert/*, User $user*/, $slug, $categoryId)
     {
-        $advert->setUser($user);
+        /*$advert->setUser($user);*/
+        $categories =
+
+        $advert->setSlug($slug);
+        $advert->setCategory($categoryId);
+
+       /* $advert->setCategory($advert->getCategory()->getId(1));*/
 
         $this->em->persist($advert);
         $this->em->flush();

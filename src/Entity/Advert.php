@@ -53,7 +53,44 @@ class Advert
     private $category;
 
     /**
+     * @return mixed
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param mixed $category
+     * @return Advert
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    /**
+     * @param mixed $comments
+     * @return Advert
+     */
+    public function setComments($comments)
+    {
+        $this->comments = $comments;
+        return $this;
+    }
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="advert")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $comments;
 
@@ -62,6 +99,16 @@ class Advert
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
+
+    /**
+     * Advert constructor.
+     * @param $creationDate
+     */
+    public function __construct()
+    {
+        $this->creationDate = new \DateTime();
+    }
+
 
     public function getId()
     {
@@ -104,17 +151,17 @@ class Advert
         return $this;
     }
 
-    public function getCreationDate(): ?\DateTimeInterface
+    public function getCreationDate(): \DateTime
     {
         return $this->creationDate;
     }
 
-    public function setCreationDate(\DateTimeInterface $creationDate): self
+   /* public function setCreationDate(\DateTimeInterface $creationDate): self
     {
         $this->creationDate = $creationDate;
 
         return $this;
-    }
+    }*/
 
     public function getSlug(): ?string
     {
