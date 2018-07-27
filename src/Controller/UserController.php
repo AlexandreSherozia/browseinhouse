@@ -54,13 +54,28 @@ class UserController extends Controller
 
     /**
      * let user modify or add infos in his personnal infos panel
-     * @Route("/edit-profile", name="edit_profile")
+     * @Route("/edit-profile/{pseudo}", name="edit_profile")
      * @Security("has_role('ROLE_USER')")
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function editProfileData()
+    public function editProfileData(UserManager $userManager, Request $request)
     {
+        $user = $this->getUser();
+        $form = $this->createForm(UserType::class, $user);
 
+        $formHandler = new UserHandler($form, $request, $userManager);
+
+        if ($formHandler->process()) {
+
+            $this->addFlash('success', 'userprofile.edit.validation');
+
+            return $this->redirectToRoute('user_profile');
+        }
+
+        return $this->render('form/editprofile.html.twig', [
+            'form' => $form->createView(),
+            'user' => $user
+        ]);
     }
 
 }
