@@ -1,4 +1,7 @@
 {% extends 'layout.html.twig' %}
+{% trans_default_domain 'register' %}
+
+{% block title %}{{ parent() }} | {{ 'register.pagename' | trans }}{% endblock %}
 
 {% block content %}
     <div class="row">
@@ -6,7 +9,7 @@
             <h2 class="text-center">
                 Register
             </h2>
-
+            {% form_theme form 'bootstrap_3_layout.html.twig' %}
             {{ form(form, {attr: {novalidate: 'novalidate'}}) }}
 
         </div>

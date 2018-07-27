@@ -1,4 +1,8 @@
 {% extends 'layout.html.twig' %}
+{% trans_default_domain 'login' %}
+
+
+{% block title %}{{ parent() }} | {{ 'login.pagename' | trans }}{% endblock %}
 
 {% block content %}
     <div class="row">
@@ -13,6 +17,7 @@
                 </div>
             {% endif %}
 
+            {% form_theme form 'bootstrap_3_layout.html.twig' %}
             {{ form(form, {attr: {novalidate: 'novalidate'}}) }}
 
         </div>

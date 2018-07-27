@@ -21,7 +21,7 @@ class UserRegistrationTest extends WebTestCase
         $form['user[password]'] = 'unmotdepasse';
 
         $crawler = $client->submit($form);
-        $this->assertContains('asserts.pseudo.notblank', $crawler->filter('ul > li')->text());
+        $this->assertContains('Warning: pseudo needed!', $crawler->filter('ul > li')->text());
     }
 
     public function testEmailCannotBeBlankInForm()
@@ -36,7 +36,7 @@ class UserRegistrationTest extends WebTestCase
         $form['user[password]'] = 'unmotdepasse';
 
         $crawler = $client->submit($form);
-        $this->assertContains('asserts.email.notblank', $crawler->filter('ul > li')->text());
+        $this->assertContains('Warning: email needed!', $crawler->filter('ul > li')->text());
     }
 
     public function testPasswordCannotBeBlankInForm()
@@ -51,7 +51,7 @@ class UserRegistrationTest extends WebTestCase
         $form['user[email]'] = 'unmail@test.fr';
 
         $crawler = $client->submit($form);
-        $this->assertContains('asserts.password.notblank', $crawler->filter('ul > li')->text());
+        $this->assertContains('Warning: password needed!', $crawler->filter('ul > li')->text());
     }
 
     public function testUserRegistrationFormIsOk()

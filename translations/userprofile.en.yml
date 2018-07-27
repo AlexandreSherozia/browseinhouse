@@ -1,0 +1,11 @@
+userprofile.pagename: 'My profile'
+userprofile.title: 'My Profile'
+userprofile.login.data: Login infos
+userprofile.edit: Edit your infos
+userprofile.pseudo: Pseudo
+userprofile.email: Email
+userprofile.personnal.data: Personnal infos
+userprofile.firstname: Firstname
+userprofile.lastname: Lastname
+userprofile.phone: Phone number
+userprofile.avatar: Your avatar
