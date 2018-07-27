@@ -29,7 +29,7 @@ class SecurityController extends Controller
 
         $errorMessage = $authenticationUtils->getLastAuthenticationError();
 
-        return $this->render('index/login.html.twig', [
+        return $this->render('form/login.html.twig', [
             'form' => $form->createView(),
             'errorMessage' => $errorMessage
         ]);
