@@ -43,17 +43,24 @@ class UserController extends Controller
 
     /**
      * Get user personnal infos for his profile landing page
-     * @Route("/user-profile", name="user_profile")
+     * @Route("/user-profile/{pseudo}", name="user_profile")
      * @Security("has_role('ROLE_USER')")
-     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function showProfileData(Request $request, TokenStorageInterface $tokenStorage)
+    public function showProfileData()
     {
-
-
         return $this->render('user/userprofile.html.twig');
     }
 
+    /**
+     * let user modify or add infos in his personnal infos panel
+     * @Route("/edit-profile", name="edit_profile")
+     * @Security("has_role('ROLE_USER')")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function editProfileData()
+    {
+
+    }
 
 }
