@@ -9,37 +9,43 @@
 namespace App\Form\Handler;
 
 
+use App\Entity\Advert;
+use App\Entity\User;
 use App\Service\AdvertManager;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class AdvertHandler
 {
     protected   $form,
                 $advert,
-                $request,
-                $advertManager;
+                $advertManager,
+                $security;
+
 
     /**
      * AdvertHandler constructor.
      * @param $form
      * @param $request
      */
-    public function __construct(Form $form, Request $request, AdvertManager $advertManager)
+    public function __construct(Form $form, Request $request, AdvertManager $advertManager/*, Security $security*/)
     {
         $this->form             = $form;
         $this->request          = $request;
         $this->advertManager    = $advertManager;
+        /*$this->security         = $security;*/
 
     }
 
-    public function process()
+    public function process(/*$userId*/)
     {
         $this->form->handleRequest($this->request);
 
         if ($this->form->isSubmitted() && $this->form->isValid()) {
 
-            $this->onSuccess();
+            $this->onSubmitted(/*$userId*/);   //onSuccess
 
             return true;
         }
@@ -48,10 +54,6 @@ class AdvertHandler
 
     }
 
-    public function getAdvert()
-    {
-        return $this->advert;
-    }
 
     /**
      * @return Form
@@ -68,11 +70,16 @@ class AdvertHandler
      *  "myPersist" method, which persists and flushes by native Doctrine methods
      *  of AdvertManager
      */
-    protected function onSuccess()
+    protected function onSubmitted(/*$userId*/) //onSuccess
     {
 
         $advert = $this->form->getData();
-        $this->advert = $this->advertManager->myPersist($advert);
+
+        /*$user = $this->security->getToken()->getUser();*/
+        $categoryId = $advert->getCategory();
+        $slug = $advert->getTitle();
+
+        $this->advert = $this->advertManager->myPersist($advert/*, $userId*/,$slug, $categoryId);
 
     }
 

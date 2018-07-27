@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,7 +23,7 @@ class Category
     private $label;
 
     /**
-     * @ORM\Column(type="array")
+     * @ORM\Column(type="string")
      */
     private $section;
 
@@ -30,6 +31,15 @@ class Category
      * @ORM\OneToMany(targetEntity="App\Entity\Advert", mappedBy="category")
      */
     private $adverts;
+
+    /**
+     * Category constructor.
+     * @param $adverts
+     */
+    public function __construct()
+    {
+        $this->adverts = new ArrayCollection();
+    }
 
     public function getId()
     {
@@ -48,15 +58,38 @@ class Category
         return $this;
     }
 
-    public function getSection(): ?array
+    public function getSection()
     {
         return $this->section;
     }
 
-    public function setSection(array $section): self
+    public function setSection($section): self
     {
         $this->section = $section;
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getAdverts()
+    {
+        return $this->adverts;
+    }
+
+    /**
+     * @param mixed $adverts
+     * @return Category
+     */
+    public function addAdvert(Advert $advert)
+    {
+        $this->adverts[] = $advert;
+
+        $advert->setCategory($this);
+
+        return $this;
+    }
+
+
 }
