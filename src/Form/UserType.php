@@ -20,20 +20,20 @@ class UserType extends AbstractType
             ->add('pseudo', TextType::class, [
                 'label' => false,
                 'attr' => [
-                    'placeholder' => 'form.placeholder.pseudo'
+                    'placeholder' => 'form.register.placeholder.pseudo'
                 ]
 
             ])
             ->add('email', EmailType::class, [
                 'label' => false,
                 'attr' => [
-                    'placeholder' => 'form.placeholder.email'
+                    'placeholder' => 'form.register.placeholder.email'
                 ]
             ])
             ->add('password', PasswordType::class, [
                 'label' => false,
                 'attr' => [
-                    'placeholder' => 'form.placeholder.password'
+                    'placeholder' => 'form.register.placeholder.password'
                 ]
             ])
             ->add('submit', SubmitType::class, [
