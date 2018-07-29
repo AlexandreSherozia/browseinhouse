@@ -1,0 +1,47 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}
+
+    {% for advert in filteredAdvertsByCategory %}
+
+        {#{{ parent() }} #}{{ advert.title }}
+
+    {% endfor %}
+{% endblock %}
+
+{% block content %}
+
+
+
+    <div class="container">
+        <h2>Ici les annonces de section Achat / CAtegorie Vehicle / travailler le visuel</h2>
+        <p>The .table-hover class enables a hover state on table rows:</p>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Product</th>
+                <th>Category</th>
+                <th>Author</th>
+                <th>Creation Date</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for advert in filteredAdvertsByCategory %}
+                <tr>
+                    <td>{{ advert.title }}</td>
+                    <td>{{ advert.category.label }}</td>
+                    <td>{{ advert.user.pseudo }}</td>
+                    <td>{{ advert.creationDate|date('Y-m-d') }}</td>
+                </tr>
+            {% endfor %}
+
+
+
+            </tbody>
+        </table>
+    </div>
+
+
+    {% include 'includes/_categories.html.twig' %}
+{% endblock %}

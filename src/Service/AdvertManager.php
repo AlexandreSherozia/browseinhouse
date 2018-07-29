@@ -14,20 +14,39 @@ use App\Entity\User;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 
 class AdvertManager
 {
-    private $em, $repository;
+    private $em, $advertRepository, $connected_User;
 
     /**
      * AdvertManager constructor.
      * @param $em
      */
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em, Security $security)
     {
-        $this->em           = $em;
-        $this->repository   = $em->getRepository(Advert::class);
+        $this->em               = $em;
+        $this->advertRepository = $em->getRepository(Advert::class);
+        $this->connected_User   = $security->getUser();
+    }
 
+
+
+
+    public function myPersist(Advert $advert, $slug)
+    {
+
+        $advert->setUser($this->connected_User);
+
+        $advert->setSlug($slug);
+
+        //$advert->setCategory($categoryId); se récupère automatiquement par getData()
+
+        $this->em->persist($advert);
+        $this->em->flush();
+
+        return $advert;
     }
 
     /**
@@ -36,8 +55,15 @@ class AdvertManager
      */
     public function getBuyingCategories()
     {
-        $this->repository->getBuyingCategories();
+        return $this->advertRepository->getBuyingCategories();
     }
+
+
+    public function getAdvertsByCategory($categoryId)
+    {
+        return $this->advertRepository->getAdvertsByCategory($categoryId);
+    }
+
 
 
     /**
@@ -51,23 +77,6 @@ class AdvertManager
     }*/
 
     /*public function getAll($user)*/
-
-
-    public function myPersist(Advert $advert/*, User $user*/, $slug, $categoryId)
-    {
-        /*$advert->setUser($user);*/
-        $categories =
-
-        $advert->setSlug($slug);
-        $advert->setCategory($categoryId);
-
-       /* $advert->setCategory($advert->getCategory()->getId(1));*/
-
-        $this->em->persist($advert);
-        $this->em->flush();
-
-        return $advert;
-    }
 
 
 }

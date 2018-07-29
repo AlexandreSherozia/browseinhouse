@@ -21,8 +21,7 @@ class AdvertHandler
 {
     protected   $form,
                 $advert,
-                $advertManager,
-                $security;
+                $advertManager;
 
 
     /**
@@ -35,7 +34,7 @@ class AdvertHandler
         $this->form             = $form;
         $this->request          = $request;
         $this->advertManager    = $advertManager;
-        /*$this->security         = $security;*/
+
 
     }
 
@@ -76,10 +75,10 @@ class AdvertHandler
         $advert = $this->form->getData();
 
         /*$user = $this->security->getToken()->getUser();*/
-        $categoryId = $advert->getCategory();
+        //$categoryId = $advert->getCategory(); se récupère automatiquement par getData()
         $slug = $advert->getTitle();
 
-        $this->advert = $this->advertManager->myPersist($advert/*, $userId*/,$slug, $categoryId);
+        $this->advert = $this->advertManager->myPersist($advert/*, $userId*/,$slug);
 
     }
 

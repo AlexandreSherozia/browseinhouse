@@ -23,8 +23,22 @@ class AdvertRepository extends ServiceEntityRepository
     public function getBuyingCategories()
     {
         return $this->createQueryBuilder('a')
-            ->where('a.category = :val')
-            ->setParameter('val', 'buy')
+            ->where('a.section = :val')
+            ->setParameter('val', 1)
+            ->orderBy('a.id', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function getAdvertsByCategory($categoryId)
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.section = :val')
+            ->setParameter('val', 1)
+            ->andWhere('a.category = :category')
+            ->setParameter('category', $categoryId)
+            ->orderBy('a.id','DESC')
             ->getQuery()
             ->getResult()
         ;

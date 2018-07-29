@@ -312,9 +312,19 @@ header .btn-primary i{
 .browse ul{
 	margin:0;
 }
+
+.browse-categories .browse ul li img{
+	display: block;
+	width: 80px;
+}
+.browse-categories .browse ul li{
+	width:185px;
+	height:175px;
+}
+
 .browse ul li{
-	width:184px;
-	height:190px;
+	width:565px;
+	height:300px;
 	border:1px solid #E5E5E5;
 	text-align:center;
 	padding:50px 0 0 0;
@@ -329,6 +339,8 @@ header .btn-primary i{
 }
 .browse ul li img{
 	margin:0 auto;
+	display: block;
+	width: 200px;
 }
 .browse ul li p{
 	font-size:18px;
