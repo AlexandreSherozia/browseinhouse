@@ -43,6 +43,7 @@ class AdvertController extends Controller
      * Penser à modifier en "showCategoriesBySection" et rajouter en parametre
      * "sectionId", ce qui evitera la creation des methodes similaires
      * pour chaque section
+     *
      * @Route("/Buy", name="show_buying_categories")
      */
     public function showBuyingCategories(AdvertManager $advertManager) //
@@ -60,7 +61,18 @@ class AdvertController extends Controller
 
         return $this->render('advert/filter_adverts_by_category.html.twig', [
             'filteredAdvertsByCategory' => $advertManager->getAdvertsByCategory($id),
-            'buyingCategories' => $advertManager->getBuyingCategories()
+            'buyingCategories'          => $advertManager->getBuyingCategories()
+        ]);
+    }
+
+    /**
+     * @param $id
+     * @Route("/advert/{id}", name="show_advert")
+     */
+    public function showAdvert(AdvertManager $advertManager, $id)
+    {
+        return $this->render('advert/show_advert.html.twig', [
+            'advert'  => $advertManager->showAdvert($id)
         ]);
     }
 

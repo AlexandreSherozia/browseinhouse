@@ -2,7 +2,33 @@
 	font-family: "ElegantIcons";   
 	font-style: normal;  
 	font-weight: normal;   
-	src: local("ElegantIcons"), url("../fonts/ElegantIcons.woff") format("woff"); 
+	src: local("ElegantIcons"), url("{{ asset('../fonts/ElegantIcons.woff') }}") format("woff");
+}
+
+/*-----------
+[ test]
+------------*/
+
+.item .banner-1{
+	width: 100%;
+	height: 400px;
+	background-image: url("public/images/banner1.jpg");
+	background-color: #eeedd5;
+}
+
+.banner-1 h2, .banner-1 h1{
+	padding: 58px 0;
+
+}
+
+
+
+.item .banner-1 a{
+	display: block;
+	width: 100px;
+	margin: 10px auto;
+	border-radius: 30px;
+	background-color: #fed700;
 }
 
 /*----------

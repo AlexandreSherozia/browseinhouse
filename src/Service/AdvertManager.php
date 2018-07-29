@@ -64,6 +64,11 @@ class AdvertManager
         return $this->advertRepository->getAdvertsByCategory($categoryId);
     }
 
+    public function showAdvert($id)
+    {
+        return $this->advertRepository->find($id);
+    }
+
 
 
     /**

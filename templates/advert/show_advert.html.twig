@@ -1,0 +1,23 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}
+
+   {# {% for advert in filteredAdvertsByCategory %}#}
+
+        {#{{ parent() }} #}{{ advert.title }}
+
+  {#  {% endfor %}#}
+{% endblock %}
+
+{% block content %}
+
+    <section class="container">
+
+        <h2 class="text-center">{{ advert.title }}</h2>
+        <p class="well well-lg">{{ advert.description }}</p>
+        <p class="text-right">{{ advert.creationDate | date('Y-m-d') }}</p>
+
+    </section>
+
+{% endblock %}
+
