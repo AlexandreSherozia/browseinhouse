@@ -29,15 +29,23 @@ class UserHandler
      * form submission verification
      * @return bool
      */
-    public function process()
+    public function process(string $type)
     {
         $this->form->handleRequest($this->request);
 
         if ($this->form->isSubmitted() && $this->form->isValid()) {
 
-            $this->onSuccess();
+            if($type === 'new') {
+                $this->onSuccessNew();
 
-            return true;
+                return true;
+            }
+            elseif($type === 'edit') {
+                $this->onSuccessEdit();
+
+                return true;
+            }
+
         }
 
         return false;
@@ -46,9 +54,15 @@ class UserHandler
     /**
      *
      */
-    protected function onSuccess()
+    protected function onSuccessNew()
     {
         $userFormData = $this->form->getData();
         $this->userManager->addNewUserToDb($userFormData);
+    }
+
+    protected function onSuccessEdit()
+    {
+        $userFormData = $this->form->getData();
+        $this->userManager->UpdateUserIntoDb($userFormData);
     }
 }

@@ -29,11 +29,11 @@ class UserController extends Controller
 
         $formHandler = new UserHandler($form, $request, $userManager);
 
-        if ($formHandler->process()) {
+        if ($formHandler->process('new')) {
 
-            $this->addFlash('success', 'home.registration.validation');
+            $this->addFlash('success', 'login.registration.validation');
 
-            return $this->redirectToRoute('index');
+            return $this->redirectToRoute('login');
         }
 
         return $this->render('form/register.html.twig', [
@@ -65,16 +65,17 @@ class UserController extends Controller
 
         $formHandler = new UserHandler($form, $request, $userManager);
 
-        if ($formHandler->process()) {
+        if ($formHandler->process('edit')) {
 
             $this->addFlash('success', 'userprofile.edit.validation');
 
-            return $this->redirectToRoute('user_profile');
+            return $this->redirectToRoute('user_profile', [
+                'pseudo' => $user->getPseudo()
+            ]);
         }
 
         return $this->render('form/editprofile.html.twig', [
             'form' => $form->createView(),
-            'user' => $user
         ]);
     }
 

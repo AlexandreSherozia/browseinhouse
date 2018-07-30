@@ -36,4 +36,10 @@ class UserManager
         $this->em->flush();
     }
 
+    public function UpdateUserIntoDb(User $user)
+    {
+        $this->em->persist($user);
+        $this->em->flush();
+    }
+
 }
