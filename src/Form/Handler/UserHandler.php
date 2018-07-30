@@ -2,8 +2,10 @@
 
 namespace App\Form\Handler;
 
+use App\Service\ImageUploader;
 use App\Service\UserManager;
 use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 
 class UserHandler
@@ -17,6 +19,7 @@ class UserHandler
      * @param Form $form
      * @param Request $request
      * @param UserManager $userManager
+     * @param string $avatarDir
      */
     public function __construct(Form $form, Request $request, UserManager $userManager)
     {
@@ -63,6 +66,8 @@ class UserHandler
     protected function onSuccessEdit()
     {
         $userFormData = $this->form->getData();
+        $image = $userFormData->getAvatar();
+        $filename = ImageUploader->upload();
         $this->userManager->UpdateUserIntoDb($userFormData);
     }
 }

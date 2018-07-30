@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-
+use App\Service\ImageUploader;
 use App\Entity\User;
 use App\Form\Handler\UserHandler;
 use App\Service\UserManager;
@@ -11,7 +11,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class UserController extends Controller
 {
