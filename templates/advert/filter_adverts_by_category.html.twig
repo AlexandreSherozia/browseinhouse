@@ -29,7 +29,11 @@
 
             {% for advert in filteredAdvertsByCategory %}
                 <tr>
-                    <td>{{ advert.title }}</td>
+                    <td>
+                        <a href="{{ path('show_advert' , {'id' : advert.id }) }}">
+                        {{ advert.title }}
+                        </a>
+                    </td>
                     <td>{{ advert.category.label }}</td>
                     <td>{{ advert.user.pseudo }}</td>
                     <td>{{ advert.creationDate|date('Y-m-d') }}</td>

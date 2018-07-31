@@ -30,7 +30,8 @@ class AdvertController extends Controller
 
         if ($formHandler->process()) {
 
-            return $this->redirectToRoute("show_buying_categories");
+            return $this->redirectToRoute('show_adverts_by_section' ,
+                ['id' => 1 /*$formHandler->getForm()->getData()->getSection()])*/ ]);
         }
 
         return $this->render('form/createAdvertForm.html.twig',[
@@ -40,28 +41,34 @@ class AdvertController extends Controller
     }
 
     /**
-     * Penser à modifier en "showCategoriesBySection" et rajouter en parametre
-     * "sectionId", ce qui evitera la creation des methodes similaires
-     * pour chaque section
-     *
-     * @Route("/Buy", name="show_buying_categories")
+     * @Route("/section/{id}", name="show_adverts_by_section")
      */
-    public function showBuyingCategories(AdvertManager $advertManager) //
+    public function showAdvertsBySection($id, AdvertManager $advertManager) //
     {
-        return $this->render('advert/show_buying_categories.html.twig', [
-            'buyingCategories' => $advertManager->getBuyingCategories()
+        return $this->render('advert/show_adverts_by_section.html.twig', [
+            'advertsBySection' => $advertManager->getAdvertsBySection($id)
         ]);
     }
 
     /**
-     * @Route("/Buy/{id}", name="filter_adverts_by_category")
+     * @Route("/section/{sectionid}/category/{categoryid}", name="filter_adverts_by_category_and_section")
      */
-    public function filterAdvertsByCategory(AdvertManager $advertManager, $id)
+    public function filterAdvertsByCategoryAndSection($sectionid, $categoryid, AdvertManager $advertManager)
+    {
+        return $this->render('advert/filter_adverts_by_category.html.twig', [
+            'filteredAdvertsByCategory' => $advertManager->getAdvertsByCategoryAndSection($sectionid, $categoryid)
+        ]);
+    }
+
+    /**
+     * @Route("/category/{id}", name="filter_adverts_by_category")
+     */
+    public function filterAdvertsByCategory($id, AdvertManager $advertManager)
     {
 
         return $this->render('advert/filter_adverts_by_category.html.twig', [
-            'filteredAdvertsByCategory' => $advertManager->getAdvertsByCategory($id),
-            'buyingCategories'          => $advertManager->getBuyingCategories()
+            'filteredAdvertsByCategory' => $advertManager->getAdvertsByCategory($id)/*,
+            'buyingCategories'          => $advertManager->getAdvertsBysection($sectionid)*/
         ]);
     }
 

@@ -53,21 +53,27 @@ class AdvertManager
      * Returns all categories of the section "Buying"
      * called by showBuyingCategories()
      */
-    public function getBuyingCategories()
+    public function getAdvertsBysection($id)
     {
-        return $this->advertRepository->getBuyingCategories();
+        return $this->advertRepository->findAdvertsBySection($id);
     }
 
 
-    public function getAdvertsByCategory($categoryId)
+    public function getAdvertsByCategoryAndsection($sectionId, $categoryId)
     {
-        return $this->advertRepository->getAdvertsByCategory($categoryId);
+        return $this->advertRepository->findAdvertsByCategoryAndSection($sectionId, $categoryId);
+    }
+
+    public function getAdvertsByCategory($id)
+    {
+        return $this->advertRepository->findAdvertsByCategory($id);
     }
 
     public function showAdvert($id)
     {
         return $this->advertRepository->find($id);
     }
+
 
 
 

@@ -35,10 +35,10 @@
                     <h2>Choose Section</h2>
                     <hr/>
                     <ul class="list-inline">
-                        <li><a href="{{ path('show_buying_categories') }}"><img src="{{ asset('images/shopping.png') }}" alt="icon" title="icon" class="img-responsive" /><p>Buy</p></a></li>
-                        <li><a href="mobile_category.html"><img src="{{ asset('images/selling.png') }}" alt="icon" title="icon" class="img-responsive" /><p>Sell</p></a></li>
-                        <li><a href="electonics_category.html"><img src="{{ asset('images/Rental.png') }}" alt="icon" title="icon" class="img-responsive" /><p>Rent</p></a></li>
-                        <li><a href="real_estate_category.html"><img src="{{ asset('images/service.png') }}" alt="icon" title="icon" class="img-responsive" /><p>Service</p></a></li>
+                        <li><a href="{{ path('show_adverts_by_section',{'id' : 1 }) }}"><img src="{{ asset('images/shopping.png') }}" alt="icon" title="icon" class="img-responsive" /><p>Shopping</p></a></li>
+                        <li><a href="{{ path('show_adverts_by_section',{'id' : 2 }) }}"><img src="{{ asset('images/selling.png') }}" alt="icon" title="icon" class="img-responsive" /><p>Jobs</p></a></li>
+                        <li><a href="{{ path('show_adverts_by_section',{'id' : 3 }) }}"><img src="{{ asset('images/Rental.png') }}" alt="icon" title="icon" class="img-responsive" /><p>Rent</p></a></li>
+                        <li><a href="{{ path('show_adverts_by_section',{'id' : 4 }) }}"><img src="{{ asset('images/service.png') }}" alt="icon" title="icon" class="img-responsive" /><p>Service</p></a></li>
 
                     </ul>
                 </div>
