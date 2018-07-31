@@ -14,7 +14,8 @@ class UserHandler
     protected   $form,
                 $request,
                 $userManager,
-                $imageUploader;
+                $imageUploader,
+                $currentAvatar;
 
     /**
      * UserHandler constructor.
@@ -37,6 +38,7 @@ class UserHandler
      */
     public function process(string $type)
     {
+        $this->currentAvatar = $this->form->getData()->getAvatar();
         $this->form->handleRequest($this->request);
 
         if ($this->form->isSubmitted() && $this->form->isValid()) {
@@ -65,9 +67,16 @@ class UserHandler
     protected function onSuccessEdit()
     {
         $userFormData = $this->form->getData();
+        //dump($userFormData->getAvatar());
         /** @var File $image */
-        $image = new File($userFormData->getAvatar());
-        $imageName = $this->imageUploader->upload($image);
-        $this->userManager->UpdateUserIntoDb($userFormData, $imageName);
+        if ($userFormData->getAvatar() === null) {
+            $imageName = $this->currentAvatar;
+            $this->userManager->updateUserIntoDb($userFormData, $imageName);
+        }
+        else {
+            $image = new File($userFormData->getAvatar());
+            $imageName = $this->imageUploader->upload($image);
+            $this->userManager->updateUserIntoDb($userFormData, $imageName);
+        }
     }
 }

@@ -78,4 +78,22 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * user avatar deletion
+     * @Route("/avatar-delete", name="avatar_delete")
+     * @Security("has_role('ROLE_USER')")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function deleteAvatar(UserManager $userManager)
+    {
+        $user = $this->getUser();
+        $avatar = $user->getAvatar();
+
+        $userManager->removeAvatar($user->getId(), $avatar);
+
+        return $this->redirectToRoute('user_profile', [
+            'pseudo' => $user->getPseudo()
+        ]);
+    }
+
 }
