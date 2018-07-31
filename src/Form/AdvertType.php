@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Advert;
 use App\Entity\Category;
+use App\Entity\Section;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -18,9 +19,15 @@ class AdvertType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', TextType::class)
+            ->add('title', TextType::class, [
+                'label' => 'Product'
+            ])
             ->add('description', TextareaType::class)
             ->add('price', NumberType::class)
+            ->add('section', EntityType::class, [
+               'class' => Section::class,
+                'choice_label' => 'label'
+            ])
             ->add('category', EntityType::class, [
                 'class' => Category::class,
                 'choice_label' => 'label'

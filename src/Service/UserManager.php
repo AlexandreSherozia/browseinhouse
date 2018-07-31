@@ -34,6 +34,8 @@ class UserManager
         $user->setPassword($this->encoder->encodePassword($user, $user->getPassword()));
         $this->em->persist($user);
         $this->em->flush();
+
+        return $user;
     }
 
 }

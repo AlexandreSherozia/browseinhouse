@@ -29,7 +29,7 @@ class UserController extends Controller
 
         if ($formHandler->process()) {
 
-            $this->addFlash('success', 'Congratulation, you have been registered !');
+            $this->addFlash('success', 'Congratulations, you have been registered !');
 
             return $this->redirectToRoute('index');
         }

@@ -1,0 +1,59 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}
+
+    {{ parent() }}Buy
+    
+{% endblock %}
+
+{% block content %}
+
+
+
+        <div class="container">
+
+
+            <p>The .table-hover class enables a hover state on table rows:</p>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Category</th>
+                    <th>Author</th>
+                    <th>Creation Date</th>
+                </tr>
+                </thead>
+                <tbody>
+
+            {% for advert in advertsBySection %}
+
+                <tr>
+                    <td>
+                        <a href="{{ path('show_advert' , {'id' : advert.id }) }}">
+                            {{ advert.title }}
+                        </a>
+                    </td>
+
+                    <td>
+                        <a href="{{ path('filter_adverts_by_category_and_section', {'sectionid' : advert.section.id, 'categoryid' : advert.category.id}  ) }}">
+                            {{ advert.category.label }}
+                        </a>
+                    </td>
+
+                    <td>{{ advert.user.pseudo }}</td>
+                    <td>{{ advert.creationDate|date('Y-m-d') }}</td>
+                </tr>
+
+                {#{{ dump(advert.category.id ) }}#}
+            {% endfor %}
+
+
+
+                </tbody>
+            </table>
+        </div>
+
+    {% include 'includes/_categories.html.twig' %}
+
+{% endblock %}
+

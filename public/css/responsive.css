@@ -5,8 +5,14 @@
 	header .btn-primary {
 		padding: 10px 16px;
     }
+
+	.browse ul li img{
+		display: block;
+		width: 100px;
+	}
+
 	.browse ul li {
-		width: 151px;
+		width: 465px;
 		height: 175px;
 		padding: 32px 0 0 0;
     }
@@ -112,9 +118,15 @@
 	}
 	header .btn-primary i {
 		margin-right: 4px;
-	}	
+	}
+
+	.browse ul li img{
+		display: block;
+		width: 85px;
+	}
+
 	.browse ul li {
-		width: 174px;
+		width: 355px;
 	}
 	footer p, footer .links li a {
 		font-size: 12px;
@@ -366,9 +378,15 @@
 	.slideshow img {
 		height: auto;
 	}
+
+	.browse ul li img{
+		display: block;
+		width: 85px;
+	}
+
 	.browse ul li {
 		width: 100%;
-		height: 190px;
+		height: 175px;
 		padding: 50px 0 0 0;
     }
 	footer .matter, footer .info {

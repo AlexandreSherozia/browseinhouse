@@ -53,40 +53,10 @@ class Advert
     private $category;
 
     /**
-     * @return mixed
+     * @ORM\ManyToOne(targetEntity="App\Entity\Section")
      */
-    public function getCategory()
-    {
-        return $this->category;
-    }
+    private $section;
 
-    /**
-     * @param mixed $category
-     * @return Advert
-     */
-    public function setCategory($category)
-    {
-        $this->category = $category;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getComments()
-    {
-        return $this->comments;
-    }
-
-    /**
-     * @param mixed $comments
-     * @return Advert
-     */
-    public function setComments($comments)
-    {
-        $this->comments = $comments;
-        return $this;
-    }
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="advert")
@@ -156,12 +126,6 @@ class Advert
         return $this->creationDate;
     }
 
-   /* public function setCreationDate(\DateTimeInterface $creationDate): self
-    {
-        $this->creationDate = $creationDate;
-
-        return $this;
-    }*/
 
     public function getSlug(): ?string
     {
@@ -170,8 +134,65 @@ class Advert
 
     public function setSlug(string $slug): self
     {
+
         $this->slug = $slug;
 
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param mixed $category
+     * @return Advert
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSection()
+    {
+        return $this->section;
+    }
+
+    /**
+     * @param mixed $section
+     * @return Advert
+     */
+    public function setSection($section)
+    {
+        $this->section = $section;
+        return $this;
+    }
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    /**
+     * @param mixed $comments
+     * @return Advert
+     */
+    public function setComments($comments)
+    {
+        $this->comments = $comments;
         return $this;
     }
 
