@@ -21,12 +21,12 @@ class UserController extends Controller
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function userRegistration(UserManager $userManager, Request $request)
+    public function userRegistration(UserManager $userManager, Request $request, ImageUploader $imageUploader)
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
 
-        $formHandler = new UserHandler($form, $request, $userManager);
+        $formHandler = new UserHandler($form, $request, $userManager, $imageUploader);
 
         if ($formHandler->process('new')) {
 
@@ -87,9 +87,8 @@ class UserController extends Controller
     public function deleteAvatar(UserManager $userManager)
     {
         $user = $this->getUser();
-        $avatar = $user->getAvatar();
 
-        $userManager->removeAvatar($user->getId(), $avatar);
+        $userManager->removeAvatar($user->getId());
 
         return $this->redirectToRoute('user_profile', [
             'pseudo' => $user->getPseudo()

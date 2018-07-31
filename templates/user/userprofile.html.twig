@@ -43,8 +43,16 @@
                         <li class="list-group-item">{{ 'userprofile.firstname' | trans }} : {{ app.user.firstname }}</li>
                         <li class="list-group-item">{{ 'userprofile.lastname' | trans }} : {{ app.user.lastname }}</li>
                         <li class="list-group-item">{{ 'userprofile.phone' | trans }} : {{ app.user.phone }}</li>
-                        <li class="list-group-item">{{ 'userprofile.avatar' | trans }} : <img src="{{ asset('images/avatars/'~app.user.avatar) }}" alt="{{ app.user.pseudo }}" class="center-block img-circle">
-                        <div class="text-center"><a href="{{ path('avatar-delete') }}"><i class="la la-close"></i><span>{{ 'userprofile.avatar.delete' | trans }}</span></a></div></li>
+                        <li class="list-group-item">{{ 'userprofile.avatar' | trans }} :
+                            {% if app.user.avatar %}
+                                <img src="{{ asset('images/avatars/'~app.user.avatar) }}" alt="{{ 'userprofile.alt.avatar' | trans }}{{ ' '~ app.user.pseudo }}" class="center-block img-circle">
+                                <div class="text-center">
+                                    <a href="{{ path('avatar_delete') }}">
+                                        <i class="la la-close"></i><span>{{ 'userprofile.avatar.delete' | trans }}</span>
+                                    </a>
+                                </div>
+                            {% endif %}
+                        </li>
                     </ul>
 
                 </div>

@@ -71,6 +71,11 @@ class UserHandler
         /** @var File $image */
         if ($userFormData->getAvatar() === null) {
             $imageName = $this->currentAvatar;
+
+            if($imageName === null) {
+                $imageName = '';
+            }
+
             $this->userManager->updateUserIntoDb($userFormData, $imageName);
         }
         else {

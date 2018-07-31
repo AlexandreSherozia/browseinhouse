@@ -1,13 +1,15 @@
 userprofile.pagename: 'My profile'
 userprofile.title: 'My Profile'
-userprofile.login.data: Login infos
-userprofile.edit: Edit your infos
+userprofile.login.data: 'Login infos'
+userprofile.edit: 'Edit your infos'
 userprofile.pseudo: Pseudo
 userprofile.email: Email
-userprofile.personnal.data: Personnal infos
+userprofile.personnal.data: 'Personnal infos'
 userprofile.firstname: Firstname
 userprofile.lastname: Lastname
-userprofile.phone: Phone number
-userprofile.avatar: Your avatar
-userprofile.edit.validation: Your profile has been updated
+userprofile.phone: 'Phone number'
+userprofile.avatar: 'Your avatar'
+userprofile.edit.validation: 'Your profile has been updated'
 userprofile.cancel.edit: Cancel
+userprofile.alt.avatar: 'Avatar picture of'
+userprofile.avatar.delete: 'Delete'
