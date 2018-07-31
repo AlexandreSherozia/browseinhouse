@@ -67,7 +67,7 @@ class UserHandler
     {
         $userFormData = $this->form->getData();
         $image = $userFormData->getAvatar();
-        $filename = ImageUploader->upload();
+        //$filename = ImageUploader->upload();
         $this->userManager->UpdateUserIntoDb($userFormData);
     }
 }

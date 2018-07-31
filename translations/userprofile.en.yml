@@ -9,3 +9,5 @@ userprofile.firstname: Firstname
 userprofile.lastname: Lastname
 userprofile.phone: Phone number
 userprofile.avatar: Your avatar
+userprofile.edit.validation: Your profile has been updated
+userprofile.cancel.edit: Cancel

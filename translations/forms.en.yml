@@ -5,7 +5,8 @@ form.register.placeholder.pseudo: 'Your pseudo'
 form.register.placeholder.email: 'Your email'
 form.register.placeholder.password: 'Your password'
 form.register.submit: Register
-form.register.placeholder.firstname: 'Your firstname'
-form.register.placeholder.lastname: 'Your lastname'
-form.register.placeholder.phone: 'Your phone number'
-form.register.edit: Edit
+form.edit.placeholder.firstname: 'Your firstname'
+form.edit.placeholder.lastname: 'Your lastname'
+form.edit.placeholder.phone: 'Your phone number'
+form.edit.avatar: 'Avatar :'
+form.edit: Edit

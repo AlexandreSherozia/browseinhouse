@@ -56,26 +56,26 @@ class UserType extends AbstractType
                         'required' => false,
                         'label' => false,
                         'attr' => [
-                            'placeholder' => 'form.register.placeholder.firstname'
+                            'placeholder' => 'form.edit.placeholder.firstname'
                         ]
                     ])
                         ->add('lastname', TextType::class, [
                             'required' => false,
                             'label' => false,
                             'attr' => [
-                                'placeholder' => 'form.register.placeholder.lastname'
+                                'placeholder' => 'form.edit.placeholder.lastname'
                             ]
                         ])
                         ->add('phone', TextType::class, [
                             'required' => false,
                             'label' => false,
                             'attr' => [
-                                'placeholder' => 'form.register.placeholder.phone'
+                                'placeholder' => 'form.edit.placeholder.phone'
                             ]
                         ])
                         ->add('avatar', FileType::class, [
                             'required' => false,
-                            'label' => false,
+                            'label' => 'form.edit.avatar',
                             'data_class' => null,
                             'attr' => [
                                 'class' => 'dropify',
@@ -83,7 +83,7 @@ class UserType extends AbstractType
                             ]
                         ])
                         ->add('submit', SubmitType::class, [
-                            'label' => "form.register.edit"
+                            'label' => "form.edit"
                         ]);
                 }
             });

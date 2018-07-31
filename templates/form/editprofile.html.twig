@@ -13,6 +13,7 @@
         <div class="col-xs-6 col-xs-offset-3">
             {% form_theme form 'bootstrap_3_layout.html.twig' %}
             {{ form(form, {attr: {novalidate: 'novalidate'}}) }}
+            <a href="{{ path('user_profile', {'pseudo' : app.user.pseudo}) }}"><button class="btn-default btn alert-danger">{{ 'userprofile.cancel.edit' | trans }}</button></a>
         </div>
     </div>
 {% endblock %}
