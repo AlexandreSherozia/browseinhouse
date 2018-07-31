@@ -21,12 +21,17 @@
                         <!--language code end here-->
                     </li>
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                        <li><a href="#"><i class="la la-user"></i><span>{{ 'header.profile' | trans }} {{ '(' ~app.user.pseudo ~')' }}</span></a></li>
+                        <li>
+                            <a href="{{ path('user_profile', {'pseudo' : app.user.pseudo}) }}">
+                                <i class="la la-user"></i>
+                                <span>{{ 'header.profile' | trans }} {{ '(' ~app.user.pseudo ~')' }}</span>
+                            </a>
+                        </li>
                         <li><a href="{{ path('logout') }}"><i class="la la-close"></i><span>{{ 'header.logout' | trans }}</span></a></li>
                         <li><span></span></li>
                     {% else %}
-                    <li><a href="{{ path('login') }}"><i class="la la-plus-square"></i> <span>{{ 'header.login' | trans }}</span></a></li>
-                    <li><a href="{{ path('register') }}"><i class="la la-key"></i> <span>{{ 'header.register' | trans }}</span></a></li>
+                        <li><a href="{{ path('login') }}"><i class="la la-plus-square"></i> <span>{{ 'header.login' | trans }}</span></a></li>
+                        <li><a href="{{ path('register') }}"><i class="la la-key"></i> <span>{{ 'header.register' | trans }}</span></a></li>
                     {% endif %}
                 </ul>
             </div>

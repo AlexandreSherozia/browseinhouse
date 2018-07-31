@@ -50,21 +50,26 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
+     * @Assert\Length(max="50", maxMessage="asserts.password.toolong")
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
+     * @Assert\Length(max="50", maxMessage="asserts.password.toolong")
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=15, nullable=true)
+     * @Assert\Length(max="15", maxMessage="asserts.password.toolong")
      */
     private $phone;
 
     /**
      * @ORM\Column(type="string", length=180, nullable=true)
+     * @Assert\Image(mimeTypesMessage="asserts.article.image.mimetype",
+     *     maxSize="1M", maxSizeMessage="asserts.article.image.maxsize")
      */
     private $avatar;
 

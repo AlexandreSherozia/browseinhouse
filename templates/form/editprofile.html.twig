@@ -1,0 +1,19 @@
+{% extends 'layout.html.twig' %}
+{% trans_default_domain 'userprofile' %}
+
+{% block title %}{{ parent() }} | {{ 'userprofile.pagename' | trans }}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-xs-6 col-xs-offset-3">
+            <h2 class="text-center">{{ 'userprofile.title' | trans }}</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-6 col-xs-offset-3">
+            {% form_theme form 'bootstrap_3_layout.html.twig' %}
+            {{ form(form, {attr: {novalidate: 'novalidate'}}) }}
+            <a href="{{ path('user_profile', {'pseudo' : app.user.pseudo}) }}"><button class="btn-default btn alert-danger">{{ 'userprofile.cancel.edit' | trans }}</button></a>
+        </div>
+    </div>
+{% endblock %}

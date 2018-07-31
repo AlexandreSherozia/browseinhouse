@@ -1,20 +1,16 @@
 {% extends 'layout.html.twig' %}
+{% trans_default_domain 'register' %}
+
+{% block title %}{{ parent() }} | {{ 'register.pagename' | trans }}{% endblock %}
 
 {% block content %}
     <div class="row">
         <div class="col-xs-6 col-xs-push-3">
             <h2 class="text-center">
-                Login
+                Register
             </h2>
-
-            {% if errorMessage %}
-                <div class="alert alert-danger">
-                    {{ errorMessage.messageKey|trans(errorMessage.messageData, 'security') }}
-                </div>
-            {% endif %}
-
+            {% form_theme form 'bootstrap_3_layout.html.twig' %}
             {{ form(form, {attr: {novalidate: 'novalidate'}}) }}
-
         </div>
     </div>
 

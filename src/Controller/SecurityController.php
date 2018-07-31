@@ -17,7 +17,7 @@ class SecurityController extends Controller
      * @param AuthenticationUtils $authenticationUtils
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function userLogin(Request $request, AuthenticationUtils $authenticationUtils)
+    public function userLogin(AuthenticationUtils $authenticationUtils)
     {
         if ($this->getUser()) {
             return  $this->redirectToRoute('index');
@@ -29,7 +29,7 @@ class SecurityController extends Controller
 
         $errorMessage = $authenticationUtils->getLastAuthenticationError();
 
-        return $this->render('index/login.html.twig', [
+        return $this->render('form/login.html.twig', [
             'form' => $form->createView(),
             'errorMessage' => $errorMessage
         ]);
@@ -38,7 +38,7 @@ class SecurityController extends Controller
     /**
      * @Route("/logout", name="logout")
      */
-    public function logout()
+    public function userLogout()
     {
     }
 }

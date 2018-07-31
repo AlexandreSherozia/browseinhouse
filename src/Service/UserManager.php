@@ -5,6 +5,7 @@ namespace App\Service;
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserManager
@@ -12,6 +13,7 @@ class UserManager
     private $em;
     private $repository;
     private $encoder;
+
 
     /**
      * UserManager constructor.
@@ -38,4 +40,9 @@ class UserManager
         return $user;
     }
 
+    public function UpdateUserIntoDb(User $user)
+    {
+        $this->em->persist($user);
+        $this->em->flush();
+    }
 }
