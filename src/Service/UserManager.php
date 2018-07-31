@@ -40,8 +40,9 @@ class UserManager
         return $user;
     }
 
-    public function UpdateUserIntoDb(User $user)
+    public function UpdateUserIntoDb(User $user, string $imageName)
     {
+        $user->setAvatar($imageName);
         $this->em->persist($user);
         $this->em->flush();
     }

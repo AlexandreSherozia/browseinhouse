@@ -29,7 +29,7 @@ class UserController extends Controller
         $formHandler = new UserHandler($form, $request, $userManager);
 
         if ($formHandler->process('new')) {
-            
+
             $this->addFlash('success', 'login.registration.validation');
 
             return $this->redirectToRoute('login');
@@ -57,12 +57,12 @@ class UserController extends Controller
      * @Security("has_role('ROLE_USER')")
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function editProfileData(UserManager $userManager, Request $request)
+    public function editProfileData(UserManager $userManager, Request $request, ImageUploader $imageUploader)
     {
         $user = $this->getUser();
         $form = $this->createForm(UserType::class, $user);
 
-        $formHandler = new UserHandler($form, $request, $userManager);
+        $formHandler = new UserHandler($form, $request, $userManager, $imageUploader);
 
         if ($formHandler->process('edit')) {
 

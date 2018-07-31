@@ -2,17 +2,19 @@
 
 namespace App\Form\Handler;
 
+use App\Entity\User;
 use App\Service\ImageUploader;
 use App\Service\UserManager;
 use Symfony\Component\Form\Form;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 
 class UserHandler
 {
     protected   $form,
                 $request,
-                $userManager;
+                $userManager,
+                $imageUploader;
 
     /**
      * UserHandler constructor.
@@ -21,11 +23,12 @@ class UserHandler
      * @param UserManager $userManager
      * @param string $avatarDir
      */
-    public function __construct(Form $form, Request $request, UserManager $userManager)
+    public function __construct(Form $form, Request $request, UserManager $userManager, ImageUploader $imageUploader)
     {
         $this->form             = $form;
         $this->request          = $request;
         $this->userManager      = $userManager;
+        $this->imageUploader    = $imageUploader;
     }
 
     /**
@@ -48,15 +51,11 @@ class UserHandler
 
                 return true;
             }
-
         }
 
         return false;
     }
 
-    /**
-     *
-     */
     protected function onSuccessNew()
     {
         $userFormData = $this->form->getData();
@@ -66,8 +65,9 @@ class UserHandler
     protected function onSuccessEdit()
     {
         $userFormData = $this->form->getData();
-        $image = $userFormData->getAvatar();
-        //$filename = ImageUploader->upload();
-        $this->userManager->UpdateUserIntoDb($userFormData);
+        /** @var File $image */
+        $image = new File($userFormData->getAvatar());
+        $imageName = $this->imageUploader->upload($image);
+        $this->userManager->UpdateUserIntoDb($userFormData, $imageName);
     }
 }

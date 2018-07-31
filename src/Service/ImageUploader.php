@@ -3,7 +3,7 @@
 namespace App\Service;
 
 
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\File;
 
 class ImageUploader
 {
@@ -14,7 +14,11 @@ class ImageUploader
         $this->avatarDir = $avatarDir;
     }
 
-    public function upload(UploadedFile $image)
+    /**
+     * @param File $image
+     * @return string
+     */
+    public function upload(File $image)
     {
         $fileName = time(). '_' . rand(0, 100) . '.' . $image->guessExtension();
 
