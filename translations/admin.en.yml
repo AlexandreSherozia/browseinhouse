@@ -1,0 +1,11 @@
+userprofile.pagename: Admin Page
+admin.userlist.title: List of our users
+admin.userlist.registration_date: Registration Date
+admin.userlist.firstname: Firstname
+admin.userlist.lastname: Lastname
+admin.userlist.phone: Phone number
+admin.userlist.avatar: Avatar
+admin.userlist.roles: Role
+admin.userlist.deleteUser: Delete
+admin.deleteUser.validation: 'User successfully deleted!'
+

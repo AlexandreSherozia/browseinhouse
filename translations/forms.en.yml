@@ -9,5 +9,4 @@ form.edit.avatar: 'Avatar :'
 form.edit: Edit
 form.login.placeholder.email: 'Your email'
 form.login.placeholder.password: 'Your password'
-form.login.submit: Sign up
-
+form.login.submit: 'Sign up'

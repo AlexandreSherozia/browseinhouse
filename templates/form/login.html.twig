@@ -16,6 +16,7 @@
                     {{ message  | trans }}
                 </div>
             {% endfor %}
+
             {% if errorMessage %}
                 <div class="alert alert-danger">
                     {{ errorMessage.messageKey|trans(errorMessage.messageData, 'security') }}

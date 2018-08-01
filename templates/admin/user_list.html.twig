@@ -1,0 +1,65 @@
+{% extends 'layout.html.twig' %}
+{% trans_default_domain 'admin' %}
+
+{% block title %}{{ parent() }} | {{ 'userprofile.pagename' | trans }}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6 col-md-push-4">
+            <h2 class="text-center">{{ 'admin.userlist.title' | trans }}</h2>
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success alert-dismissible text-center" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    {{ message | trans }}
+                </div>
+            {% endfor %}
+            {#{% for message in app.flashes('danger') %}#}
+                {#<div class="alert alert-danger alert-dismissible text-center" role="alert">#}
+                    {#<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>#}
+                    {#{{ message | trans }}#}
+                {#</div>#}
+            {#{% endfor %}#}
+        </div>
+    </div>
+    <div class="row">
+        {% include 'includes/_userprofilesidebar.html.twig' %}
+        <div class="col-md-6 col-xs-6">
+            {% if userList %}
+                {#{{ dump(userList) }}#}
+                <table class="table">
+                    <tr>
+                        <th>ID</th>
+                        <th>Pseudo</th>
+                        <th>Email</th>
+                        <th>{{ 'admin.userlist.registration_date' | trans }}</th>
+                        <th>{{ 'admin.userlist.firstname' | trans }}</th>
+                        <th>{{ 'admin.userlist.lastname' | trans }}</th>
+                        <th>{{ 'admin.userlist.phone' | trans }}</th>
+                        <th>{{ 'admin.userlist.avatar' | trans }}</th>
+                        <th class="text-center">{{ 'admin.userlist.roles' | trans }}</th>
+                        <th>{{ 'admin.userlist.deleteUser' | trans }}</th>
+                    </tr>
+                    {% for user in userList %}
+                        <div>
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.pseudo }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.registrationDate | date('d/m/Y')}}</td>
+                            <td>{{ user.firstname }}</td>
+                            <td>{{ user.lastname }}</td>
+                            <td>{{ user.phone }}</td>
+                            <td>{% if user.avatar %}
+                                <img src="{{ asset('images/avatars/'~ user.avatar) }}" height="40px">
+                                {% endif %}
+                            </td>
+                            <td><div class="text-center">{% for role in user.roles %}{{ role }}</td> {% endfor %}</div>
+                            <td>
+                                <a href="{{ path('delete_user', {'user_id': user.id}) }}"><div class="text-center"><i class="la la-close alert-danger"></i></div></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

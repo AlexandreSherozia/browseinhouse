@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Form\Handler\UserHandler;
 use App\Service\UserManager;
 use App\Form\UserType;
+use Doctrine\DBAL\Exception\ConstraintViolationException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -78,11 +79,12 @@ class UserController extends Controller
         ]);
     }
 
-    /**
+     /**
      * user avatar deletion
      * @Route("/avatar-delete", name="avatar_delete")
      * @Security("has_role('ROLE_USER')")
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param UserManager $userManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAvatar(UserManager $userManager)
     {
@@ -93,6 +95,38 @@ class UserController extends Controller
         return $this->redirectToRoute('user_profile', [
             'pseudo' => $user->getPseudo()
         ]);
+    }
+
+    /**
+     * show a list of all users for an admin user
+     * @Route("/admin/user-list", name="user_list")
+     * @Security("has_role('ROLE_ADMIN')")
+     * @param UserManager $userManager
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function showUserList(UserManager $userManager)
+    {
+        $userList = $userManager->getUserList();
+
+        return $this->render('admin/user_list.html.twig', [
+            'userList' => $userList
+        ]);
+    }
+
+    /**
+     * delete an user from db in admin page
+     * @Route("/admin/delete-user/{user_id}", name="delete_user")
+     * @Security("has_role('ROLE_ADMIN')")
+     * @param UserManager $userManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function deleteUser(UserManager $userManager, $user_id)
+    {
+        $userManager->removeUser($user_id);
+
+        $this->addFlash('success', 'admin.deleteUser.validation');
+
+        return $this->redirectToRoute('user_list');
     }
 
 }

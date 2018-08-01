@@ -12,7 +12,7 @@ userprofile.avatar: 'Your avatar'
 userprofile.edit.validation: 'Your profile has been updated'
 userprofile.cancel.edit: Cancel
 userprofile.alt.avatar: 'Avatar picture of'
-userprofile.avatar.delete: 'Delete'
+userprofile.avatar.delete: Delete
 userprofile.sidebar.menu: 'Your account'
 userprofile.menu.infos: 'Personnal datas'
 userprofile.menu.wishlist: 'My whislit'
