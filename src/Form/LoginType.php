@@ -38,7 +38,8 @@ class LoginType extends AbstractType
     {
         $resolver
             ->setDefaults([
-                'data_class' => null
+                'data_class' => null,
+                'translation_domain' => 'forms'
             ]);
     }
 

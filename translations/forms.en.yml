@@ -1,6 +1,3 @@
-form.login.placeholder.email: 'Your email'
-form.login.placeholder.password: 'Enter a password'
-form.login.submit: 'Sign up'
 form.register.placeholder.pseudo: 'Your pseudo'
 form.register.placeholder.email: 'Your email'
 form.register.placeholder.password: 'Your password'
@@ -10,3 +7,7 @@ form.edit.placeholder.lastname: 'Your lastname'
 form.edit.placeholder.phone: 'Your phone number'
 form.edit.avatar: 'Avatar :'
 form.edit: Edit
+form.login.placeholder.email: 'Your email'
+form.login.placeholder.password: 'Your password'
+form.login.submit: Sign up
+
