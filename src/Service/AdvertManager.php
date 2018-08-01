@@ -84,6 +84,11 @@ class AdvertManager
         return $this->em->getRepository(Category::class)->findAll();
     }
 
+    public function getAllAdvertsInfos()
+    {
+        return $this->advertRepository->joinAdvertCategorySectionUser();
+    }
+
 
     /**
      * @param $user

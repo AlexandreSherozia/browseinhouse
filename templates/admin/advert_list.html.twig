@@ -24,38 +24,32 @@
     <div class="row">
         {% include 'includes/_userprofilesidebar.html.twig' %}
         <div class="col-md-6 col-xs-6">
-            {% if sections %}
+            {% if advertList and sections %}
                 {% for section in sections %}
-                    <h3>{{ section.label }}</h3>
+                    <h3>{{ section }}</h3>
                     <table class="table">
-                        {% if advertList %}
-                            <tr>
-                                <th>ID</th>
-                                <th>{{ 'admin.advertlist.creation_date' | trans }}</th>
-                                <th>{{ 'admin.advertlist.description' | trans }}</th>
-                                <th>{{ 'admin.advertlist.price' | trans }}</th>
-                                <th>{{ 'admin.advertlist.category' | trans }}</th>
-                                <th>{{ 'admin.advertlist.pseudo' | trans }}</th>
-                                <th>{{ 'admin.advertlist.deleteAdvert' | trans }}</th>
-                            </tr>
-                            <tr>
-                                {% for advert in advertList %}
-                                    {% if advert.sectionId is same as section.id %}
-                                        <td>{{ advert.creation_date | date('d/m/Y') }}</td>
-                                        <td>{{ advert.description }}</td>
-                                        <td>{{ advert.price }}</td>
-                                        <td>{% for category in categories %}
-                                                {% if advert.category.id is same as category.id %}
-                                                    {{ category.label }}
-                                                {% endif %}
-                                            {% endfor %}
-                                        </td>
-                                        <td>Pseudo</td>
-                                        <td>Delete</td>
-                                    {% endif %}
-                                {% endfor %}
-                            </tr>
-                        {% endif %}
+                        <tr>
+                            <th>ID</th>
+                            <th>{{ 'admin.advertlist.creation_date' | trans }}</th>
+                            <th>{{ 'admin.advertlist.description' | trans }}</th>
+                            <th>{{ 'admin.advertlist.price' | trans }}</th>
+                            <th>{{ 'admin.advertlist.category' | trans }}</th>
+                            <th>{{ 'admin.advertlist.pseudo' | trans }}</th>
+                            <th>{{ 'admin.advertlist.deleteAdvert' | trans }}</th>
+                        </tr>
+                        {% for advert in advertList %}
+                            {% if section == advert.section.label %}
+                                <tr>
+                                    <td>{{ advert.id }}</td>
+                                    <td>{{ advert.creationDate | date('d/m/Y') }}</td>
+                                    <td>{{ advert.description }}</td>
+                                    <td>{{ advert.price }}</td>
+                                    <td>{{ advert.category.label }}</td>
+                                    <td>{{ advert.user.pseudo }}</td>
+                                    <td>Delete</td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
                     </table>
                 {% endfor %}
             {% endif %}

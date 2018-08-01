@@ -140,24 +140,17 @@ class UserController extends Controller
      */
     public function showAdvertList(AdvertManager $advertManager)
     {
-        $sections = $advertManager->getAllSections();
-        $categories = $advertManager->getAllCategories();
-        $allAdverts = [];
-
-        foreach($sections as $val)
-        {
-            /** @var Section $val */
-            $id = $val->getId();
-            $allAdverts[] = $advertManager->getAdvertsBysection($id);
+        $allAdverts = $advertManager->getAllAdvertsInfos();
+        /** @var Section $section */
+        foreach($advertManager->getAllSections() as $section){
+            $allSections[] = $section->getLabel();
         }
-
         dump($allAdverts);
-        dump($sections);
-        dump($categories);
+        dump($allSections);
+
         return $this->render('admin/advert_list.html.twig', [
             'advertList' => $allAdverts,
-            'sections' => $sections,
-            'categories' => $categories
+            'sections' => $allSections
         ]);
     }
 }

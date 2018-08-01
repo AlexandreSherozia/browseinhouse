@@ -57,32 +57,19 @@ class AdvertRepository extends ServiceEntityRepository
             ;
     }
 
-//    /**
-//     * @return Advert[] Returns an array of Advert objects
-//     */
-    /*
-    public function findByExampleField($value)
+    public function joinAdvertCategorySectionUser()
     {
         return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
+            ->select('a', 'c', 's', 'u')
+            ->leftJoin('a.category', 'c')
+            ->where('a.category = c.id')
+            ->leftJoin('a.section', 's')
+            ->where('a.section = s.id')
+            ->leftJoin('a.user', 'u')
+            ->where('a.user = u.id')
+            ->orderBy('a.creationDate', 'DESC')
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Advert
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
