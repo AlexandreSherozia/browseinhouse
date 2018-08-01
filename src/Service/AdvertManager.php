@@ -1,16 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: pc
- * Date: 25/07/2018
- * Time: 07:28
- */
 
 namespace App\Service;
 
 
 use App\Entity\Advert;
+use App\Entity\Category;
+use App\Entity\Section;
 use App\Entity\User;
+use App\Repository\SectionRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,7 +29,10 @@ class AdvertManager
     }
 
 
-
+    public function getEm()
+    {
+        return $this->em;
+    }
 
     public function myPersist(Advert $advert, $slug)
     {
@@ -74,7 +74,15 @@ class AdvertManager
         return $this->advertRepository->find($id);
     }
 
+    public function getAllSections()
+    {
+        return $this->em->getRepository(Section::class)->findAll();
+    }
 
+    public function getAllCategories()
+    {
+        return $this->em->getRepository(Category::class)->findAll();
+    }
 
 
     /**

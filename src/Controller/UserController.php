@@ -2,12 +2,14 @@
 
 namespace App\Controller;
 
+
+use App\Entity\Section;
+use App\Service\AdvertManager;
 use App\Service\ImageUploader;
 use App\Entity\User;
 use App\Form\Handler\UserHandler;
 use App\Service\UserManager;
 use App\Form\UserType;
-use Doctrine\DBAL\Exception\ConstraintViolationException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -98,7 +100,7 @@ class UserController extends Controller
     }
 
     /**
-     * show a list of all users for an admin user
+     * show the list of all users for an admin user
      * @Route("/admin/user-list", name="user_list")
      * @Security("has_role('ROLE_ADMIN')")
      * @param UserManager $userManager
@@ -129,4 +131,33 @@ class UserController extends Controller
         return $this->redirectToRoute('user_list');
     }
 
+    /**
+     * show the list of all adverts for an admin user
+     * @Route("/admin/advert-list", name="advert_list")
+     * @Security("has_role('ROLE_ADMIN')")
+     * @param AdvertManager $advertManager
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function showAdvertList(AdvertManager $advertManager)
+    {
+        $sections = $advertManager->getAllSections();
+        $categories = $advertManager->getAllCategories();
+        $allAdverts = [];
+
+        foreach($sections as $val)
+        {
+            /** @var Section $val */
+            $id = $val->getId();
+            $allAdverts[] = $advertManager->getAdvertsBysection($id);
+        }
+
+        dump($allAdverts);
+        dump($sections);
+        dump($categories);
+        return $this->render('admin/advert_list.html.twig', [
+            'advertList' => $allAdverts,
+            'sections' => $sections,
+            'categories' => $categories
+        ]);
+    }
 }
