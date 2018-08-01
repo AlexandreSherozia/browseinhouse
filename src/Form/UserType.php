@@ -78,8 +78,7 @@ class UserType extends AbstractType
                             'label' => 'form.edit.avatar',
                             'data_class' => null,
                             'attr' => [
-                                'class' => 'dropify',
-                                'data-default-file' => $this->image_url
+                               'data-default-file' => $this->image_url
                             ]
                         ])
                         ->add('submit', SubmitType::class, [

@@ -21,15 +21,15 @@ class UserController extends Controller
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function userRegistration(UserManager $userManager, Request $request)
+    public function userRegistration(UserManager $userManager, Request $request, ImageUploader $imageUploader)
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
 
-        $formHandler = new UserHandler($form, $request, $userManager);
+        $formHandler = new UserHandler($form, $request, $userManager, $imageUploader);
 
         if ($formHandler->process('new')) {
-            
+
             $this->addFlash('success', 'login.registration.validation');
 
             return $this->redirectToRoute('login');
@@ -57,12 +57,12 @@ class UserController extends Controller
      * @Security("has_role('ROLE_USER')")
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function editProfileData(UserManager $userManager, Request $request)
+    public function editProfileData(UserManager $userManager, Request $request, ImageUploader $imageUploader)
     {
         $user = $this->getUser();
         $form = $this->createForm(UserType::class, $user);
 
-        $formHandler = new UserHandler($form, $request, $userManager);
+        $formHandler = new UserHandler($form, $request, $userManager, $imageUploader);
 
         if ($formHandler->process('edit')) {
 
@@ -75,6 +75,23 @@ class UserController extends Controller
 
         return $this->render('form/editprofile.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * user avatar deletion
+     * @Route("/avatar-delete", name="avatar_delete")
+     * @Security("has_role('ROLE_USER')")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function deleteAvatar(UserManager $userManager)
+    {
+        $user = $this->getUser();
+
+        $userManager->removeAvatar($user->getId());
+
+        return $this->redirectToRoute('user_profile', [
+            'pseudo' => $user->getPseudo()
         ]);
     }
 

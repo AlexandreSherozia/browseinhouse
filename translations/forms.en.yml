@@ -1,6 +1,6 @@
 form.login.placeholder.email: 'Your email'
 form.login.placeholder.password: 'Enter a password'
-form.login.submit: Sign up
+form.login.submit: 'Sign up'
 form.register.placeholder.pseudo: 'Your pseudo'
 form.register.placeholder.email: 'Your email'
 form.register.placeholder.password: 'Your password'

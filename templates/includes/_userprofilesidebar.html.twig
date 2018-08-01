@@ -1,0 +1,32 @@
+{% trans_default_domain 'userprofile' %}
+
+<div class="col-md-3 col-xs-6 col-md-offset-1">
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <div class="panel panel-default">
+            <div class="panel-heading"><h4>{{ 'userprofile.sidebar.menu' | trans }}</h4></div>
+            <div class="panel-body">
+                <ul class="list-group">
+                    {% if is_granted('ROLE_USER') %}
+                        <li class="list-group-item">
+                            <a href="{{ path('user_profile', {'pseudo' : app.user.pseudo}) }}">
+                                {{ 'userprofile.menu.infos' | trans }}
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="#">
+                                {{ 'userprofile.menu.wishlist' | trans }}
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="#">
+                                {{ 'userprofile.menu.follow' | trans }}
+                            </a>
+                        </li>
+                    {% endif %}
+                    {#{% if is_granted('ROLE_ADMIN') %}#}
+                    {#{% endif %}#}
+                </ul>
+            </div>
+        </div>
+    {% endif %}
+</div>
