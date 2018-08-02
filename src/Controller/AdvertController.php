@@ -91,13 +91,14 @@ class AdvertController extends Controller
         ]);
     }
 
+
     /**
-     * @param Request $request
-     * @param $advertslug
+     * @param $id
      * @Security("has_role('ROLE_USER')")
      * @Route("/delete_advert/{id}", name="delete_advert")
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAdvert($id)
+    public function deleteAdvert(int $id)
     {
         $this->manager->removeAdvert($id);
 

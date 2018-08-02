@@ -97,4 +97,9 @@ class AdvertManager
         return $this->advertRepository;
     }
 
+    public function getAdvertsByUser($id)
+    {
+        return $this->advertRepository->findAdvertsByUser($id);
+    }
+
 }

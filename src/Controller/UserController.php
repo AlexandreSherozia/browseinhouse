@@ -100,13 +100,59 @@ class UserController extends Controller
     }
 
     /**
+     * Get user adverts
+     * @Route("/adverts/{pseudo}", name="show_user_adverts")
+     * @Security("has_role('ROLE_USER')")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function showUserAdverts(AdvertManager $advertManager)
+    {
+        $user = $this->getUser();
+
+        /** @var Section $section */
+        foreach($advertManager->getAllSections() as $section){
+            $allSections[] = $section->getLabel();
+        }
+
+        $userAdverts = $advertManager->getAdvertsByUser($user->getId());
+
+        return $this->render('user/userprofile_adverts.html.twig', [
+            'advertList' => $userAdverts,
+        ]);
+    }
+
+    /**
+     * allow an user to delete an advert on his profile page
+     * @Route("/user_delete_advert/{advert_id}", name="user_delete_advert")
+     * @Security("has_role('ROLE_USER')")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function deleteUserAdverts(AdvertManager $advertManager, $advert_id)
+    {
+        $advertManager->removeAdvert($advert_id);
+
+        $user = $this->getUser();
+
+        /** @var Section $section */
+        foreach($advertManager->getAllSections() as $section){
+            $allSections[] = $section->getLabel();
+        }
+
+        $userAdverts = $advertManager->getAdvertsByUser($user->getId());
+
+        return $this->render('user/userprofile_adverts.html.twig', [
+            'advertList' => $userAdverts,
+        ]);
+    }
+
+    /**
      * show the list of all users for an admin user
      * @Route("/admin/user-list", name="user_list")
      * @Security("has_role('ROLE_ADMIN')")
      * @param UserManager $userManager
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function showUserList(UserManager $userManager)
+    public function adminShowUserList(UserManager $userManager)
     {
         $userList = $userManager->getUserList();
 
@@ -122,7 +168,7 @@ class UserController extends Controller
      * @param UserManager $userManager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteUser(UserManager $userManager, $user_id)
+    public function adminDeleteUser(UserManager $userManager, int $user_id)
     {
         $userManager->removeUser($user_id);
 
@@ -138,19 +184,34 @@ class UserController extends Controller
      * @param AdvertManager $advertManager
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function showAdvertList(AdvertManager $advertManager)
+    public function adminShowAdvertList(AdvertManager $advertManager)
     {
         $allAdverts = $advertManager->getAllAdvertsInfos();
         /** @var Section $section */
         foreach($advertManager->getAllSections() as $section){
             $allSections[] = $section->getLabel();
         }
-        dump($allAdverts);
-        dump($allSections);
 
         return $this->render('admin/advert_list.html.twig', [
             'advertList' => $allAdverts,
             'sections' => $allSections
         ]);
     }
+
+    /**
+     * delete an advert from db in admin page
+     * @Route("/admin/delete-advert/{advert_id}", name="admin_delete_advert")
+     * @Security("has_role('ROLE_ADMIN')")
+     * @param AdvertManager $advertManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function adminDeleteAdvert(AdvertManager $advertManager, int $advert_id)
+    {
+        $advertManager->removeAdvert($advert_id);
+
+        $this->addFlash('success', 'admin.deleteAdvert.validation');
+
+        return $this->redirectToRoute('advert_list');
+    }
+
 }
