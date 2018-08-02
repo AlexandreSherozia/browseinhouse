@@ -29,7 +29,7 @@ class AdvertHandler
      * @param $form
      * @param $request
      */
-    public function __construct(Form $form, Request $request, AdvertManager $advertManager/*, Security $security*/)
+    public function __construct(Form $form, Request $request, AdvertManager $advertManager)
     {
         $this->form             = $form;
         $this->request          = $request;
@@ -38,13 +38,13 @@ class AdvertHandler
 
     }
 
-    public function process(/*$userId*/)
+    public function process()
     {
         $this->form->handleRequest($this->request);
 
         if ($this->form->isSubmitted() && $this->form->isValid()) {
 
-            $this->onSubmitted(/*$userId*/);   //onSuccess
+            $this->onSubmitted();   //onSuccess
 
             return true;
         }
@@ -69,16 +69,15 @@ class AdvertHandler
      *  "myPersist" method, which persists and flushes by native Doctrine methods
      *  of AdvertManager
      */
-    protected function onSubmitted(/*$userId*/) //onSuccess
+    protected function onSubmitted() //onSuccess
     {
 
         $advert = $this->form->getData();
 
-        /*$user = $this->security->getToken()->getUser();*/
-        //$categoryId = $advert->getCategory(); se récupère automatiquement par getData()
-        $slug = $advert->getTitle();
 
-        $this->advert = $this->advertManager->myPersist($advert/*, $userId*/,$slug);
+        //$slug = $advert->getSlug();
+
+        $this->advert = $this->advertManager->myPersist($advert);
 
     }
 

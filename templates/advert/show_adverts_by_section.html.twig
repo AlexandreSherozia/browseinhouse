@@ -2,7 +2,7 @@
 
 {% block title %}
 
-    {{ parent() }}Buy
+    {{ parent() }}Section
     
 {% endblock %}
 
@@ -12,8 +12,6 @@
 
         <div class="container">
 
-
-            <p>The .table-hover class enables a hover state on table rows:</p>
             <table class="table table-hover">
                 <thead>
                 <tr>
@@ -29,13 +27,13 @@
 
                 <tr>
                     <td>
-                        <a href="{{ path('show_advert' , {'id' : advert.id }) }}">
+                        <a href="{{ path('show_advert' , {'advertslug' : advert.slug }) }}">
                             {{ advert.title }}
                         </a>
                     </td>
 
                     <td>
-                        <a href="{{ path('filter_adverts_by_category_and_section', {'sectionid' : advert.section.id, 'categoryid' : advert.category.id}  ) }}">
+                        <a href="{{ path('filter_adverts_by_category_and_section', {'sectionlabel' : advert.section.label, 'categorylabel' : advert.category.label }  ) }}">
                             {{ advert.category.label }}
                         </a>
                     </td>

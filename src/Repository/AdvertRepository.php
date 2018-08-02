@@ -20,24 +20,30 @@ class AdvertRepository extends ServiceEntityRepository
     }
 
 
-    public function findAdvertsBySection($id)
+    public function findAdvertsBySection($label)
     {
         return $this->createQueryBuilder('a')
-            ->where('a.section = :val')
-            ->setParameter('val', $id)
+            ->join('a.section', 's')
+            ->addSelect('s')
+            ->andWhere('s.label = :val')
+            ->setParameter('val', $label)
             ->orderBy('a.id', 'DESC')
             ->getQuery()
             ->getResult()
         ;
     }
 
-    public function findAdvertsByCategoryAndSection($sectionId, $categoryId)
+    public function findAdvertsByCategoryAndSection($sectionlabel, $categorylabel)
     {
         return $this->createQueryBuilder('a')
-            ->where('a.section = :val')
-            ->setParameter('val', $sectionId)
-            ->andWhere('a.category = :category')
-            ->setParameter('category', $categoryId)
+            ->join('a.section', 's')
+            ->addSelect('s')
+            ->andWhere('s.label = :val')
+            ->setParameter('val', $sectionlabel)
+            ->join('a.category', 'c')
+            ->addSelect('c')
+            ->andWhere('c.label = :val')
+            ->setParameter('val', $categorylabel)
             ->orderBy('a.id','DESC')
             ->getQuery()
             ->getResult()
@@ -55,6 +61,15 @@ class AdvertRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
             ;
+    }
+
+    public function findAdvertBySlug($advertSlug)
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.slug = :val')
+            ->setParameter('val', $advertSlug)
+            ->getQuery()
+            ->getResult();
     }
 
     public function joinAdvertCategorySectionUser()
