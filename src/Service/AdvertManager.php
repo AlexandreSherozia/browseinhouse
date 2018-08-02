@@ -1,16 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: pc
- * Date: 25/07/2018
- * Time: 07:28
- */
 
 namespace App\Service;
 
 
 use App\Entity\Advert;
+use App\Entity\Category;
+use App\Entity\Section;
 use App\Entity\User;
+use App\Repository\SectionRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,6 +29,11 @@ class AdvertManager
     }
 
 
+    public function getEm()
+    {
+        return $this->em;
+    }
+
     public function myPersist(Advert $advert)
     {
 
@@ -41,7 +43,7 @@ class AdvertManager
         $this->em->flush();
 
         return $advert;
-}
+    }
 
     /**
      * Returns all categories of the section "Buying"
@@ -68,6 +70,20 @@ class AdvertManager
         return $this->advertRepository->findOneBy(['slug' => $advertslug]);
     }
 
+    public function getAllSections()
+    {
+        return $this->em->getRepository(Section::class)->findAll();
+    }
+
+    public function getAllCategories()
+    {
+        return $this->em->getRepository(Category::class)->findAll();
+    }
+
+    public function getAllAdvertsInfos()
+    {
+        return $this->advertRepository->joinAdvertCategorySectionUser();
+    }
 
     public function removeAdvert($advertid)
     {
@@ -80,19 +96,5 @@ class AdvertManager
     {
         return $this->advertRepository;
     }
-
-
-    /**
-     * @param $user
-     * @return mixed
-     * Returns  all adverts of user
-     */
-    /*public function getAdvertByUser($user)
-    {
-        return $this->repository->getAll($user);
-    }*/
-
-    /*public function getAll($user)*/
-
 
 }

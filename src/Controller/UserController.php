@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+
+use App\Entity\Section;
+use App\Service\AdvertManager;
 use App\Service\ImageUploader;
 use App\Entity\User;
 use App\Form\Handler\UserHandler;
@@ -78,11 +81,12 @@ class UserController extends Controller
         ]);
     }
 
-    /**
+     /**
      * user avatar deletion
      * @Route("/avatar-delete", name="avatar_delete")
      * @Security("has_role('ROLE_USER')")
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param UserManager $userManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAvatar(UserManager $userManager)
     {
@@ -95,4 +99,58 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * show the list of all users for an admin user
+     * @Route("/admin/user-list", name="user_list")
+     * @Security("has_role('ROLE_ADMIN')")
+     * @param UserManager $userManager
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function showUserList(UserManager $userManager)
+    {
+        $userList = $userManager->getUserList();
+
+        return $this->render('admin/user_list.html.twig', [
+            'userList' => $userList
+        ]);
+    }
+
+    /**
+     * delete an user from db in admin page
+     * @Route("/admin/delete-user/{user_id}", name="delete_user")
+     * @Security("has_role('ROLE_ADMIN')")
+     * @param UserManager $userManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function deleteUser(UserManager $userManager, $user_id)
+    {
+        $userManager->removeUser($user_id);
+
+        $this->addFlash('success', 'admin.deleteUser.validation');
+
+        return $this->redirectToRoute('user_list');
+    }
+
+    /**
+     * show the list of all adverts for an admin user
+     * @Route("/admin/advert-list", name="advert_list")
+     * @Security("has_role('ROLE_ADMIN')")
+     * @param AdvertManager $advertManager
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function showAdvertList(AdvertManager $advertManager)
+    {
+        $allAdverts = $advertManager->getAllAdvertsInfos();
+        /** @var Section $section */
+        foreach($advertManager->getAllSections() as $section){
+            $allSections[] = $section->getLabel();
+        }
+        dump($allAdverts);
+        dump($allSections);
+
+        return $this->render('admin/advert_list.html.twig', [
+            'advertList' => $allAdverts,
+            'sections' => $allSections
+        ]);
+    }
 }

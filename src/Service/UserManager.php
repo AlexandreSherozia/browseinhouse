@@ -3,6 +3,7 @@
 namespace App\Service;
 
 
+use App\Entity\Advert;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -52,4 +53,26 @@ class UserManager
         $user->setAvatar(null);
         $this->em->flush();
     }
+
+    public function getUserList()
+    {
+        $userList = $this->em->getRepository(User::class)->findAll();
+
+        return $userList;
+    }
+
+    public function removeUser($user_id)
+    {
+        $user = $this->em->getRepository(User::class)->find($user_id);
+        $adverts = $this->em->getRepository(Advert::class)->findBy(['user'=>$user_id]);
+
+        foreach($adverts as $advert) {
+            $this->em->remove($advert);
+        }
+
+        $this->em->remove($user);
+
+        $this->em->flush();
+    }
+
 }

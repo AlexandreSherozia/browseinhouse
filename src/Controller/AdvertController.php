@@ -15,7 +15,6 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class AdvertController extends Controller
 {
-
     /**
      * @var AdvertManager
      */
