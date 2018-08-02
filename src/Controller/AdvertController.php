@@ -92,10 +92,9 @@ class AdvertController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param $advertslug
+     * @param $id
      * @Security("has_role('ROLE_USER')")
-     * @Route("/delete_advert/{id}", name="delete_advert")
+     * @Route("/delete-advert/{id}", name="delete_advert")
      */
     public function deleteAdvert($id)
     {
