@@ -18,20 +18,29 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class AdvertFixtures extends Fixture
 {
-    private $numberOfIterations = 20;
-    private $numberOfCategory   =  1;
-    private $numberOfSection    =  1;
-    private $numberOfUser       =  6;
+
+    private $numberOfIterations = 10;
 
     public function load(ObjectManager $manager)
     {
+        $totalNumberOfCategories = $manager->getRepository(Category::class)->getTotalNumberOfCategories();
+        $totalNumberOfsections   = $manager->getRepository(Section::class)->getTotalNumberOfSections();
+        $totalNumberOfUsers      = $manager->getRepository(Section::class)->getTotalNumberOfSections();
+
+
+
+
         for ($i = 0; $i < $this->numberOfIterations; $i++)
             {
                 $advert = new Advert();
 
-                $category = $manager->getRepository(Category::class)->find($this->numberOfCategory);
-                $section  = $manager->getRepository(Section::class)->find($this->numberOfSection);
-                $user     = $manager->getRepository(User::class)->find($this->numberOfUser);
+                $numberCategoryRandom   = mt_rand(1, $totalNumberOfCategories);
+                $numbersectionRandom    = mt_rand(1, $totalNumberOfsections);
+                $numberUserRandom       = mt_rand(1, $totalNumberOfUsers);
+
+                $category = $manager->getRepository(Category::class)->find($numberCategoryRandom);
+                $section  = $manager->getRepository(Section::class)->find($numbersectionRandom);
+                $user     = $manager->getRepository(User::class)->find($numberUserRandom);
 
 
                 $advert->setTitle('product '.$i);

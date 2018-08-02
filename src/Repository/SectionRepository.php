@@ -19,6 +19,15 @@ class SectionRepository extends ServiceEntityRepository
         parent::__construct($registry, Section::class);
     }
 
+    public function getTotalNumberOfSections()
+    {
+        return $this->createQueryBuilder('s')
+
+            ->select('COUNT(s)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
 //    /**
 //     * @return Section[] Returns an array of Section objects
 //     */
