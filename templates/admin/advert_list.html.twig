@@ -47,7 +47,7 @@
                                     <td>{{ advert.category.label }}</td>
                                     <td>{{ advert.user.pseudo }}</td>
                                     <td>
-                                        <a href="{{ path('delete_advert', {'advert_id': advert.id}) }}"><div class="text-center"><i class="la la-close alert-danger"></i></div></a>
+                                        <a href="{{ path('admin_delete_advert', {'advert_id': advert.id}) }}"><div class="text-center"><i class="la la-close alert-danger"></i></div></a>
                                     </td>
                                 </tr>
                             {% endif %}

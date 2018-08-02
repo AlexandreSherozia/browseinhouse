@@ -98,7 +98,7 @@ class AdvertController extends Controller
      * @Route("/delete_advert/{id}", name="delete_advert")
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAdvert($id)
+    public function deleteAdvert(int $id)
     {
         $this->manager->removeAdvert($id);
 

@@ -22,6 +22,7 @@
                     <table class="table">
                         <tr>
                             <th>{{ 'userprofile.advertlist.creation_date' | trans }}</th>
+                            <th>{{ 'userprofile.advertlist.title' | trans }}</th>
                             <th>{{ 'userprofile.advertlist.description' | trans }}</th>
                             <th>{{ 'userprofile.advertlist.price' | trans }}</th>
                             <th>{{ 'userprofile.advertlist.section' | trans }}</th>
@@ -32,6 +33,7 @@
                         {% for advert in advertList %}
                                 <tr>
                                     <td>{{ advert.creationDate | date('d/m/Y') }}</td>
+                                    <td>{{ advert.title }}</td>
                                     <td>{{ advert.description }}</td>
                                     <td>{{ advert.price }}</td>
                                     <td>{{ advert.section.label }}</td>
@@ -40,11 +42,13 @@
                                         <a href="{{ path('advert_edit', {'advertslug': advert.slug}) }}"><div class="text-center"><i class="la la-paint-brush alert-success"></i></div></a>
                                     </td>
                                     <td>
-                                        <a href="{{ path('delete_advert', {'advert_id': advert.id}) }}"><div class="text-center"><i class="la la-close alert-danger"></i></div></a>
+                                        <a href="{{ path('user_delete_advert', {'advert_id': advert.id}) }}"><div class="text-center"><i class="la la-close alert-danger"></i></div></a>
                                     </td>
                                 </tr>
                         {% endfor %}
                     </table>
+            {% else %}
+                <div class="text-center"><br/><br/>{{ 'userprofile.advertlist.noAdvertToShow' | trans }}</div>
             {% endif %}
         </div>
     </div>
