@@ -23,9 +23,9 @@ class AdvertRepository extends ServiceEntityRepository
     public function findAdvertsBySection($label)
     {
         return $this->createQueryBuilder('a')
+            ->select('a', 's')
             ->join('a.section', 's')
-            ->addSelect('s')
-            ->andWhere('s.label = :val')
+            ->where('s.label = :val')
             ->setParameter('val', $label)
             ->orderBy('a.id', 'DESC')
             ->getQuery()
@@ -36,18 +36,18 @@ class AdvertRepository extends ServiceEntityRepository
     public function findAdvertsByCategoryAndSection($sectionlabel, $categorylabel)
     {
         return $this->createQueryBuilder('a')
-            ->join('a.section', 's')
-            ->addSelect('s')
-            ->andWhere('s.label = :val')
-            ->setParameter('val', $sectionlabel)
-            ->join('a.category', 'c')
-            ->addSelect('c')
-            ->andWhere('c.label = :val')
-            ->setParameter('val', $categorylabel)
-            ->orderBy('a.id','DESC')
+            ->select('a','s','c')
+            ->leftJoin('a.section', 's')
+            ->leftJoin('a.category', 'c')
+            ->where('s.label = :toto')
+            ->andWhere('c.label = :val2')
+            ->setParameter('toto', $sectionlabel)
+            ->setParameter('val2', $categorylabel)
+            ->orderBy('a.creationDate', 'DESC')
             ->getQuery()
             ->getResult()
-        ;
+            ;
+
     }
 
     public function findAdvertsByCategory($id)
