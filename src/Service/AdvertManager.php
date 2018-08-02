@@ -32,36 +32,30 @@ class AdvertManager
     }
 
 
-
-
-    public function myPersist(Advert $advert, $slug)
+    public function myPersist(Advert $advert)
     {
 
         $advert->setUser($this->connected_User);
-
-        $advert->setSlug($slug);
-
-        //$advert->setCategory($categoryId); se récupère automatiquement par getData()
 
         $this->em->persist($advert);
         $this->em->flush();
 
         return $advert;
-    }
+}
 
     /**
      * Returns all categories of the section "Buying"
      * called by showBuyingCategories()
      */
-    public function getAdvertsBysection($id)
+    public function getAdvertsBySection($label)
     {
-        return $this->advertRepository->findAdvertsBySection($id);
+        return $this->advertRepository->findAdvertsBySection($label);
     }
 
 
-    public function getAdvertsByCategoryAndsection($sectionId, $categoryId)
+    public function getAdvertsByCategoryAndSection($sectionlabel, $categorylabel)
     {
-        return $this->advertRepository->findAdvertsByCategoryAndSection($sectionId, $categoryId);
+        return $this->advertRepository->findAdvertsByCategoryAndSection($sectionlabel, $categorylabel);
     }
 
     public function getAdvertsByCategory($id)
@@ -69,12 +63,23 @@ class AdvertManager
         return $this->advertRepository->findAdvertsByCategory($id);
     }
 
-    public function showAdvert($id)
+    public function findAdvert($advertslug)
     {
-        return $this->advertRepository->find($id);
+        return $this->advertRepository->findOneBy(['slug' => $advertslug]);
     }
 
 
+    public function removeAdvert($advertid)
+    {
+        $advert = $this->advertRepository->find($advertid);
+        $this->em->remove($advert);
+        $this->em->flush();
+    }
+
+    public function getAdvertRepo()
+    {
+        return $this->advertRepository;
+    }
 
 
     /**
