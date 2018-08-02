@@ -84,4 +84,16 @@ class AdvertRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findAdvertsByUser($id)
+    {
+        return $this->createQueryBuilder('a')
+            ->leftJoin('a.category', 'c')
+            ->leftJoin('a.section', 's')
+            ->where('a.user = :id')
+            ->setParameter('id', $id)
+            ->orderBy('a.creationDate', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
 }

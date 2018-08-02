@@ -11,14 +11,14 @@
     <section class="container">
 
         {% for advert in advertdata %}
-
             {% if app.user.id == advert.user.id %}
-
+                {{ dump(advertdata) }}
+            {{ dump(advert) }}
                 <a href="{{ path('advert_edit', {'advertslug' : advert.slug }) }}" class="col-sm-2 btn btn-default">
                     Edit
                 </a>
 
-                <a href="{{ path('delete_advert', {'id' : advert.id }) }}" class="col-sm-2 btn btn-danger">
+                <a href="{{ path('delete_advert', {'id': advert.id }) }}" class="col-sm-2 btn btn-danger">
                     Delete
                 </a>
 

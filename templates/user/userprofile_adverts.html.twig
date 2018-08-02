@@ -1,0 +1,51 @@
+{% extends 'layout.html.twig' %}
+{% trans_default_domain 'userprofile' %}
+
+{% block title %}{{ parent() }} | {{ 'userprofile.pagename' | trans }}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6 col-md-push-4">
+            <h2 class="text-center">{{ 'userprofile.adverts.title' | trans }}</h2>
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success alert-dismissible text-center" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    {{ message | trans }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row">
+        {% include 'includes/_userprofilesidebar.html.twig' %}
+        <div class="col-md-6 col-xs-6">
+            {% if advertList %}
+                    <table class="table">
+                        <tr>
+                            <th>{{ 'userprofile.advertlist.creation_date' | trans }}</th>
+                            <th>{{ 'userprofile.advertlist.description' | trans }}</th>
+                            <th>{{ 'userprofile.advertlist.price' | trans }}</th>
+                            <th>{{ 'userprofile.advertlist.section' | trans }}</th>
+                            <th>{{ 'userprofile.advertlist.category' | trans }}</th>
+                            <th>{{ 'userprofile.advertlist.edit' | trans }}</th>
+                            <th>{{ 'userprofile.advertlist.delete' | trans }}</th>
+                        </tr>
+                        {% for advert in advertList %}
+                                <tr>
+                                    <td>{{ advert.creationDate | date('d/m/Y') }}</td>
+                                    <td>{{ advert.description }}</td>
+                                    <td>{{ advert.price }}</td>
+                                    <td>{{ advert.section.label }}</td>
+                                    <td>{{ advert.category.label }}</td>
+                                    <td>
+                                        <a href="{{ path('advert_edit', {'advertslug': advert.slug}) }}"><div class="text-center"><i class="la la-paint-brush alert-success"></i></div></a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ path('delete_advert', {'advert_id': advert.id}) }}"><div class="text-center"><i class="la la-close alert-danger"></i></div></a>
+                                    </td>
+                                </tr>
+                        {% endfor %}
+                    </table>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

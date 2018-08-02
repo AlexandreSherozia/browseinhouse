@@ -101,14 +101,25 @@ class UserController extends Controller
 
     /**
      * Get user adverts
-     * @Route("/user-profile/{pseudo}", name="user_profile")
+     * @Route("/adverts/{pseudo}", name="show_user_adverts")
      * @Security("has_role('ROLE_USER')")
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    //public function showUserAdverts()
-    //{
+    public function showUserAdverts(AdvertManager $advertManager)
+    {
+        $user = $this->getUser();
 
-    //}
+        /** @var Section $section */
+        foreach($advertManager->getAllSections() as $section){
+            $allSections[] = $section->getLabel();
+        }
+
+        $userAdverts = $advertManager->getAdvertsByUser($user->getId());
+
+        return $this->render('user/userprofile_adverts.html.twig', [
+            'advertList' => $userAdverts,
+        ]);
+    }
 
     /**
      * show the list of all users for an admin user
