@@ -77,11 +77,8 @@ class AdvertRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('a')
             ->select('a', 'c', 's', 'u')
             ->leftJoin('a.category', 'c')
-            ->where('a.category = c.id')
             ->leftJoin('a.section', 's')
-            ->where('a.section = s.id')
             ->leftJoin('a.user', 'u')
-            ->where('a.user = u.id')
             ->orderBy('a.creationDate', 'DESC')
             ->getQuery()
             ->getResult();
