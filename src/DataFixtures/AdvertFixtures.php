@@ -23,11 +23,13 @@ class AdvertFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        $totalNumberOfCategories = $manager->getRepository(Category::class)->getTotalNumberOfCategories();
-        $totalNumberOfsections   = $manager->getRepository(Section::class)->getTotalNumberOfSections();
-        $totalNumberOfUsers      = $manager->getRepository(Section::class)->getTotalNumberOfSections();
+        $categoryRepository = $manager->getRepository(Category::class);
+        $sectionRepository  = $manager->getRepository(Section::class);
+        $userRepository     = $manager->getRepository(User::class);
 
-
+        $totalNumberOfCategories = $categoryRepository->getTotalNumberOfCategories();
+        $totalNumberOfSections   = $sectionRepository->getTotalNumberOfSections();
+        $totalNumberOfUsers      = $userRepository->getTotalNumberOfUsers();
 
 
         for ($i = 0; $i < $this->numberOfIterations; $i++)
@@ -35,12 +37,12 @@ class AdvertFixtures extends Fixture
                 $advert = new Advert();
 
                 $numberCategoryRandom   = mt_rand(1, $totalNumberOfCategories);
-                $numbersectionRandom    = mt_rand(1, $totalNumberOfsections);
+                $numberSectionRandom    = mt_rand(1, $totalNumberOfSections);
                 $numberUserRandom       = mt_rand(1, $totalNumberOfUsers);
 
-                $category = $manager->getRepository(Category::class)->find($numberCategoryRandom);
-                $section  = $manager->getRepository(Section::class)->find($numbersectionRandom);
-                $user     = $manager->getRepository(User::class)->find($numberUserRandom);
+                $category = $categoryRepository->find($numberCategoryRandom);
+                $section  = $sectionRepository->find($numberSectionRandom);
+                $user     = $userRepository->find($numberUserRandom);
 
 
                 $advert->setTitle('product '.$i);
