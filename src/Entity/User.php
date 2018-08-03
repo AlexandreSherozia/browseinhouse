@@ -47,7 +47,7 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=80)
      * @Assert\NotBlank(message="asserts.password.notblank")
      * @Assert\Length(min="8", minMessage="asserts.password.tooshort",
-     *                max="80", maxMessage="asserts.password.toolong")
+     *                max="30", maxMessage="asserts.password.toolong")
      */
     private $password;
 
