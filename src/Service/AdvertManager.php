@@ -102,4 +102,9 @@ class AdvertManager
         return $this->advertRepository->findAdvertsByUser($id);
     }
 
+    public function getFiveLastAdverts()
+    {
+        return $this->advertRepository->findFiveLastAdverts();
+    }
+
 }
