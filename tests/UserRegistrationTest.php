@@ -22,7 +22,7 @@ class UserRegistrationTest extends WebTestCase
         $this->assertContains('Warning: pseudo needed!', $crawler->filter('div.has-error > span > ul > li')->text());
     }
 
-    public function testPseudoMustHaveEnoughCharacters()
+    public function testPseudoCantHaveLessThanFiveCharactersInForm()
     {
         $client = static::createClient();
         $client->request('GET', '/register');
@@ -30,12 +30,28 @@ class UserRegistrationTest extends WebTestCase
         $crawler = $client->getCrawler();
 
         $form = $crawler->selectButton('Register')->form();
-        $form['user[pseudo]'] = 'u';
+        $form['user[pseudo]'] = 'user';
         $form['user[email]'] = 'unmail@test.fr';
         $form['user[password]'] = 'unmotdepasse';
 
         $crawler = $client->submit($form);
         $this->assertContains('pseudo is too short!', $crawler->filter('div.has-error > span > ul > li')->text());
+    }
+
+    public function testPseudoCantHaveMoreThanFiftyCharactersInForm()
+    {
+        $client = static::createClient();
+        $client->request('GET', '/register');
+
+        $crawler = $client->getCrawler();
+
+        $form = $crawler->selectButton('Register')->form();
+        $form['user[pseudo]'] = 'pseudopseudopseudopseudopseudopseudopseudopseudopse';
+        $form['user[email]'] = 'unmail@test.fr';
+        $form['user[password]'] = 'unmotdepasse';
+
+        $crawler = $client->submit($form);
+        $this->assertContains('pseudo is too long!', $crawler->filter('div.has-error > span > ul > li')->text());
     }
 
     public function testEmailCannotBeBlankInForm()
@@ -53,7 +69,23 @@ class UserRegistrationTest extends WebTestCase
         $this->assertContains('Warning: email needed!', $crawler->filter('div.has-error > span > ul > li')->text());
     }
 
-    public function testEmailMustBeValid()
+    public function testEmailCantHaveMoreThanEightyCharactersInForm()
+    {
+        $client = static::createClient();
+        $client->request('GET', '/register');
+
+        $crawler = $client->getCrawler();
+
+        $form = $crawler->selectButton('Register')->form();
+        $form['user[pseudo]'] = 'pseudo';
+        $form['user[email]'] = 'unmailunmailunmailunmailunmailunmailunmailunmailunmail@testtesttesttesttesttes.fr';
+        $form['user[password]'] = 'unmotdepasse';
+
+        $crawler = $client->submit($form);
+        $this->assertContains('email is too long!', $crawler->filter('div.has-error > span > ul > li')->text());
+    }
+
+    public function testEmailMustBeValidInForm()
     {
         $client = static::createClient();
         $client->request('GET', '/register');
@@ -84,7 +116,7 @@ class UserRegistrationTest extends WebTestCase
         $this->assertContains('Warning: password needed!', $crawler->filter('div.has-error > span > ul > li')->text());
     }
 
-    public function testPasswordMustHaveEnoughCharacters()
+    public function testPasswordMustHaveEnoughCharactersInForm()
     {
         $client = static::createClient();
         $client->request('GET', '/register');
@@ -118,7 +150,7 @@ class UserRegistrationTest extends WebTestCase
         $this->assertContains('Welcome, you have been registered! You can sign up below', $crawler->filter('div.alert')->text());
     }
 
-    public function testUserPseudoMustBeUnique()
+    public function testPseudoMustBeUniqueInForm()
     {
         $client = static::createClient();
         $client->request('GET', '/register');
@@ -133,7 +165,7 @@ class UserRegistrationTest extends WebTestCase
         $this->assertContains('Sorry, this pseudo is already used by someone else.', $crawler->filter('div.has-error > span > ul > li')->text());
     }
 
-    public function testUserEmailMustBeUnique()
+    public function testEmailMustBeUniqueInForm()
     {
         $client = static::createClient();
         $client->request('GET', '/register');
