@@ -26,6 +26,16 @@ class Section
         return $this->id;
     }
 
+    /**
+     * @param mixed $id
+     * @return Section
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
+
     public function getLabel(): ?string
     {
         return $this->label;

@@ -33,6 +33,16 @@ class Category
     private $adverts;
 
     /**
+     * @param mixed $id
+     * @return Category
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    /**
      * Category constructor.
      * @param $adverts
      */
