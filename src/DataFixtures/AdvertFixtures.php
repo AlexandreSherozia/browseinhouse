@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: pc
- * Date: 02/08/2018
- * Time: 12:28
- */
 
 namespace App\DataFixtures;
 
@@ -14,12 +8,13 @@ use App\Entity\Category;
 use App\Entity\Section;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class AdvertFixtures extends Fixture
+class AdvertFixtures extends Fixture implements OrderedFixtureInterface
 {
 
-    private $numberOfIterations = 10;
+    private $numberOfIterations = 100;
 
     public function load(ObjectManager $manager)
     {
@@ -29,21 +24,19 @@ class AdvertFixtures extends Fixture
 
         $totalNumberOfCategories = $categoryRepository->getTotalNumberOfCategories();
         $totalNumberOfSections   = $sectionRepository->getTotalNumberOfSections();
-        $totalNumberOfUsers      = $userRepository->getTotalNumberOfUsers();
-
 
         for ($i = 0; $i < $this->numberOfIterations; $i++)
             {
                 $advert = new Advert();
 
-                $numberCategoryRandom   = mt_rand(1, $totalNumberOfCategories);
                 $numberSectionRandom    = mt_rand(1, $totalNumberOfSections);
-                $numberUserRandom       = mt_rand(1, $totalNumberOfUsers);
+                $numberCategoryRandom   = mt_rand(1, $totalNumberOfCategories);
 
                 $category = $categoryRepository->find($numberCategoryRandom);
                 $section  = $sectionRepository->find($numberSectionRandom);
-                $user     = $userRepository->find($numberUserRandom);
-
+                $user     = $userRepository->findAll();
+                $key = array_rand($user);
+                $user = $userRepository->find($user[$key]);
 
                 $advert->setTitle('product '.$i);
                 $advert->setDescription($i. 'Vente 2Gîtes 3 Clés tarif 2 nuits:200€, 50€ par nuit supplémentaire Semaine :380€,460€,560€ selon période.
@@ -53,11 +46,16 @@ class AdvertFixtures extends Fixture
 
                 $advert->setCategory($category);
                 $advert->setSection($section);
-
+                /** @var User $user */
                 $advert->setUser($user);
 
                 $manager->persist($advert);
             }
             $manager->flush();
+    }
+
+    public function getOrder()
+    {
+        return 2;
     }
 }
