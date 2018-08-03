@@ -3,11 +3,14 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity(fields="email", message="asserts.email.alreadyused")
+ * @UniqueEntity(fields="pseudo", message="asserts.pseudo.alreadyused")
  */
 class User implements UserInterface
 {
@@ -25,7 +28,7 @@ class User implements UserInterface
     private $registrationDate;
 
     /**
-     * @ORM\Column(type="string", length=80)
+     * @ORM\Column(name="email", type="string", length=80, unique=true)
      * @Assert\NotBlank(message="asserts.email.notblank")
      * @Assert\Length(max="80", maxMessage="asserts.email.toolong")
      * @Assert\Email(message="asserts.email.wrongtype")
@@ -33,7 +36,7 @@ class User implements UserInterface
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, unique=true)
      * @Assert\NotBlank(message="asserts.pseudo.notblank")
      * @Assert\Length(min="5", minMessage="asserts.pseudo.tooshort",
      *                max="50", maxMessage="asserts.pseudo.toolong")
