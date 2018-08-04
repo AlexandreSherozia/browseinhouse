@@ -14,36 +14,33 @@ use App\Entity\Category;
 use App\Entity\Section;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class AdvertFixtures extends Fixture
+class AdvertFixtures extends Fixture implements OrderedFixtureInterface
 {
 
-    private $numberOfIterations = 10;
+    private $numberOfIterations = 100;
 
     public function load(ObjectManager $manager)
     {
-        $categoryRepository = $manager->getRepository(Category::class);
-        $sectionRepository  = $manager->getRepository(Section::class);
-        $userRepository     = $manager->getRepository(User::class);
-
-        $totalNumberOfCategories = $categoryRepository->getTotalNumberOfCategories();
-        $totalNumberOfSections   = $sectionRepository->getTotalNumberOfSections();
-        $totalNumberOfUsers      = $userRepository->getTotalNumberOfUsers();
+        $categoryRepository = $manager->getRepository(Category::class)->getTotalNumberOfCategories();
+        $sectionRepository  = $manager->getRepository(Section::class)->getTotalNumberOfSections();
+        $userRepository     = $manager->getRepository(User::class)->getTotalNumberOfUsers();
 
 
         for ($i = 0; $i < $this->numberOfIterations; $i++)
             {
                 $advert = new Advert();
 
-                $numberCategoryRandom   = mt_rand(1, $totalNumberOfCategories);
-                $numberSectionRandom    = mt_rand(1, $totalNumberOfSections);
-                $numberUserRandom       = mt_rand(1, $totalNumberOfUsers);
+                $numberCategoryRandom   = mt_rand(1, $categoryRepository);
+                $numberSectionRandom    = mt_rand(1, $sectionRepository);
+                $numberUserRandom       = mt_rand(1, $userRepository);
 
-                $category = $categoryRepository->find($numberCategoryRandom);
-                $section  = $sectionRepository->find($numberSectionRandom);
-                $user     = $userRepository->find($numberUserRandom);
 
+                $category = $manager->getRepository(Category::class)->find($numberCategoryRandom);
+                $section  = $manager->getRepository(Section::class)->find($numberSectionRandom);
+                $user     = $manager->getRepository(User::class)->find($numberUserRandom);
 
                 $advert->setTitle('product '.$i);
                 $advert->setDescription($i. 'Vente 2Gîtes 3 Clés tarif 2 nuits:200€, 50€ par nuit supplémentaire Semaine :380€,460€,560€ selon période.
@@ -59,5 +56,9 @@ class AdvertFixtures extends Fixture
                 $manager->persist($advert);
             }
             $manager->flush();
+    }
+    public function getOrder()
+    {
+        // TODO: Implement getOrder() method.
     }
 }

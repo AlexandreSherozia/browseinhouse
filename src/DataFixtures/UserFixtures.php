@@ -57,6 +57,7 @@ class UserFixtures extends Fixture
             $user->setPhone($phones);
 
 
+
             $pass = $this->encoder->encodePassword($user, 'pepiniere');
 
             $user->setPassword($pass);
@@ -68,5 +69,10 @@ class UserFixtures extends Fixture
 
         $manager->flush();
     }
+
+   /* public function getOrder()
+    {
+        return 1;
+    }*/
 
 }
