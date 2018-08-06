@@ -40,7 +40,7 @@
                         </a>
                     </td>
                     <td>{{ advert.category.label }}</td>
-                    <td>{{ advert.user.pseudo }}</td>
+                    <td><a href="{{ path('show_public_profile', {'pseudo': advert.user.pseudo}) }}">{{ advert.user.pseudo }}</a></td>
                     <td>{{ advert.creationDate|date('Y-m-d') }}</td>
                 </tr>
             {% endfor %}
