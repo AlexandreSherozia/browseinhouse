@@ -24,9 +24,8 @@
                 </tr>
                 </thead>
 
-
+            {{ dump(advertsBySection) }}
                 <tbody>
-
             {% for advert in advertsBySection %}
 
                 <tr>
@@ -51,17 +50,16 @@
                     <td>{{ advert.creationDate|date('Y-m-d') }}</td>
                 </tr>
 
-                {#{{ dump(advert.category.id ) }}#}
             {% endfor %}
 
                 </tbody>
             </table>
 
-            <div class="text-center">
-                <ul class="pagination">
-                    {{ knp_pagination_render(advertsBySection) }}
-                </ul>
-            </div>
+            {#<div class="text-center">#}
+                {#<ul class="pagination">#}
+                    {#{{ knp_pagination_render(advertsBySection) }}#}
+                {#</ul>#}
+            {#</div>#}
 
         </div>
 

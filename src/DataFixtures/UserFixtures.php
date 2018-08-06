@@ -5,7 +5,6 @@ namespace App\DataFixtures;
 
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -49,8 +48,6 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
             $phones     =  '0' . mt_rand(0, 9) . mt_rand(0, 9) . mt_rand(0, 9) . mt_rand(0, 9) .mt_rand(0, 9) . mt_rand(0, 9) . mt_rand(0, 9) . mt_rand(0, 9) . mt_rand(0, 9);
             $user->setPhone($phones);
 
-
-
             $pass = $this->encoder->encodePassword($user, 'pepiniere');
 
             $user->setPassword($pass);
@@ -58,15 +55,13 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
             $user->setRoles(['ROLE_USER']);
 
             $manager->persist($user);
-
         }
-
 
         $manager->flush();
     }
 
     public function getOrder()
     {
-        return 1;
+        return 3;
     }
 }

@@ -22,10 +22,6 @@ class Category
      */
     private $label;
 
-    /**
-     * @ORM\Column(type="string")
-     */
-    private $section;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Advert", mappedBy="category")
@@ -64,18 +60,6 @@ class Category
     public function setLabel(string $label): self
     {
         $this->label = $label;
-
-        return $this;
-    }
-
-    public function getSection()
-    {
-        return $this->section;
-    }
-
-    public function setSection($section): self
-    {
-        $this->section = $section;
 
         return $this;
     }
