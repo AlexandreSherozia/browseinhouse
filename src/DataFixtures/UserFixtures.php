@@ -1,24 +1,20 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: pc
- * Date: 03/08/2018
- * Time: 00:04
- */
 
 namespace App\DataFixtures;
 
 
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 
-class UserFixtures extends Fixture
+class UserFixtures extends Fixture implements OrderedFixtureInterface
 {
 
-    private $numberOfIterations = 20;
+    private $numberOfIterations = 10;
     private $encoder;
 
     private $firstNames = ['John', 'Michael', 'Alex', 'George', 'Colleen','Lara','Larissa','Matilde','Kauan','Maria','Marcos','Emilly','Breno','Joao','Simon','Simon','Sille','Marius','Anna','Peter'];
@@ -38,9 +34,6 @@ class UserFixtures extends Fixture
         for ($i = 0; $i < $this->numberOfIterations; $i++)
         {
             $user = new User();
-
-
-
             $user->setEmail($i . 'user@gmail.com');
 
             $key = array_rand($this->firstNames);
@@ -65,14 +58,15 @@ class UserFixtures extends Fixture
             $user->setRoles(['ROLE_USER']);
 
             $manager->persist($user);
+
         }
+
 
         $manager->flush();
     }
 
-   /* public function getOrder()
+    public function getOrder()
     {
         return 1;
-    }*/
-
+    }
 }
