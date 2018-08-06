@@ -22,6 +22,7 @@ class UserController extends Controller
      * @Route("/register", name="register")
      * @param UserManager $userManager
      * @param Request $request
+     * @param ImageUploader $imageUploader
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function userRegistration(UserManager $userManager, Request $request, ImageUploader $imageUploader)
@@ -44,6 +45,27 @@ class UserController extends Controller
     }
 
     /**
+     * show public infos on a specific user
+     * @Route("/public-profile/{pseudo}", name="show_public_profile")
+     *
+     */
+    public function userPublicProfile(AdvertManager $manager, $pseudo)
+    {
+        $selectedUser = $this->getDoctrine()->getRepository(User::class)->findOneByPseudo($pseudo);
+        $userAdverts = $manager->getAdvertsByUser($selectedUser->getId());
+
+        return $this->render('user/user_publicprofile.html.twig', [
+            'user_public'  => $selectedUser,
+            'user_adverts' => $userAdverts
+        ]);
+    }
+
+
+    /****************************************************************************
+     *                       USER PROFILE PERSONAL PANEL                        *
+     ****************************************************************************/
+
+    /**
      * Get user personnal infos for his profile landing page
      * @Route("/user-profile/{pseudo}", name="user_profile")
      * @Security("has_role('ROLE_USER')")
@@ -58,7 +80,10 @@ class UserController extends Controller
      * let user modify or add infos in his personnal infos panel
      * @Route("/edit-profile/{pseudo}", name="edit_profile")
      * @Security("has_role('ROLE_USER')")
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param UserManager $userManager
+     * @param Request $request
+     * @param ImageUploader $imageUploader
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function editProfileData(UserManager $userManager, Request $request, ImageUploader $imageUploader)
     {
@@ -103,6 +128,7 @@ class UserController extends Controller
      * Get user adverts
      * @Route("/adverts/{pseudo}", name="show_user_adverts")
      * @Security("has_role('ROLE_USER')")
+     * @param AdvertManager $advertManager
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showUserAdverts(AdvertManager $advertManager)
@@ -125,6 +151,8 @@ class UserController extends Controller
      * allow an user to delete an advert on his profile page
      * @Route("/user_delete_advert/{advert_id}", name="user_delete_advert")
      * @Security("has_role('ROLE_USER')")
+     * @param AdvertManager $advertManager
+     * @param $advert_id
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function deleteUserAdverts(AdvertManager $advertManager, $advert_id)
@@ -144,6 +172,11 @@ class UserController extends Controller
             'advertList' => $userAdverts,
         ]);
     }
+
+
+    /****************************************************************************
+     *                              ADMINISTRATOR PANEL                         *
+     ****************************************************************************/
 
     /**
      * show the list of all users for an admin user
@@ -166,6 +199,7 @@ class UserController extends Controller
      * @Route("/admin/delete-user/{user_id}", name="delete_user")
      * @Security("has_role('ROLE_ADMIN')")
      * @param UserManager $userManager
+     * @param int $user_id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function adminDeleteUser(UserManager $userManager, int $user_id)
@@ -203,6 +237,7 @@ class UserController extends Controller
      * @Route("/admin/delete-advert/{advert_id}", name="admin_delete_advert")
      * @Security("has_role('ROLE_ADMIN')")
      * @param AdvertManager $advertManager
+     * @param int $advert_id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function adminDeleteAdvert(AdvertManager $advertManager, int $advert_id)

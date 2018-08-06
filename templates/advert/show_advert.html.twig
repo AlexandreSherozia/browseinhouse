@@ -12,8 +12,8 @@
 
         <div class="panel panel-default">
             {% for advert in advertdata %}
-
-                {% if app.user.id == advert.user.id %}
+                {% if app.user.id is defined %}
+                    {% if app.user.id == advert.user.id %}
 
                     <div class="panel-body">
                         <a href="{{ path('advert_edit', {'advertslug' : advert.slug }) }}" class="col-sm-2 btn btn-default">
@@ -24,15 +24,21 @@
                             Delete
                         </a>
                     </div>
+                    {% endif %}
                 {% endif %}
                     <div class="panel-body">
                         <h2 class="text-center">{{ advert.title }}</h2>
                         <p class="well well-lg">{{ advert.description }}</p>
-                        <div class="badge">{{ advert.price }} €</div>
-                        <p class="text-right">{{ advert.creationDate | date('Y-m-d') }}</p>
-                        <p class="text-right">{{ advert.creationDate | date('H:i:s') }}</p>
+                        <div class="col-md-6">
+                            <p class="badge">{{ advert.price }} €</p>
+                            <p><a href="#" class="badge alert-danger">Add to whislist</a></p>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="text-right">{{ advert.creationDate | date('Y-m-d') ~' '~ advert.creationDate | date('H:i:s') }}</p>
+                            <p class="text-right"><a href="{{ path('show_public_profile', {'pseudo': advert.user.pseudo}) }}">{{ advert.user.pseudo }}</a></p>
+                        </div>
                     </div>
-                {% endfor %}
+            {% endfor %}
 
         </div>
     </section>

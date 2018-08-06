@@ -1,0 +1,60 @@
+{% extends 'layout.html.twig' %}
+{% trans_default_domain 'userprofile' %}
+
+{% block title %}{{ parent() }} | {{ 'userprofile.public'~user_public.pseudo | trans }}{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-md-6 col-md-push-4">
+            <h2 class="text-center">{{ 'userprofile.publictitle' | trans }}</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 col-md-push-4">
+            {% if user_public.avatar %}
+            <img src="{{ asset('images/avatars/' ~user_public.avatar) }}" alt="{{ user_public.pseudo }}" class="col-md-2">
+            {% else %}<div class="col-md-2"></div>
+            {% endif %}
+            <div class="col-md-4">
+                <p>{{ user_public.pseudo }}</p>
+                <p>{{ 'userprofile.registeredsince' | trans }}{{ user_public.registrationDate | date('d-m-Y') }}</p>
+                <p><a href="#" class="badge alert-warning">{{ 'userprofile.follow' | trans }}</a></p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-md-push-4">
+            <h2 class="text-center">{{ 'userprofile.advertstitle' | trans }}</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-md-push-4">
+            {% if user_adverts %}
+            <div class="list-group">
+
+                {% for advert in user_adverts %}
+                <a href="{{ path('show_advert', {'advertslug': advert.slug }) }}" class="list-group-item">
+                    <div class="row">
+                        <h3 class="col-md-6">{{ advert.title }}</h3>
+
+                        <p class="text-left col-md-3">posted by
+                            {{ advert.user.pseudo }} on {{ advert.creationDate | date('d-m-Y') }}
+                        </p>
+                        <p class="text-right col-md-3">category :
+                            {{ advert.category.label }} in {{ advert.section.label }}
+                        </p>
+                        <p class="col-md-10">
+                            {{ advert.description | shorten_text }} -
+                        </p>
+                        <h4 class="text-right col-md-2">{{ advert.price }} €</h4>
+                    </div>
+                </a>
+                {% endfor %}
+
+            </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
