@@ -42,7 +42,11 @@
                                 <tr>
                                     <td>{{ advert.id }}</td>
                                     <td>{{ advert.creationDate | date('d/m/Y') }}</td>
-                                    <td>{{ advert.description }}</td>
+                                    <td>
+                                        <a href="{{ path('show_advert' {'advertslug': advert.slug }) }}">
+                                            {{ advert.description | shorten_text }}
+                                        </a>
+                                    </td>
                                     <td>{{ advert.price }}</td>
                                     <td>{{ advert.category.label }}</td>
                                     <td>{{ advert.user.pseudo }}</td>

@@ -10,6 +10,8 @@
 {% endblock %}
 
 {% block content %}
+    {% set current_path = app.request.get('_route') %}
+    {{ current_path }}
 
 
 
@@ -30,8 +32,11 @@
             {% for advert in filteredAdvertsByCategory %}
                 <tr>
                     <td>
-                        <a href="{{ path('show_advert' , {'advertslug' : advert.slug }) }}">
                         {{ advert.title }}
+                    </td>
+                    <td>
+                        <a href="{{ path('show_advert', {'advertslug': advert.slug }) }}">
+                            {{ advert.description | shorten_text }}
                         </a>
                     </td>
                     <td>{{ advert.category.label }}</td>
@@ -40,10 +45,16 @@
                 </tr>
             {% endfor %}
 
-
-
             </tbody>
         </table>
+
+        <div class="text-center">
+            <ul class="pagination">
+                {#{{ knp_pagination_render(filteredAdvertsByCategory) }}#}
+            </ul>
+        </div>
+
+
     </div>
 
 
