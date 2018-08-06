@@ -10,26 +10,31 @@
 
     <section class="container">
 
-        {% for advert in advertdata %}
-            {% if app.user.id == advert.user.id %}
-                <a href="{{ path('advert_edit', {'advertslug' : advert.slug }) }}" class="col-sm-2 btn btn-default">
-                    Edit
-                </a>
+        <div class="panel panel-default">
+            {% for advert in advertdata %}
 
-                <a href="{{ path('delete_advert', {'id': advert.id }) }}" class="col-sm-2 btn btn-danger">
-                    Delete
-                </a>
+                {% if app.user.id == advert.user.id %}
 
-            {% endif %}
+                    <div class="panel-body">
+                        <a href="{{ path('advert_edit', {'advertslug' : advert.slug }) }}" class="col-sm-2 btn btn-default">
+                            Edit
+                        </a>
 
-        <h2 class="text-center">{{ advert.title }}</h2>
-        <p class="well well-lg">{{ advert.description }}</p>
-        <p class="text-right">{{ advert.creationDate | date('Y-m-d') }}</p>
-        <p class="text-right">{{ advert.creationDate | date('H:i:s') }}</p>
+                        <a href="{{ path('delete_advert', {'id': advert.id }) }}" class="col-sm-2 btn btn-danger">
+                            Delete
+                        </a>
+                    </div>
+                {% endif %}
+                    <div class="panel-body">
+                        <h2 class="text-center">{{ advert.title }}</h2>
+                        <p class="well well-lg">{{ advert.description }}</p>
+                        <div class="badge">{{ advert.price }} €</div>
+                        <p class="text-right">{{ advert.creationDate | date('Y-m-d') }}</p>
+                        <p class="text-right">{{ advert.creationDate | date('H:i:s') }}</p>
+                    </div>
+                {% endfor %}
 
-        {% endfor %}
-
-
+        </div>
     </section>
 
 {% endblock %}

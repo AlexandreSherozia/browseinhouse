@@ -7,7 +7,10 @@ use App\Entity\Advert;
 use App\Form\AdvertType;
 use App\Form\Handler\AdvertHandler;
 use App\Service\AdvertManager;
+use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
+use Knp\Component\Pager\Pagination\PaginationInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -110,10 +113,17 @@ class AdvertController extends Controller
     /**
      * @Route("/section/{label}", name="show_adverts_by_section")
      */
-    public function showAdvertsBySection($label)
+    public function showAdvertsBySection($label, Request $request)
     {
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query = $this->manager->getAdvertsBySection($label),
+            $request->query->getInt('page', 1),
+            10
+        );
+
         return $this->render('advert/show_adverts_by_section.html.twig', [
-            'advertsBySection' => $this->manager->getAdvertsBySection($label)
+            'advertsBySection' => $pagination
         ]);
     }
 

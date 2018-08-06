@@ -34,15 +34,23 @@
                                 <tr>
                                     <td>{{ advert.creationDate | date('d/m/Y') }}</td>
                                     <td>{{ advert.title }}</td>
-                                    <td>{{ advert.description }}</td>
-                                    <td>{{ advert.price }}</td>
+                                    <td>
+                                        <a href="{{ path('show_advert', {'advertslug':advert.slug }) }}">
+                                            <p>{{ advert.description | shorten_text }}</p>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <div  class="badge">
+                                            {{ advert.price }} €
+                                        </div>
+                                    </td>
                                     <td>{{ advert.section.label }}</td>
                                     <td>{{ advert.category.label }}</td>
                                     <td>
-                                        <a href="{{ path('advert_edit', {'advertslug': advert.slug}) }}"><div class="text-center"><i class="la la-paint-brush alert-success"></i></div></a>
+                                        <a href="{{ path('advert_edit', {'advertslug': advert.slug }) }}"><div class="text-center"><i class="la la-paint-brush alert-success"></i></div></a>
                                     </td>
                                     <td>
-                                        <a href="{{ path('user_delete_advert', {'advert_id': advert.id}) }}"><div class="text-center"><i class="la la-close alert-danger"></i></div></a>
+                                        <a href="{{ path('user_delete_advert', {'advert_id': advert.id }) }}"><div class="text-center"><i class="la la-close alert-danger"></i></div></a>
                                     </td>
                                 </tr>
                         {% endfor %}

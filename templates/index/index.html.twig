@@ -37,11 +37,18 @@
                     {% for advert in lastAdverts %}
                         <a href="#" class="list-group-item">
                             <div class="row">
-                            <h3 class="col-md-6">{{ advert.title }}</h3>
-                            <p class="text-left col-md-3">posted by {{ advert.user.pseudo }} on {{ advert.creationDate | date('d-m-Y') }}</p>
-                            <p class="text-right col-md-3">category : {{ advert.category.label }} in {{ advert.section.label }}</p>
-                            <p class="col-md-10">{{ advert.description }} - </p>
-                            <h4 class="text-right col-md-2">{{ advert.price }} €</h4>
+                                <h3 class="col-md-6">{{ advert.title }}</h3>
+
+                                <p class="text-left col-md-3">posted by
+                                    {{ advert.user.pseudo }} on {{ advert.creationDate | date('d-m-Y') }}
+                                </p>
+                                <p class="text-right col-md-3">category :
+                                    {{ advert.category.label }} in {{ advert.section.label }}
+                                </p>
+                                <p class="col-md-10">
+                                    {{ advert.description | shorten_text }} -
+                                </p>
+                                <h4 class="text-right col-md-2">{{ advert.price }} €</h4>
                             </div>
                         </a>
                     {% endfor %}

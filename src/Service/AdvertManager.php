@@ -10,10 +10,11 @@ use App\Entity\User;
 use App\Repository\SectionRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Bundle\PaginatorBundle\Definition\PaginatorAware;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 
-class AdvertManager
+class AdvertManager extends PaginatorAware
 {
     private $em, $advertRepository, $connected_User;
 
@@ -46,8 +47,7 @@ class AdvertManager
     }
 
     /**
-     * Returns all categories of the section "Buying"
-     * called by showBuyingCategories()
+     * Returns all categories of any section"
      */
     public function getAdvertsBySection($label)
     {

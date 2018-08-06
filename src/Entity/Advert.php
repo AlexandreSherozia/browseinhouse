@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AdvertRepository")
@@ -19,16 +20,20 @@ class Advert
 
     /**
      * @ORM\Column(type="string", length=120)
+     * @Assert\NotBlank(message="asserts.title.mandatory")
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank(message="asserts.description.mandatory")
      */
     private $description;
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\NotBlank(message="asserts.price.mandatory")
+     * @Assert\Type(type="float", message="asserts.integer.type")
      */
     private $price;
 
