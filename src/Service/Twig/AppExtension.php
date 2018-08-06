@@ -29,7 +29,7 @@ class AppExtension extends AbstractExtension
 
                     $stringCut = substr($string, 0, self::NB_SUMMARY_CHAR);
 
-                    $string = substr($stringCut, 0, strrpos($stringCut, ' ')).'-->';
+                    $string = substr($stringCut, 0, strrpos($stringCut, ' ')).'...';
 
                 }
 

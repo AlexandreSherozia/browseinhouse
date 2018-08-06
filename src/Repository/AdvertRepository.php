@@ -96,4 +96,17 @@ class AdvertRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findFiveLastAdverts()
+    {
+        return $this->createQueryBuilder('a')
+            ->select('a', 'c', 's', 'u')
+            ->leftJoin('a.category', 'c')
+            ->leftJoin('a.section', 's')
+            ->leftJoin('a.user', 'u')
+            ->orderBy('a.creationDate', 'DESC')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult();
+    }
+
 }
