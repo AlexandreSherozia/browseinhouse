@@ -132,7 +132,7 @@ class UserRegistrationTest extends WebTestCase
         $this->assertContains('password is too short!', $crawler->filter('div.has-error > span > ul > li')->text());
     }
 
-    public function testPasswordCantHaveMoreThanThirtyCharactersInForm()
+    public function testPasswordCantHaveMoreThanSixtyCharactersInForm()
     {
         $client = static::createClient();
         $client->request('GET', '/register');
@@ -142,7 +142,7 @@ class UserRegistrationTest extends WebTestCase
         $form = $crawler->selectButton('Register')->form();
         $form['user[pseudo]'] = 'pseudo';
         $form['user[email]'] = 'unmail@test.fr';
-        $form['user[password]'] = 'unmotdepasseunmotdepasseunmotde';
+        $form['user[password]'] = '$2y$13$MIZXcVUKh9au30Xrk.zUX.zdkh95bKwOnWCJfC1ZQJ4gZKSSxfXVm2';
 
         $crawler = $client->submit($form);
         $this->assertContains('password is too long!', $crawler->filter('div.has-error > span > ul > li')->text());
