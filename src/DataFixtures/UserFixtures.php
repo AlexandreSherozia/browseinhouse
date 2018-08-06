@@ -50,6 +50,7 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
             $user->setPhone($phones);
 
 
+
             $pass = $this->encoder->encodePassword($user, 'pepiniere');
 
             $user->setPassword($pass);
