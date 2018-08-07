@@ -6,6 +6,8 @@ namespace App\Form\Handler;
 use App\Entity\Contact;
 use Swift_Mailer;
 use Swift_Message;
+use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\Request;
 
 class ContactHandler
 {
@@ -16,6 +18,23 @@ class ContactHandler
     {
         $this->mailer = $mailer;
         $this->twig = $twig;
+    }
+
+    public function process(Form $form, Request $request)
+    {
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $this->onSuccess($form);
+            return true;
+        }
+    }
+
+    public function onSuccess($form)
+    {
+        $contact = $form->getData();
+        $this->sendMail($contact);
     }
 
     public function sendMail(Contact $contact)

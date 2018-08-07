@@ -6,6 +6,7 @@ use App\Entity\Contact;
 use App\Entity\User;
 use App\Entity\Advert;
 use App\Entity\Section;
+use App\Form\ContactType;
 use App\Form\Handler\ContactHandler;
 use App\Form\UserType;
 use App\Form\Handler\UserHandler;
@@ -85,30 +86,9 @@ class UserController extends Controller
         $contact->setContactedPseudo($contactedUser->getPseudo());
         $contact->setContactingPseudo($contacter->getPseudo());
 
-        $form = $this->createFormBuilder($contact)
-            ->add('messageTitle', TextType::class, [
-                'label' => false,
-                'attr' => [
-                    'placeholder' => 'form.contact.placeholder.messagetitle'
-                ]
-            ])
-            ->add('messageBody', TextareaType::class, [
-                'label' => false,
-                'attr' => [
-                    'placeholder' => 'form.contact.placeholder.messagebody'
-                ]
-            ])
-            ->add('submit', SubmitType::class, [
-                'label' => 'form.contact.submit'
-            ])
-            ->getForm();
+        $form = $this->createForm(ContactType::class, $contact);
 
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $contact = $form->getData();
-            $contactHandler->sendMail($contact);
+        if ($contactHandler->process($form, $request)) {
 
             $this->addFlash('success', 'contact.validation');
 

@@ -142,7 +142,7 @@ class Contact
      */
     public function getContactedPseudo()
     {
-        return $this->contactedpseudo;
+        return $this->contactedPseudo;
     }
 
     /**
