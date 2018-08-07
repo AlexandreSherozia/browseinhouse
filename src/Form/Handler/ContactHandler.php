@@ -10,10 +10,12 @@ use Swift_Message;
 class ContactHandler
 {
     protected $mailer;
+    protected $twig;
 
-    public function __construct(Swift_Mailer $mailer)
+    public function __construct(Swift_Mailer $mailer, \Twig_Environment $twig)
     {
         $this->mailer = $mailer;
+        $this->twig = $twig;
     }
 
     public function sendMail(Contact $contact)
@@ -22,7 +24,14 @@ class ContactHandler
 
         $message->setFrom($contact->getContactingEmail())
             ->setTo($contact->getContactedEmail())
-            ->setBody($contact->getMessageBody());
+            ->setBody(
+                $this->twig->render('mail/usercontact_mail.html.twig', [
+                    'contactedpseudo' => $contact->getContactedPseudo(),
+                    'contactingpseudo' => $contact->getContactingPseudo(),
+                    'advertTitle' => $contact->getAdvertTitle(),
+                    'advertSlug' => $contact->getAdvertSlug(),
+                    'message' => $contact->getMessageBody()
+                ]), 'text/html');
 
         $this->mailer->send($message);
 

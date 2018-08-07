@@ -16,6 +16,10 @@ class Contact
 
     private $advertTitle;
 
+    private $contactedPseudo;
+
+    private $contactingPseudo;
+
 
     /**
      * @Assert\NotBlank(message="You have to enter a title")
@@ -131,6 +135,38 @@ class Contact
     public function setAdvertTitle($advertTitle): void
     {
         $this->advertTitle = $advertTitle;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getContactedPseudo()
+    {
+        return $this->contactedpseudo;
+    }
+
+    /**
+     * @param mixed $pseudo
+     */
+    public function setContactedPseudo($contactedpseudo): void
+    {
+        $this->contactedpseudo = $contactedpseudo;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getContactingPseudo()
+    {
+        return $this->contactingPseudo;
+    }
+
+    /**
+     * @param mixed $contactingPseudo
+     */
+    public function setContactingPseudo($contactingPseudo): void
+    {
+        $this->contactingPseudo = $contactingPseudo;
     }
 
 

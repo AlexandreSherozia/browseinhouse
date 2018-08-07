@@ -82,6 +82,8 @@ class UserController extends Controller
         $contact->setContactedEmail($contactedUser->getEmail());
         $contact->setAdvertSlug($slug);
         $contact->setAdvertTitle($advert->getTitle());
+        $contact->setContactedPseudo($contactedUser->getPseudo());
+        $contact->setContactingPseudo($contacter->getPseudo());
 
         $form = $this->createFormBuilder($contact)
             ->add('messageTitle', TextType::class, [
