@@ -2,18 +2,21 @@
 
 namespace App\Controller;
 
-
+use App\Entity\User;
+use App\Entity\Advert;
 use App\Entity\Section;
+use App\Form\UserType;
+use App\Form\ContactType;
+use App\Form\Handler\ContactHandler;
+use App\Form\Handler\UserHandler;
 use App\Service\AdvertManager;
 use App\Service\ImageUploader;
-use App\Entity\User;
-use App\Form\Handler\UserHandler;
 use App\Service\UserManager;
-use App\Form\UserType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+
 
 class UserController extends Controller
 {
@@ -57,6 +60,34 @@ class UserController extends Controller
         return $this->render('user/user_publicprofile.html.twig', [
             'user_public'  => $selectedUser,
             'user_adverts' => $userAdverts
+        ]);
+    }
+
+
+    /**
+     * @Route("/advert/{slug}/user-contact", name="user_contact")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function contactUserFromAdvert($slug, Request $request)
+    {
+        $advert = $this->getDoctrine()->getRepository(Advert::class)->findOneBySlug($slug);
+        $contacterUser = $this->getUser();
+        $contactedUser = $this->getDoctrine()->getRepository(User::class)->find($advert->getUser());
+
+        $form = $this->createForm(ContactType::class);
+        $formHandler = new ContactHandler($form, $contacterUser, $contactedUser, $advert, $request);
+
+//        if($formHandler->process()) {
+//
+//            $this->addFlash('success', 'userContact.contact.validation');
+//
+//            return $this->redirectToRoute('show_advert', [
+//                'advertdata' => $advert
+//            ]);
+//        }
+
+        return $this->render('form/user_contact.html.twig',[
+            'form' => $formHandler->getForm()->createView()
         ]);
     }
 

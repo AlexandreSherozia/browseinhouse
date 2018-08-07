@@ -37,6 +37,19 @@
                             <p class="text-right">{{ advert.creationDate | date('Y-m-d') ~' '~ advert.creationDate | date('H:i:s') }}</p>
                             <p class="text-right"><a href="{{ path('show_public_profile', {'pseudo': advert.user.pseudo}) }}">{{ advert.user.pseudo }}</a></p>
                         </div>
+                        <div class="text-center">
+                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                            {% if is_granted('ROLE_USER') %}
+                            <a href="{{ path('user_contact', {'slug': advert.slug}) }}">
+                                <button class="btn btn-primary btn-lg alert-success">Contact user about this advert</button>
+                            </a>
+                            {% endif %}
+                        {% else %}
+                            <button class="btn btn-primary btn-lg" disabled="disabled">Contact user about this advert</button>
+                            <p>You can't contact any user for the moment. Please, <a href="{{ path('login') }}">Log in</a> or <a href="{{ path('register') }}">Register</a>.</p>
+                        {% endif %}
+
+                        </div>
                     </div>
             {% endfor %}
 

@@ -9,13 +9,9 @@
 namespace App\Form\Handler;
 
 
-use App\Entity\Advert;
-use App\Entity\User;
 use App\Service\AdvertManager;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class AdvertHandler
 {
