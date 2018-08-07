@@ -15,9 +15,6 @@ use App\Service\ImageUploader;
 use App\Service\UserManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -71,31 +68,28 @@ class UserController extends Controller
      * Allow an user to contact an other through an advert by sending him an email
      * @Route("/advert/{slug}/user-contact", name="user_contact")
      * @Security("has_role('ROLE_USER')")
+     * @param string $slug
+     * @param Request $request
+     * @param ContactHandler $contactHandler
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function contactUserFromAdvert($slug, Request $request , ContactHandler $contactHandler)
+    public function contactUserFromAdvert(string $slug, Request $request , ContactHandler $contactHandler)
     {
         $advert = $this->getDoctrine()->getRepository(Advert::class)->findOneBySlug($slug);
         $contacter = $this->getUser();
         $contactedUser = $this->getDoctrine()->getRepository(User::class)->find($advert->getUser());
 
         $contact = new Contact();
-        $contact->setContactingEmail($contacter->getEmail());
-        $contact->setContactedEmail($contactedUser->getEmail());
-        $contact->setAdvertSlug($slug);
-        $contact->setAdvertTitle($advert->getTitle());
-        $contact->setContactedPseudo($contactedUser->getPseudo());
-        $contact->setContactingPseudo($contacter->getPseudo());
 
         $form = $this->createForm(ContactType::class, $contact);
 
-        if ($contactHandler->process($form, $request)) {
+        if ($contactHandler->process($form, $request, $advert, $contacter, $contactedUser)) {
 
             $this->addFlash('success', 'contact.validation');
 
             return $this->redirectToRoute('show_advert', [
                 'advertslug' => $advert->getSlug(),
-                'advertdata'  => $advert,
-                'contact' => $contact
+                'advertdata'  => $advert
             ]);
         }
 

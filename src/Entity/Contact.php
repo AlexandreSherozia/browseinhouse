@@ -7,19 +7,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class Contact
 {
-
-    private $contactingEmail;
-
-    private $contactedEmail;
-
-    private $advertSlug;
-
-    private $advertTitle;
-
-    private $contactedPseudo;
-
-    private $contactingPseudo;
-
+    private $contactingEmail,
+            $contactedEmail,
+            $advertSlug,
+            $advertTitle,
+            $contactedPseudo,
+            $contactingPseudo;
 
     /**
      * @Assert\NotBlank(message="You have to enter a title")
@@ -41,134 +34,92 @@ class Contact
      */
     private $messageBody;
 
-    /**
-     * @return mixed
-     */
-    public function getContactingEmail()
+    public function getContactingEmail(): string
     {
         return $this->contactingEmail;
     }
 
-    /**
-     * @param mixed $contactingEmail
-     */
-    public function setContactingEmail($contactingEmail): void
+    public function setContactingEmail(string $contactingEmail): self
     {
         $this->contactingEmail = $contactingEmail;
+        return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getContactedEmail()
+    public function getContactedEmail(): string
     {
         return $this->contactedEmail;
     }
 
-    /**
-     * @param mixed $contactedEmail
-     */
-    public function setContactedEmail($contactedEmail): void
+    public function setContactedEmail(string $contactedEmail): self
     {
         $this->contactedEmail = $contactedEmail;
+        return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getAdvertSlug()
+    public function getAdvertSlug(): string
     {
         return $this->advertSlug;
     }
 
-    /**
-     * @param mixed $advertSlug
-     */
-    public function setAdvertSlug($advertSlug): void
+    public function setAdvertSlug(string $advertSlug): self
     {
         $this->advertSlug = $advertSlug;
+        return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getMessageTitle()
+    public function getMessageTitle(): ?string
     {
         return $this->messageTitle;
     }
 
-    /**
-     * @param mixed $messageTitle
-     */
-    public function setMessageTitle($messageTitle): void
+
+    public function setMessageTitle(string $messageTitle): void
     {
         $this->messageTitle = $messageTitle;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getMessageBody()
+
+    public function getMessageBody(): ?string
     {
         return $this->messageBody;
     }
 
-    /**
-     * @param mixed $messageBody
-     */
-    public function setMessageBody($messageBody): void
+
+    public function setMessageBody(string $messageBody): void
     {
         $this->messageBody = $messageBody;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getAdvertTitle()
+    public function getAdvertTitle(): string
     {
         return $this->advertTitle;
     }
 
-    /**
-     * @param mixed $advertTitle
-     */
-    public function setAdvertTitle($advertTitle): void
+    public function setAdvertTitle(string $advertTitle): self
     {
         $this->advertTitle = $advertTitle;
+        return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getContactedPseudo()
+    public function getContactedPseudo(): string
     {
         return $this->contactedPseudo;
     }
 
-    /**
-     * @param mixed $pseudo
-     */
-    public function setContactedPseudo($contactedpseudo): void
+    public function setContactedPseudo(string $contactedPseudo): self
     {
-        $this->contactedpseudo = $contactedpseudo;
+        $this->contactedPseudo = $contactedPseudo;
+        return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getContactingPseudo()
+    public function getContactingPseudo(): string
     {
         return $this->contactingPseudo;
     }
 
-    /**
-     * @param mixed $contactingPseudo
-     */
-    public function setContactingPseudo($contactingPseudo): void
+    public function setContactingPseudo(string $contactingPseudo): self
     {
         $this->contactingPseudo = $contactingPseudo;
+        return $this;
     }
-
-
-
 }
