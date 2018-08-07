@@ -121,7 +121,7 @@ class AdvertController extends Controller
             $request->query->getInt('page', 1),
             10
         );
-
+            dump($pagination);
         return $this->render('advert/show_adverts_by_section.html.twig', [
             'advertsBySection' => $pagination
         ]);
