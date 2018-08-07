@@ -2,18 +2,21 @@
 
 namespace App\Controller;
 
+use App\Entity\Contact;
 use App\Entity\User;
 use App\Entity\Advert;
 use App\Entity\Section;
-use App\Form\UserType;
-use App\Form\ContactType;
 use App\Form\Handler\ContactHandler;
+use App\Form\UserType;
 use App\Form\Handler\UserHandler;
 use App\Service\AdvertManager;
 use App\Service\ImageUploader;
 use App\Service\UserManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -63,31 +66,61 @@ class UserController extends Controller
         ]);
     }
 
-
     /**
+     * Allow an user to contact an other through an advert by sending him an email
      * @Route("/advert/{slug}/user-contact", name="user_contact")
      * @Security("has_role('ROLE_USER')")
      */
-    public function contactUserFromAdvert($slug, Request $request)
+    public function contactUserFromAdvert($slug, Request $request , ContactHandler $contactHandler)
     {
         $advert = $this->getDoctrine()->getRepository(Advert::class)->findOneBySlug($slug);
-        $contacterUser = $this->getUser();
+        $contacter = $this->getUser();
         $contactedUser = $this->getDoctrine()->getRepository(User::class)->find($advert->getUser());
 
-        $form = $this->createForm(ContactType::class);
-        $formHandler = new ContactHandler($form, $contacterUser, $contactedUser, $advert, $request);
+        $contact = new Contact();
+        $contact->setContactingEmail($contacter->getEmail());
+        $contact->setContactedEmail($contactedUser->getEmail());
+        $contact->setAdvertSlug($slug);
+        $contact->setAdvertTitle($advert->getTitle());
 
-//        if($formHandler->process()) {
-//
-//            $this->addFlash('success', 'userContact.contact.validation');
-//
-//            return $this->redirectToRoute('show_advert', [
-//                'advertdata' => $advert
-//            ]);
-//        }
+        $form = $this->createFormBuilder($contact)
+            ->add('messageTitle', TextType::class, [
+                'label' => false,
+                'attr' => [
+                    'placeholder' => 'form.contact.placeholder.messagetitle'
+                ]
+            ])
+            ->add('messageBody', TextareaType::class, [
+                'label' => false,
+                'attr' => [
+                    'placeholder' => 'form.contact.placeholder.messagebody'
+                ]
+            ])
+            ->add('submit', SubmitType::class, [
+                'label' => 'form.contact.submit'
+            ])
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $contact = $form->getData();
+            $contactHandler->sendMail($contact);
+
+            $this->addFlash('success', 'contact.validation');
+
+            return $this->redirectToRoute('show_advert', [
+                'advertslug' => $advert->getSlug(),
+                'advertdata'  => $advert,
+                'contact' => $contact
+            ]);
+        }
 
         return $this->render('form/user_contact.html.twig',[
-            'form' => $formHandler->getForm()->createView()
+            'form' => $form->createView(),
+            'contacter' => $contacter,
+            'advert' => $advert
         ]);
     }
 
