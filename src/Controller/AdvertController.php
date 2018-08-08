@@ -4,8 +4,12 @@ namespace App\Controller;
 
 
 use App\Entity\Advert;
+use App\Entity\Contact;
+use App\Entity\User;
 use App\Form\AdvertType;
+use App\Form\ContactType;
 use App\Form\Handler\AdvertHandler;
+use App\Form\Handler\ContactHandler;
 use App\Service\AdvertManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -145,4 +149,40 @@ class AdvertController extends Controller
         ]);
     }
 
+
+    /**
+     * Allow an user to contact an other through an advert by sending him an email
+     * @Route("/advert/{slug}/user-contact", name="user_contact")
+     * @Security("has_role('ROLE_USER')")
+     * @param string $slug
+     * @param Request $request
+     * @param ContactHandler $contactHandler
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function contactUserFromAdvert(string $slug, Request $request , ContactHandler $contactHandler)
+    {
+        $advert = $this->getDoctrine()->getRepository(Advert::class)->findOneBySlug($slug);
+        $contacter = $this->getUser();
+        $contactedUser = $this->getDoctrine()->getRepository(User::class)->find($advert->getUser());
+
+        $contact = new Contact();
+
+        $form = $this->createForm(ContactType::class, $contact);
+
+        if ($contactHandler->process($form, $request, $advert, $contacter, $contactedUser)) {
+
+            $this->addFlash('success', 'advert.email.sent');
+
+            return $this->redirectToRoute('show_advert', [
+                'advertslug' => $advert->getSlug(),
+                'advertdata'  => $advert
+            ]);
+        }
+
+        return $this->render('form/user_contact.html.twig',[
+            'form' => $form->createView(),
+            'contactedUser' => $contactedUser,
+            'advert' => $advert
+        ]);
+    }
 }
