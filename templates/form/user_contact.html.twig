@@ -1,0 +1,22 @@
+{% extends 'layout.html.twig' %}
+{% trans_default_domain 'userContact' %}
+
+{% block title %}{{ parent() }} | {{ 'userContact.pagename' | trans }}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-xs-6 col-xs-push-3">
+            <h2 class="text-center">
+                {{ 'userContact.title' | trans }}
+            </h2>
+
+            <p>{{ 'userContact.presentation.message' | trans }}<strong>{{ contactedUser.pseudo }}</strong>,</p>
+            <p>{{ 'userContact.presentation.advert' | trans }}<strong><a href="{{ path('show_advert', {'advertslug': advert.slug}) }}">{{ advert.title }}</a></strong>.</p>
+
+            {% form_theme form 'bootstrap_3_layout.html.twig' %}
+            {{ form(form, {attr: {novalidate: 'novalidate'}}) }}
+
+        </div>
+    </div>
+
+{% endblock %}

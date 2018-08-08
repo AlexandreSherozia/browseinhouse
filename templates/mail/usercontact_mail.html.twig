@@ -1,0 +1,15 @@
+<h3>Vous avez une demande de contact !</h3>
+
+Félicitation <strong>{{ contactedpseudo }}</strong> ! Vous avez reçu une demande de contact à propos de votre annonce :<br/><br/>
+
+<a href="{{ url('show_advert', {'advertslug': advertSlug}) }}">{{ advertTitle }}</a><br/><br/>
+
+Voici le message que <strong>{{ contactingpseudo }}</strong> vous a envoyé : <br/><br/>
+
+<blockquote><i>{{  message }}</i></blockquote><br/>
+
+Il vous suffit de répondre à ce mail pour contacter directement cet utilisateur.<br/><br/>
+
+Nous vous souhaitons de bonnes affaires sur BrowseInHouse.com !<br/><br/>
+
+L'équipe B'N'H.

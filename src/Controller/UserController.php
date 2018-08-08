@@ -2,18 +2,22 @@
 
 namespace App\Controller;
 
-
+use App\Entity\Contact;
+use App\Entity\User;
+use App\Entity\Advert;
 use App\Entity\Section;
+use App\Form\ContactType;
+use App\Form\Handler\ContactHandler;
+use App\Form\UserType;
+use App\Form\Handler\UserHandler;
 use App\Service\AdvertManager;
 use App\Service\ImageUploader;
-use App\Entity\User;
-use App\Form\Handler\UserHandler;
 use App\Service\UserManager;
-use App\Form\UserType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+
 
 class UserController extends Controller
 {
@@ -47,9 +51,11 @@ class UserController extends Controller
     /**
      * show public infos on a specific user
      * @Route("/public-profile/{pseudo}", name="show_public_profile")
-     *
+     * @param AdvertManager $manager
+     * @param string $pseudo
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function userPublicProfile(AdvertManager $manager, $pseudo)
+    public function userPublicProfile(AdvertManager $manager, string $pseudo)
     {
         $selectedUser = $this->getDoctrine()->getRepository(User::class)->findOneByPseudo($pseudo);
         $userAdverts = $manager->getAdvertsByUser($selectedUser->getId());
@@ -57,6 +63,42 @@ class UserController extends Controller
         return $this->render('user/user_publicprofile.html.twig', [
             'user_public'  => $selectedUser,
             'user_adverts' => $userAdverts
+        ]);
+    }
+
+    /**
+     * Allow an user to contact an other through an advert by sending him an email
+     * @Route("/advert/{slug}/user-contact", name="user_contact")
+     * @Security("has_role('ROLE_USER')")
+     * @param string $slug
+     * @param Request $request
+     * @param ContactHandler $contactHandler
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function contactUserFromAdvert(string $slug, Request $request , ContactHandler $contactHandler)
+    {
+        $advert = $this->getDoctrine()->getRepository(Advert::class)->findOneBySlug($slug);
+        $contacter = $this->getUser();
+        $contactedUser = $this->getDoctrine()->getRepository(User::class)->find($advert->getUser());
+
+        $contact = new Contact();
+
+        $form = $this->createForm(ContactType::class, $contact);
+
+        if ($contactHandler->process($form, $request, $advert, $contacter, $contactedUser)) {
+
+            $this->addFlash('success', 'advert.email.sent');
+
+            return $this->redirectToRoute('show_advert', [
+                'advertslug' => $advert->getSlug(),
+                'advertdata'  => $advert
+            ]);
+        }
+
+        return $this->render('form/user_contact.html.twig',[
+            'form' => $form->createView(),
+            'contactedUser' => $contactedUser,
+            'advert' => $advert
         ]);
     }
 

@@ -1,15 +1,24 @@
 {% extends "layout.html.twig" %}
 
+{% trans_default_domain 'showAdvert' %}
+
 {% block title %}
 
-    {{ parent() }}my adverts
+    {{ parent() }}{{ 'showAdvert.title' | trans }}
 
 {% endblock %}
 
 {% block content %}
 
+    {% for message in app.flashes('success') %}
+        <div class="row">
+            <div class="alert alert-success alert-dismissible  col-xs-6 col-xs-offset-3 text-center" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                {{ message  | trans }}
+            </div>
+        </div>
+    {% endfor %}
     <section class="container">
-
         <div class="panel panel-default">
             {% for advert in advertdata %}
                 {% if app.user.id is defined %}
@@ -31,15 +40,30 @@
                         <p class="well well-lg">{{ advert.description }}</p>
                         <div class="col-md-6">
                             <p class="badge">{{ advert.price }} €</p>
-                            <p><a href="#" class="badge alert-danger">Add to whislist</a></p>
+                            <p><a href="#" class="badge alert-danger">{{ 'advert.button.whishlist' | trans }}</a></p>
                         </div>
                         <div class="col-md-6">
                             <p class="text-right">{{ advert.creationDate | date('Y-m-d') ~' '~ advert.creationDate | date('H:i:s') }}</p>
                             <p class="text-right"><a href="{{ path('show_public_profile', {'pseudo': advert.user.pseudo}) }}">{{ advert.user.pseudo }}</a></p>
                         </div>
+                        <div class="text-center">
+                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                            {% if is_granted('ROLE_USER') %}
+                            <a href="{{ path('user_contact', {'slug': advert.slug}) }}">
+                                <button class="btn btn-primary btn-lg alert-warning">{{ 'advert.button.contactUser' | trans }}</button>
+                            </a>
+                            {% endif %}
+                        {% else %}
+                            <button class="btn btn-primary btn-lg" disabled="disabled">{{ 'advert.button.contactUser' | trans }}</button>
+                            <p>{{ 'advert.disabledbutton.info1' | trans }}
+                                <a href="{{ path('login') }}">{{ 'advert.login.link' | trans }}</a>
+                                {{ 'advert.disabledbutton.info2' | trans }}
+                                <a href="{{ path('register') }}">{{ 'advert.register.link' | trans }}</a>.</p>
+                        {% endif %}
+
+                        </div>
                     </div>
             {% endfor %}
-
         </div>
     </section>
 
