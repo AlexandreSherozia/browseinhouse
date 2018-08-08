@@ -15,22 +15,22 @@ class Contact
             $contactingPseudo;
 
     /**
-     * @Assert\NotBlank(message="You have to enter a title")
+     * @Assert\NotBlank(message="asserts.messagetitle.notblank")
      * @Assert\Length(
      *      min = 5,
      *      max = 60,
-     *      minMessage = "Your title must contain at least {{ limit }} characters",
-     *      maxMessage = "Your title can't contain more than {{ limit }} characters")
+     *      minMessage = "asserts.messagetitle.tooshort",
+     *      maxMessage = "asserts.messagetitle.toolong")
      */
     private $messageTitle;
 
     /**
-     * @Assert\NotBlank(message="You have to enter a message")
+     * @Assert\NotBlank(message="asserts.messagebody.notblank")
      * @Assert\Length(
      *      min = 10,
      *      max = 500,
-     *      minMessage = "Your message must contain at least {{ limit }} characters",
-     *      maxMessage = "Your message can't contain more than {{ limit }} characters")
+     *      minMessage = "asserts.messagebody.tooshort",
+     *      maxMessage = "asserts.messagebody.toolong")
      */
     private $messageBody;
 
