@@ -2,11 +2,13 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * @ApiResource(attributes={"filters"={"advert.search"}})
  * @ORM\Entity(repositoryClass="App\Repository\AdvertRepository")
  */
 class Advert
