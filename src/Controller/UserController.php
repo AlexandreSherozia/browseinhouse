@@ -97,7 +97,7 @@ class UserController extends Controller
 
         return $this->render('form/user_contact.html.twig',[
             'form' => $form->createView(),
-            'contacter' => $contacter,
+            'contactedUser' => $contactedUser,
             'advert' => $advert
         ]);
     }

@@ -1,0 +1,4 @@
+userContact.pagename: 'User contact'
+userContact.title: 'Send a mail'
+userContact.presentation.message: 'Here you can send a message to '
+userContact.presentation.advert: 'concerning this advert: '
