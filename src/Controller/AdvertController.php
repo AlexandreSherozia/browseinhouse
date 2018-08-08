@@ -7,14 +7,10 @@ use App\Entity\Advert;
 use App\Form\AdvertType;
 use App\Form\Handler\AdvertHandler;
 use App\Service\AdvertManager;
-use Knp\Bundle\PaginatorBundle\Definition\PaginatorAwareInterface;
-use Knp\Component\Pager\Pagination\PaginationInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class AdvertController extends Controller
 {

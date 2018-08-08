@@ -51,9 +51,11 @@ class UserController extends Controller
     /**
      * show public infos on a specific user
      * @Route("/public-profile/{pseudo}", name="show_public_profile")
-     *
+     * @param AdvertManager $manager
+     * @param string $pseudo
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function userPublicProfile(AdvertManager $manager, $pseudo)
+    public function userPublicProfile(AdvertManager $manager, string $pseudo)
     {
         $selectedUser = $this->getDoctrine()->getRepository(User::class)->findOneByPseudo($pseudo);
         $userAdverts = $manager->getAdvertsByUser($selectedUser->getId());
@@ -85,7 +87,7 @@ class UserController extends Controller
 
         if ($contactHandler->process($form, $request, $advert, $contacter, $contactedUser)) {
 
-            $this->addFlash('success', 'contact.validation');
+            $this->addFlash('success', 'advert.email.sent');
 
             return $this->redirectToRoute('show_advert', [
                 'advertslug' => $advert->getSlug(),
