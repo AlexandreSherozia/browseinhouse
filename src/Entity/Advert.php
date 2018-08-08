@@ -8,7 +8,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ApiResource()
+ * @ApiResource(attributes={"filters"={"advert.search"}})
  * @ORM\Entity(repositoryClass="App\Repository\AdvertRepository")
  */
 class Advert
