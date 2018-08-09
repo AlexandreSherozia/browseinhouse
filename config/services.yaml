@@ -35,17 +35,17 @@ services:
         arguments:
             $avatarDir: '%users_avatars_directory%'
 
-    tag.search_filter:
-        parent:     'api_platform.doctrine.orm.search_filter'
-        arguments:  [ { id: 'exact', label: 'partial' } ]
-        tags:       [ { name: 'api_platform.filter', id: 'tag.search' } ]
-        autowire: false
-        autoconfigure: false
-        public: false
+#    tag.search_filter:
+#        parent:     'api_platform.doctrine.orm.search_filter'
+#        arguments:  [ { id: 'exact', label: 'partial' } ]
+#        tags:       [ { name: 'api_platform.filter', id: 'tag.search' } ]
+#        autowire: false
+#        autoconfigure: false
+#        public: false
 
     advert.search_filter:
         parent:     'api_platform.doctrine.orm.search_filter'
-        arguments:  [ { id: 'exact', title: 'partial', slug: 'partial' } ]
+        arguments:  [ { id: 'exact', title: 'partial', slug: 'partial', user.id: 'exact', category.id: 'exact', section.id: 'exact' } ]
         tags:       [ { name: 'api_platform.filter', id: 'advert.search' } ]
         autowire: false
         autoconfigure: false

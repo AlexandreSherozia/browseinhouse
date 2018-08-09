@@ -2,10 +2,16 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * 
+ * @ApiResource(attributes={
+ *          "normalization_context"={"groups"={"read"}},
+ *          "denormalization_context"={"groups"={"write"}}
+ *     }
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\SectionRepository")
  */
 class Section
@@ -19,6 +25,7 @@ class Section
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Groups({"read"})
      */
     private $label;
 
