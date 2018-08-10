@@ -45,6 +45,10 @@ td{
 	margin-top: 10px
 }
 
+.thumbnail {
+	width: 200px;
+}
+
 /*----------
 [ Body ]
 -------------*/

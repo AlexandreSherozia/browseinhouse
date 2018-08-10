@@ -9,6 +9,8 @@
 namespace App\Service\Twig;
 
 
+use Gumlet\ImageResize;
+use Gumlet\ImageResizeException;
 use Twig\Extension\AbstractExtension;
 
 class AppExtension extends AbstractExtension
@@ -46,12 +48,16 @@ class AppExtension extends AbstractExtension
 
         public function photoEncoder($photo)
         {
-            \header('Content-Type: image/jpeg');
+            try {
+                $image = new ImageResize($photo);
+                echo $image->scale(50);
+                //$image->crop(100, 100, true, ImageResize::CROPCENTER);
+                $image->save('thumbnail.jpg');
+                $image->output();
 
-            imagejpeg($photo, null, 30);
-
-            //imagedestroy($);
-
+            } catch (ImageResizeException $e) {
+                return $e;
+            }
             return $photo;
         }
 
