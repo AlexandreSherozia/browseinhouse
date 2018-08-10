@@ -13,13 +13,13 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class UserFixtures extends Fixture implements OrderedFixtureInterface
 {
 
-    private $numberOfIterations = 10;
+    private $numberOfIterations = 20;
     private $encoder;
 
     private $firstNamesF = ['Colleen','Lara','Larissa','Matilde','Kauan','Maria','Emilly','Sille','Anna'];
     private $firstNamesM = ['John', 'Michael', 'Alex', 'George', 'Marcos','Breno','Joao','Simon','Simon','Marius','Peter'];
-    private $avatarsF = ['f1.jpg', 'f2.jpg', 'f3.jpg', 'f4.jpg', 'f5.jpg', 'f6.jpg', 'f7.jpg', 'f8.jpg', 'f9.jpg'];
-    private $avatarsM = ['m1.jpg', 'm2.jpg', 'm3.jpg', 'm4.jpg', 'm5.jpg', 'm6.jpg', 'm7.jpg', 'm8.jpg', 'm9.jpg', 'm10.jpg'];
+    private $avatarsF = ['fixture_f1.jpg', 'fixture_f2.jpg', 'fixture_f3.jpg', 'fixture_f4.jpg', 'fixture_f5.jpg', 'fixture_f6.jpg', 'fixture_f7.jpg', 'fixture_f8.jpg', 'fixture_f9.jpg'];
+    private $avatarsM = ['fixture_m1.jpg', 'fixture_m2.jpg', 'fixture_m3.jpg', 'fixture_m4.jpg', 'fixture_m5.jpg', 'fixture_m6.jpg', 'fixture_m7.jpg', 'fixture_m8.jpg', 'fixture_m9.jpg', 'fixture_m10.jpg'];
     private $lastNames  = ['Denisov','Yevseyeva','Borodin','Rinkashifu','Hruška','Režná','Beaupré','Duplessis','Jodion','Guérette','Chnadonnet','Boisclair','Lamy','Didiane','Danielsen','Danielsen','Bech','Thom'];
 
     /**
