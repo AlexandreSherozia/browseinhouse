@@ -27,6 +27,46 @@ class Photo
      */
     private $advert;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $name;
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAdvert()
+    {
+        return $this->advert;
+    }
+
+    /**
+     * @param mixed $advert
+     * @return Photo
+     */
+    public function setAdvert(Advert $advert)
+    {
+        $this->advert = $advert;
+
+        return $this;
+    }
+
     public function getId()
     {
         return $this->id;
