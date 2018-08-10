@@ -14,8 +14,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          "filters"={"advert.search"},
  *          "normalization_context"={"groups"={"read"}}
  *     },
- *     itemOperations={
- *          "get" = {"method"="GET"}
+ *     collectionOperations={"get" = {"method"="GET"}},
+ *     itemOperations={"get" = {"method"="GET"}
  *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\AdvertRepository")

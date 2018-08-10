@@ -12,6 +12,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          "normalization_context"={"groups"={"read"}},
  *          "denormalization_context"={"groups"={"write"}}
  *     },
+ *     collectionOperations={"get" = {"method"="GET"}},
  *     itemOperations={
  *          "get" = {"method"="GET"}
  *     }
