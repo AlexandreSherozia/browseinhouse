@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -51,7 +52,7 @@ class Advert
     private $slug;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Photo", mappedBy="advert")
+     * @ORM\OneToMany(targetEntity="App\Entity\Photo", mappedBy="advert", cascade={"persist"}, orphanRemoval=true)
      */
     private $photos;
 
@@ -86,6 +87,37 @@ class Advert
     public function __construct()
     {
         $this->creationDate = new \DateTime();
+        $this->photos       = new ArrayCollection();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPhotos()
+    {
+        return $this->photos;
+    }
+
+
+    /**
+     * @param Photo $photo
+     * @return $this
+     */
+    public function addPhoto(Photo $photo)
+    {
+        $this->photos[] = $photo;
+
+        //$photo->setAdvert($this);
+
+        return $this;
+    }
+
+    /**
+     * @param $photo
+     */
+    public function removePhoto($photo)
+    {
+        $this->photos->removeElement($photo);
     }
 
 

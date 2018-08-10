@@ -5,6 +5,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     users_avatars_directory: '%kernel.project_dir%/public/images/avatars'
+    advert_photos_directory: '%kernel.project_dir%/public/images/advertphotos'
     locale: 'en'
 
 services:
@@ -34,6 +35,10 @@ services:
     App\Service\ImageUploader:
         arguments:
             $avatarDir: '%users_avatars_directory%'
+
+    App\Service\AdvertPhotoUploader:
+        arguments:
+            $photoDirectory: '%advert_photos_directory%'
 
     tag.search_filter:
         parent:     'api_platform.doctrine.orm.search_filter'
