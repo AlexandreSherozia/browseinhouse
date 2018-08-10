@@ -12,8 +12,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ApiResource(
  *     attributes={
  *          "filters"={"advert.search"},
- *          "normalization_context"={"groups"={"read"}},
- *          "denormalization_context"={"groups"={"write"}}
+ *          "normalization_context"={"groups"={"read"}}
+ *     },
+ *     itemOperations={
+ *          "get" = {"method"="GET"}
  *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\AdvertRepository")
@@ -31,14 +33,14 @@ class Advert
     /**
      * @ORM\Column(type="string", length=120)
      * @Assert\NotBlank(message="asserts.title.mandatory")
-     * @Groups({"read", "write"})
+     * @Groups({"read"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
      * @Assert\NotBlank(message="asserts.description.mandatory")
-     * @Groups({"read", "write"})
+     * @Groups({"read"})
      */
     private $description;
 
@@ -46,7 +48,7 @@ class Advert
      * @ORM\Column(type="float")
      * @Assert\NotBlank(message="asserts.price.mandatory")
      * @Assert\Type(type="float", message="asserts.integer.type")
-     * @Groups({"read", "write"})
+     * @Groups({"read"})
      */
     private $price;
 
