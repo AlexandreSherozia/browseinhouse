@@ -7,9 +7,18 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource(attributes={"filters"={"advert.search"}})
+ * @ApiResource(
+ *     attributes={
+ *          "filters"={"advert.search"},
+ *          "normalization_context"={"groups"={"read"}}
+ *     },
+ *     collectionOperations={"get" = {"method"="GET"}},
+ *     itemOperations={"get" = {"method"="GET"}
+ *     }
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\AdvertRepository")
  */
 class Advert
@@ -18,18 +27,21 @@ class Advert
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=120)
      * @Assert\NotBlank(message="asserts.title.mandatory")
+     * @Groups({"read"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
      * @Assert\NotBlank(message="asserts.description.mandatory")
+     * @Groups({"read"})
      */
     private $description;
 
@@ -37,17 +49,20 @@ class Advert
      * @ORM\Column(type="float")
      * @Assert\NotBlank(message="asserts.price.mandatory")
      * @Assert\Type(type="float", message="asserts.integer.type")
+     * @Groups({"read"})
      */
     private $price;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"read"})
      */
     private $creationDate;
 
     /**
      * @Gedmo\Slug(fields={"title"},unique=true)
      * @ORM\Column(length=128, unique=true)
+     * @Groups({"read"})
      */
     private $slug;
 
@@ -59,11 +74,13 @@ class Advert
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="adverts")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"read"})
      */
     private $category;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Section")
+     * @Groups({"read"})
      */
     private $section;
 
@@ -77,6 +94,7 @@ class Advert
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"read"})
      */
     private $user;
 

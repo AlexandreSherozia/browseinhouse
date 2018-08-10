@@ -6,17 +6,26 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     attributes={
+ *          "normalization_context"={"groups"={"read"}},
+ *          "denormalization_context"={"groups"={"write"}}
+ *     },
+ *     collectionOperations={"get" = {"method"="GET"}},
+ *     itemOperations={
+ *          "get" = {"method"="GET"}
+ *     }
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity(fields="email", message="asserts.email.alreadyused")
  * @UniqueEntity(fields="pseudo", message="asserts.pseudo.alreadyused")
  */
 class User implements UserInterface
 {
-
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -42,6 +51,7 @@ class User implements UserInterface
      * @Assert\NotBlank(message="asserts.pseudo.notblank")
      * @Assert\Length(min="5", minMessage="asserts.pseudo.tooshort",
      *                max="50", maxMessage="asserts.pseudo.toolong")
+     * @Groups({"read"})
      */
     private $pseudo;
 

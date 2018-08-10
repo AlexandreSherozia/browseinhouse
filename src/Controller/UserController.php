@@ -44,23 +44,6 @@ class UserController extends Controller
         ]);
     }
 
-    /**
-     * show public infos on a specific user
-     * @Route("/public-profile/{pseudo}", name="show_public_profile")
-     * @param AdvertManager $manager
-     * @param string $pseudo
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function userPublicProfile(AdvertManager $manager, string $pseudo)
-    {
-        $selectedUser = $this->getDoctrine()->getRepository(User::class)->findOneByPseudo($pseudo);
-        $userAdverts = $manager->getAdvertsByUser($selectedUser->getId());
-
-        return $this->render('user/user_publicprofile.html.twig', [
-            'user_public'  => $selectedUser,
-            'user_adverts' => $userAdverts
-        ]);
-    }
 
 
     /****************************************************************************
@@ -126,55 +109,6 @@ class UserController extends Controller
         ]);
     }
 
-    /**
-     * Get user adverts
-     * @Route("/adverts/{pseudo}", name="show_user_adverts")
-     * @Security("has_role('ROLE_USER')")
-     * @param AdvertManager $advertManager
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function showUserAdverts(AdvertManager $advertManager)
-    {
-        $user = $this->getUser();
-
-        /** @var Section $section */
-        foreach($advertManager->getAllSections() as $section){
-            $allSections[] = $section->getLabel();
-        }
-
-        $userAdverts = $advertManager->getAdvertsByUser($user->getId());
-
-        return $this->render('user/userprofile_adverts.html.twig', [
-            'advertList' => $userAdverts,
-        ]);
-    }
-
-    /**
-     * allow an user to delete an advert on his profile page
-     * @Route("/user_delete_advert/{advert_id}", name="user_delete_advert")
-     * @Security("has_role('ROLE_USER')")
-     * @param AdvertManager $advertManager
-     * @param $advert_id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function deleteUserAdverts(AdvertManager $advertManager, $advert_id)
-    {
-        $advertManager->removeAdvert($advert_id);
-
-        $user = $this->getUser();
-
-        /** @var Section $section */
-        foreach($advertManager->getAllSections() as $section){
-            $allSections[] = $section->getLabel();
-        }
-
-        $userAdverts = $advertManager->getAdvertsByUser($user->getId());
-
-        return $this->render('user/userprofile_adverts.html.twig', [
-            'advertList' => $userAdverts,
-        ]);
-    }
-
 
     /****************************************************************************
      *                              ADMINISTRATOR PANEL                         *
@@ -211,44 +145,6 @@ class UserController extends Controller
         $this->addFlash('success', 'admin.deleteUser.validation');
 
         return $this->redirectToRoute('user_list');
-    }
-
-    /**
-     * show the list of all adverts for an admin user
-     * @Route("/admin/advert-list", name="advert_list")
-     * @Security("has_role('ROLE_ADMIN')")
-     * @param AdvertManager $advertManager
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function adminShowAdvertList(AdvertManager $advertManager)
-    {
-        $allAdverts = $advertManager->getAllAdvertsInfos();
-        /** @var Section $section */
-        foreach($advertManager->getAllSections() as $section){
-            $allSections[] = $section->getLabel();
-        }
-
-        return $this->render('admin/advert_list.html.twig', [
-            'advertList' => $allAdverts,
-            'sections' => $allSections
-        ]);
-    }
-
-    /**
-     * delete an advert from db in admin page
-     * @Route("/admin/delete-advert/{advert_id}", name="admin_delete_advert")
-     * @Security("has_role('ROLE_ADMIN')")
-     * @param AdvertManager $advertManager
-     * @param int $advert_id
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function adminDeleteAdvert(AdvertManager $advertManager, int $advert_id)
-    {
-        $advertManager->removeAdvert($advert_id);
-
-        $this->addFlash('success', 'admin.deleteAdvert.validation');
-
-        return $this->redirectToRoute('advert_list');
     }
 
 }

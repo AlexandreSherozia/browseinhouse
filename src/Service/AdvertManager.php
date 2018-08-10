@@ -96,6 +96,9 @@ class AdvertManager extends PaginatorAware
         $this->em->flush();
     }
 
+    /**
+     * @return \App\Repository\AdvertRepository|\Doctrine\Common\Persistence\ObjectRepository
+     */
     public function getAdvertRepo()
     {
         return $this->advertRepository;
