@@ -3,6 +3,7 @@
 namespace App\Service;
 
 
+
 use Symfony\Component\HttpFoundation\File\File;
 
 class ImageUploader
@@ -17,6 +18,7 @@ class ImageUploader
     /**
      * @param File $image
      * @return string
+     * @throws \Gumlet\ImageResizeException
      */
     public function upload(File $image)
     {
