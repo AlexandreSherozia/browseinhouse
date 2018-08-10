@@ -19,7 +19,13 @@ class AppExtension extends AbstractExtension
     public function getFilters()
     {
         return [
-            new \Twig_Filter('shorten_text', function ($text) {
+            new \Twig_Filter('shorten_text', array($this, 'textFilter')),
+            new \Twig_Filter('photo_encoder', array($this, 'photoEncoder')),
+            ];
+        }
+
+        public function textFilter($text)
+        {
 
 
                 $string = strip_tags($text);
@@ -36,7 +42,17 @@ class AppExtension extends AbstractExtension
                 # On retourne l'accroche
                 return $string;
 
-            }, array('is_safe' => array('html')))
-        ];
+        }
+
+        public function photoEncoder($photo)
+        {
+            \header('Content-Type: image/jpeg');
+
+            imagejpeg($photo, null, 30);
+
+            //imagedestroy($);
+
+            return $photo;
+        }
+
     }
-}

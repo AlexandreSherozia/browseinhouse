@@ -35,16 +35,19 @@ class AdvertManager extends PaginatorAware
         return $this->em;
     }
 
-    public function myPersist(Advert $advert)
+    public function myPersist(Advert $advert, $photo)
     {
 
         $advert->setUser($this->connected_User);
 
         $this->em->persist($advert);
+        $this->em->persist($photo);
         $this->em->flush();
 
         return $advert;
     }
+
+
 
     /**
      * Returns all categories of any section"

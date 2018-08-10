@@ -11,6 +11,7 @@ use App\Form\ContactType;
 use App\Form\Handler\AdvertHandler;
 use App\Form\Handler\ContactHandler;
 use App\Service\AdvertManager;
+use App\Service\AdvertPhotoUploader;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,13 +34,16 @@ class AdvertController extends Controller
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @Route("/create-advert", name="create_advert")
      */
-    public function addNewAdvert(Request $request)
+    public function addNewAdvert(Request $request, AdvertPhotoUploader $advertPhotoUploader)
     {
 
         $this->denyAccessUnlessGranted(['ROLE_USER']);
 
 
-        $formHandler = new AdvertHandler($this->createForm(AdvertType::class, new Advert()), $request, $this->manager);
+        $formHandler = new AdvertHandler($this->createForm(AdvertType::class, new Advert()),
+                                        $request,
+                                        $this->manager,
+                                        $advertPhotoUploader);
 
         if ($formHandler->process()) {
 

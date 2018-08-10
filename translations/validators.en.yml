@@ -21,3 +21,4 @@ asserts.messagetitle.toolong: "Your title can't contain more than {{ limit }} ch
 asserts.messagebody.notblank: 'You have to enter a message'
 asserts.messagebody.tooshort: 'Your message must contain at least {{ limit }} characters'
 asserts.messagebody.toolong: "Your message can't contain more than {{ limit }} characters"
+advert.photo.uploader:  "Upload your photos"
