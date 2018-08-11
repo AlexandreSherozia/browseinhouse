@@ -53,6 +53,7 @@ class Advert
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Photo", mappedBy="advert", cascade={"persist"}, orphanRemoval=true)
+     * @Assert\Image(maxSize="10M", maxSizeMessage="asserts.article.image.maxsize")
      */
     private $photos;
 

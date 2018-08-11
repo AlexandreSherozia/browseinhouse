@@ -38,10 +38,11 @@
                         <div class="list-group-item">
                             <div class="row">
                                 <div class="col-md-2">
+                                    
                                     {% if advert.photos %}
-                                        {#{% for photo in advert.photos %}#}
                                             <img src="{{ asset('images/advertphotos/'~advert.photos|first.url ) }}" class="thumbnail">
-                                        {#{% endfor %}#}
+                                    {% else %}
+                                            <img src="{{ asset('images/advertphotos/'~advert.photos|first.url ) }}" class="thumbnail">
                                     {% endif %}
 
                                 </div>
@@ -57,7 +58,7 @@
                                     <p class="col-md-10">
                                         {{ advert.description | shorten_text }} -
                                     </p>
-                                    <h4 class="text-right col-md-2 badge">{{ advert.price }} €</h4>
+                                    <h4 class="text-right col-md-2 badge">{{ advert.price | text_trim }} </h4>
                                 </div>
                             </div>
                         </div>
