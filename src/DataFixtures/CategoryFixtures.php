@@ -12,7 +12,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 class CategoryFixtures extends Fixture implements OrderedFixtureInterface
 {
 
-    private $categories = ['Real Estate', 'Vehicle', 'Mobiles', 'accessories', 'Electronics', 'Music',
+    private $categories = ['Real Estate', 'Vehicle', 'Mobiles', 'Accessories', 'Electronics', 'Music',
        'Fourniture', 'Jobs', 'Pets', 'Fashion', 'Miscellaneous', 'Informatics'];
 
     public function load(ObjectManager $manager)

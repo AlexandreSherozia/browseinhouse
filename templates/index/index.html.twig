@@ -40,7 +40,7 @@
                                 <div class="col-md-2">
                                     {% if advert.photos %}
                                         {#{% for photo in advert.photos %}#}
-                                            <img src="{{ asset('images/advertphotos/'~advert.photos|first.url ) }}" class="thumbnail">
+                                            <img src="{{ asset('images/advertphotos/'~advert.photos | first.url ) }}" class="thumbnail"/>
                                         {#{% endfor %}#}
                                     {% endif %}
 

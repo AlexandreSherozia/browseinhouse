@@ -36,13 +36,9 @@ services:
         arguments:
             $avatarDir: '%users_avatars_directory%'
 
-#    tag.search_filter:
-#        parent:     'api_platform.doctrine.orm.search_filter'
-#        arguments:  [ { id: 'exact', label: 'partial' } ]
-#        tags:       [ { name: 'api_platform.filter', id: 'tag.search' } ]
-#        autowire: false
-#        autoconfigure: false
-#        public: false
+    App\Service\AdvertPhotoUploader:
+        arguments:
+            $photoDirectory: '%advert_photos_directory%'
 
     advert.search_filter:
         parent:     'api_platform.doctrine.orm.search_filter'
