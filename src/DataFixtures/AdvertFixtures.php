@@ -66,7 +66,6 @@ class AdvertFixtures extends Fixture implements OrderedFixtureInterface
      */
     public function load(ObjectManager $manager)
     {
-
         for ($i = 0; $i < $this->numberOfIterations; $i++)
             {
                 $date = new \DateTime('2018-06-04 00:00:01');
@@ -90,8 +89,6 @@ class AdvertFixtures extends Fixture implements OrderedFixtureInterface
                 $advert->setSection($section);
                 $advert->setUser($user);
 
-                $manager->persist($advert);
-
                 $advert->setCreationDate($date);
 
                 $manager->persist($advert);
@@ -104,3 +101,4 @@ class AdvertFixtures extends Fixture implements OrderedFixtureInterface
         return 4;
     }
 }
+
