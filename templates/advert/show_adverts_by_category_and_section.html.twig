@@ -4,14 +4,17 @@
 
 {% block title %}
 
-    {{ parent() }}Section
-    
+    {% for advert in adverts %}
+
+        {#{{ parent() }} #}{{ advert.title }}
+
+    {% endfor %}
 {% endblock %}
 
 {% block content %}
 
     <div class="row">
-        <h1 class="text-center">{{ sectionLabel }}</h1>
+        <h2 class="text-center">{{ category }}</h2>
     </div>
 
     {% include 'includes/_categories.html.twig' %}
@@ -64,4 +67,3 @@
     </div>
 
 {% endblock %}
-

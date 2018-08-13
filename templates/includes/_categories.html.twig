@@ -1,102 +1,99 @@
 <div class="browse-categories">
-    <div class="browse">
+    {#<div class="browse">#}
         <div class="container">
             <div class="row">
                 <div class="col-sm-12">
                     <h2>Filter by categories</h2>
                     <hr/>
+                    <ul class="list-inline col-md-12">
+                        {#<li class="col-md-1">#}
+                            {#<a href="{{ path('filter_adverts_by_category_and_section',#}
+                                {#{'sectionlabel' : adverts.section.label, 'categorylabel' : adverts.category.label }  ) }}">#}
+                                {#<img src="{{ asset('images/icon1.png') }}" alt="icon" title="icon" class="img-responsive" />#}
+                                {#<p class="text-center">Vehicles</p>#}
+                            {#</a>#}
+                        {#</li>#}
 
-                    <ul class="list-inline">
-                        <li>
-                            <a href="{{ path('filter_adverts_by_category', {'id' : 2 }) }}">
-                                <img src="{{ asset('images/icon1.png') }}" alt="icon" title="icon" class="img-responsive" />
-                                <p>Vehicles</p>
-                            </a>
-                        </li>
+                        {#<li class="col-md-1">#}
+                            {#<a href="{{ path('filter_adverts_by_category', {'id' : 3 }) }}">#}
+                                {#<img src="{{ asset('images/icon2.png') }}" alt="icon" title="icon" class="img-responsive" />#}
+                                {#<p class="text-center">Mobiles</p>#}
+                            {#</a>#}
+                        {#</li>#}
 
-                        <li>
-                            <a href="{{ path('filter_adverts_by_category', {'id' : 3 }) }}">
-                                <img src="{{ asset('images/icon2.png') }}" alt="icon" title="icon" class="img-responsive" />
-                                <p>Mobiles</p>
-                            </a>
-                        </li>
+                        {#<li class="col-md-1">#}
+                            {#<a href="{{ path('filter_adverts_by_category', {'id' : 4 }) }}">#}
+                                {#<img src="{{ asset('images/icon3.png') }}" alt="icon" title="icon" class="img-responsive" />#}
+                                {#<p class="text-center">Electonics</p>#}
+                            {#</a>#}
+                        {#</li>#}
 
-                        <li>
-                            <a href="{{ path('filter_adverts_by_category', {'id' : 4 }) }}">
-                                <img src="{{ asset('images/icon3.png') }}" alt="icon" title="icon" class="img-responsive" />
-                                <p>Electonics</p>
-                            </a>
-                        </li>
+                        {#<li class="col-md-1">#}
+                            {#<a href="{{ path('filter_adverts_by_category', {'id' : 1 }) }}">#}
+                                {#<img src="{{ asset('images/icon4.png') }}" alt="icon" title="icon" class="img-responsive" />#}
+                                {#<p class="text-center">Real Estate</p>#}
+                            {#</a>#}
+                        {#</li>#}
 
-                        <li>
-                            <a href="{{ path('filter_adverts_by_category', {'id' : 1 }) }}">
-                                <img src="{{ asset('images/icon4.png') }}" alt="icon" title="icon" class="img-responsive" />
-                                <p>Real Estate</p>
-                            </a>
-                        </li>
+                        {#<li class="col-md-1">#}
+                            {#<a href="{{ path('filter_adverts_by_category', {'id' : 10 }) }}">#}
+                                {#<img src="{{ asset('images/icon5.png') }}" alt="icon" title="icon" class="img-responsive" />#}
+                                {#<p class="text-center">Fashion</p>#}
+                            {#</a>#}
+                        {#</li>#}
 
-                        <li>
-                            <a href="{{ path('filter_adverts_by_category', {'id' : 10 }) }}">
-                                <img src="{{ asset('images/icon5.png') }}" alt="icon" title="icon" class="img-responsive" />
-                                <p>Fashion</p>
-                            </a>
-                        </li>
+                        {#<li class="col-md-1">#}
+                            {#<a href="{{ path('filter_adverts_by_category', {'id' : 7 }) }}">#}
+                                {#<img src="{{ asset('images/icon6.png') }}" alt="icon" title="icon" class="img-responsive" />#}
+                                {#<p class="text-center">Furniture</p>#}
+                            {#</a>#}
+                        {#</li>#}
 
-                        <li>
-                            <a href="{{ path('filter_adverts_by_category', {'id' : 7 }) }}">
-                                <img src="{{ asset('images/icon6.png') }}" alt="icon" title="icon" class="img-responsive" />
-                                <p>Furniture</p>
-                            </a>
-                        </li>
+                        {#<li class="col-md-1">#}
+                            {#<a href="{{ path('filter_adverts_by_category', {'id' : 8 }) }}">#}
+                                {#<img src="{{ asset('images/icon7.png') }}" alt="icon" title="icon" class="img-responsive" />#}
+                                {#<p class="text-center">Jobs</p>#}
+                            {#</a>#}
+                        {#</li>#}
 
-                        <li>
-                            <a href="{{ path('filter_adverts_by_category', {'id' : 8 }) }}">
-                                <img src="{{ asset('images/icon7.png') }}" alt="icon" title="icon" class="img-responsive" />
-                                <p>Jobs</p>
-                            </a>
-                        </li>
+                        {#<li class="col-md-1">#}
+                            {#<a href="{{ path('filter_adverts_by_category', {'id' : 4 }) }}">#}
+                                {#<img src="{{ asset('images/icon8.png') }}" alt="icon" title="icon" class="img-responsive" />#}
+                                {#<p class="text-center">Services</p>#}
+                            {#</a>#}
+                        {#</li>#}
 
-                        <li>
-                            <a href="{{ path('filter_adverts_by_category', {'id' : 4 }) }}">
-                                <img src="{{ asset('images/icon8.png') }}" alt="icon" title="icon" class="img-responsive" />
-                                <p>Services</p>
-                            </a>
-                        </li>
+                        {#<li class="col-md-1">#}
+                            {#<a href="{{ path('filter_adverts_by_category', {'id' : 4 }) }}">#}
+                                {#<img src="{{ asset('images/icon9.png') }}" alt="icon" title="icon" class="img-responsive" />#}
+                                {#<p class="text-center">Pets</p>#}
+                            {#</a>#}
+                        {#</li>#}
 
-                        <li>
-                            <a href="{{ path('filter_adverts_by_category', {'id' : 4 }) }}">
-                                <img src="{{ asset('images/icon9.png') }}" alt="icon" title="icon" class="img-responsive" />
-                                <p>Pets</p>
-                            </a>
-                        </li>
+                        {#<li class="col-md-1">#}
+                            {#<a href="{{ path('filter_adverts_by_category', {'id' : 4 }) }}">#}
+                                {#<img src="{{ asset('images/icon10.png') }}" alt="icon" title="icon" class="img-responsive" />#}
+                                {#<p class="text-center">Education</p>#}
+                            {#</a>#}
+                        {#</li>#}
 
-                        <li>
-                            <a href="{{ path('filter_adverts_by_category', {'id' : 4 }) }}">
-                                <img src="{{ asset('images/icon10.png') }}" alt="icon" title="icon" class="img-responsive" />
-                                <p>Education</p>
-                            </a>
-                        </li>
+                        {#<li class="col-md-1">#}
+                            {#<a href="{{ path('filter_adverts_by_category', {'id' : 4 }) }}">#}
+                                {#<img src="{{ asset('images/icon11.png') }}" alt="icon" title="icon" class="img-responsive" />#}
+                                {#<p class="text-center">Accessories</p>#}
+                            {#</a>#}
+                        {#</li>#}
 
-                        <li>
-                            <a href="{{ path('filter_adverts_by_category', {'id' : 4 }) }}">
-                                <img src="{{ asset('images/icon11.png') }}" alt="icon" title="icon" class="img-responsive" />
-                                <p>Matrimony</p>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="{{ path('filter_adverts_by_category', {'id' : 4 }) }}">
-                                <img src="{{ asset('images/icon12.png') }}" alt="icon" title="icon" class="img-responsive" />
-                                <p>Notes and Coins</p>
-                            </a>
-                        </li>
-
+                        {#<li class="col-md-1">#}
+                            {#<a href="{{ path('filter_adverts_by_category', {'id' : 4 }) }}">#}
+                                {#<img src="{{ asset('images/icon12.png') }}" alt="icon" title="icon" class="img-responsive" />#}
+                                {#<p class="text-center">Notes and Coins</p>#}
+                            {#</a>#}
+                        {#</li>#}
                     </ul>
-
-
                 </div>
             </div>
         </div>
-    </div>
+    {#</div>#}
 </div>
 

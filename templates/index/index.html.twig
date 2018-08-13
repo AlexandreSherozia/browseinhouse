@@ -25,6 +25,29 @@
         </div>
     </div>
     <!-- slider ends here -->
+
+
+    <!-- browse starts here -->
+    <div class="browse">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2>{{ 'home.section.Title' | trans }}</h2>
+                    <hr/>
+                    <ul class="list-inline">
+                        <li style="width: 280px"><a href="{{ path('show_adverts_by_section',{'label' : 'Shopping' }) }}"><img src="{{ asset('images/shopping.png') }}" alt="icon" title="icon" class="img-responsive" /><p>Shopping</p></a></li>
+                        <li style="width: 280px"><a href="{{ path('show_adverts_by_section',{'label' : 'Jobs' }) }}"><img src="{{ asset('images/selling.png') }}" alt="icon" title="icon" class="img-responsive" /><p>Jobs</p></a></li>
+                        <li style="width: 280px"><a href="{{ path('show_adverts_by_section',{'label' : 'Rent' }) }}"><img src="{{ asset('images/Rental.png') }}" alt="icon" title="icon" class="img-responsive" /><p>Rent</p></a></li>
+                        <li style="width: 280px"><a href="{{ path('show_adverts_by_section',{'label' : 'Services' }) }}"><img src="{{ asset('images/service.png') }}" alt="icon" title="icon" class="img-responsive" /><p>Service</p></a></li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- browse ends here -->
+
+    <!-- last adverts -->
     <div class="browse">
         <div class="container">
             <div class="row">
@@ -51,13 +74,18 @@
                                     <p class="text-left col-md-3">posted by
                                         <a href="{{ path('show_public_profile', {'pseudo': advert.user.pseudo}) }}">{{ advert.user.pseudo }}</a> on {{ advert.creationDate | date('d-m-Y H:m:s') }}
                                     </p>
-                                    <p class="text-right col-md-3">category :
-                                        {{ advert.category.label }} in {{ advert.section.label }}
+                                    <p class="text-right col-md-3">
+                                        <a class="btn btn-default" href="{{ path('filter_adverts_by_category_and_section', {'sectionlabel' : advert.section.label, 'categorylabel' : advert.category.label }  ) }}">
+                                            {{ advert.category.label }}
+                                        </a> in
+                                        <a class="btn btn-default" href="{{ path('filter_adverts_by_category_and_section', {'sectionlabel' : advert.section.label, 'categorylabel' : advert.category.label }  ) }}">
+                                            {{ advert.section.label }}
+                                        </a>
                                     </p>
                                     <p class="col-md-10">
                                         {{ advert.description | shorten_text }} -
                                     </p>
-                                    <h4 class="text-right col-md-2 badge">{{ advert.price | text_trim }} </h4>
+                                    <h4 class="text-right col-md-1 badge">{{ advert.price | text_trim }} </h4>
                                 </div>
                             </div>
                         </div>
@@ -70,27 +98,7 @@
             </div>
         </div>
     </div>
-
-    <!-- browse starts here -->
-    <div class="browse">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12">
-                    <h2>{{ 'home.section.Title' | trans }}</h2>
-                    <hr/>
-                    <ul class="list-inline">
-                        <li><a href="{{ path('show_adverts_by_section',{'label' : 'Shopping' }) }}"><img src="{{ asset('images/shopping.png') }}" alt="icon" title="icon" class="img-responsive" /><p>Shopping</p></a></li>
-                        <li><a href="{{ path('show_adverts_by_section',{'label' : 'Jobs' }) }}"><img src="{{ asset('images/selling.png') }}" alt="icon" title="icon" class="img-responsive" /><p>Jobs</p></a></li>
-                        <li><a href="{{ path('show_adverts_by_section',{'label' : 'Rent' }) }}"><img src="{{ asset('images/Rental.png') }}" alt="icon" title="icon" class="img-responsive" /><p>Rent</p></a></li>
-                        <li><a href="{{ path('show_adverts_by_section',{'label' : 'Services' }) }}"><img src="{{ asset('images/service.png') }}" alt="icon" title="icon" class="img-responsive" /><p>Service</p></a></li>
-
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- browse ends here -->
-
+    <!-- end of last adverts -->
 
     <!-- banner starts here -->
     <div class="banner">

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 
 use App\Entity\Advert;
+use App\Entity\Category;
 use App\Entity\Contact;
 use App\Entity\User;
 use App\Form\AdvertType;
@@ -124,31 +125,45 @@ class AdvertController extends Controller
             $request->query->getInt('page', 1),
             10
         );
-            dump($pagination);
+
         return $this->render('advert/show_adverts_by_section.html.twig', [
-            'advertsBySection' => $pagination
+            'adverts' => $pagination,
+            'sectionLabel' => $label
         ]);
     }
 
     /**
      * @Route("/section/{sectionlabel}/category/{categorylabel}", name="filter_adverts_by_category_and_section")
      */
-    public function filterAdvertsByCategoryAndSection($sectionlabel, $categorylabel)
+    public function filterAdvertsByCategoryAndSection($sectionlabel, $categorylabel, Request $request)
     {
-        return $this->render('advert/filter_adverts_by_category.html.twig', [
-            'filteredAdvertsByCategory' => $this->manager->getAdvertsByCategoryAndSection($sectionlabel, $categorylabel)
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query = $this->manager->getAdvertsByCategoryAndSection($sectionlabel, $categorylabel),
+            $request->query->getInt('page', 1),
+            10
+        );
+        return $this->render('advert/show_adverts_by_category_and_section.html.twig', [
+            'adverts' => $pagination,
+            'category' => $categorylabel
         ]);
     }
 
     /**
      * @Route("/category/{id}", name="filter_adverts_by_category")
      */
-    public function filterAdvertsByCategory($id)
+    public function filterAdvertsByCategory($id, Request $request)
     {
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query = $this->manager->getAdvertsByCategory($id),
+            $request->query->getInt('page', 1),
+            10
+        );
 
-        return $this->render('advert/filter_adverts_by_category.html.twig', [
-            'filteredAdvertsByCategory' => $this->manager->getAdvertsByCategory($id)/*,
-            'buyingCategories'          => $advertManager->getAdvertsBysection($sectionid)*/
+        return $this->render('advert/show_adverts_by_category.html.twig', [
+            'adverts'   => $pagination,
+            'category'  => $this->getDoctrine()->getRepository(Category::class)->find($id)->getLabel(),
         ]);
     }
 
