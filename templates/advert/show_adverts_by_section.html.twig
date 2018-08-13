@@ -11,7 +11,7 @@
 {% block content %}
 
     <div class="row">
-        <h1 class="text-center">{{ sectionLabel }}</h1>
+        <h1 class="text-center">{{ sectionLabel }} Section</h1>
     </div>
 
     {% include 'includes/_categories.html.twig' %}
@@ -37,7 +37,7 @@
                                         <a href="{{ path('show_public_profile', {'pseudo': advert.user.pseudo}) }}">{{ advert.user.pseudo }}</a> on {{ advert.creationDate | date('d-m-Y H:m:s') }}
                                     </p>
                                     <p class="text-right col-md-3">
-                                        <a class="btn btn-default" href="{{ path('filter_adverts_by_category', {'id' : advert.category.id}) }}">
+                                        <a class="btn btn-default" href="{{ path('filter_adverts_by_category', {'categorylabel' : advert.category.label}) }}">
                                             {{ advert.category.label }}
                                         </a> in
                                         <a class="btn btn-default" href="{{ path('show_adverts_by_section', {'label' : advert.section.label}) }}">

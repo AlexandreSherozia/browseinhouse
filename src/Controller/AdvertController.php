@@ -150,20 +150,20 @@ class AdvertController extends Controller
     }
 
     /**
-     * @Route("/category/{id}", name="filter_adverts_by_category")
+     * @Route("/category/{categorylabel}", name="filter_adverts_by_category")
      */
-    public function filterAdvertsByCategory($id, Request $request)
+    public function filterAdvertsByCategory($categorylabel, Request $request)
     {
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
-            $query = $this->manager->getAdvertsByCategory($id),
+            $query = $this->manager->getAdvertsByCategory($categorylabel),
             $request->query->getInt('page', 1),
             10
         );
 
         return $this->render('advert/show_adverts_by_category.html.twig', [
             'adverts'   => $pagination,
-            'category'  => $this->getDoctrine()->getRepository(Category::class)->find($id)->getLabel(),
+            'category'  => $categorylabel
         ]);
     }
 

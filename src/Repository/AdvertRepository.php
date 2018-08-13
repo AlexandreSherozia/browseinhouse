@@ -50,12 +50,14 @@ class AdvertRepository extends ServiceEntityRepository
 
     }
 
-    public function findAdvertsByCategory($id)
+    public function findAdvertsByCategory($categorylabel)
     {
         return $this->createQueryBuilder('a')
-            ->where('a.category = :category')
-            ->setParameter('category', $id)
-            ->orderBy('a.creationDate','DESC')
+            ->select('a','c')
+            ->leftJoin('a.category', 'c')
+            ->where('c.label = :label')
+            ->setParameter('label', $categorylabel)
+            ->orderBy('a.creationDate', 'DESC')
             ->getQuery()
             ->getResult()
             ;

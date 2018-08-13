@@ -69,9 +69,9 @@ class AdvertManager extends PaginatorAware
         return $this->advertRepository->findAdvertsByCategoryAndSection($sectionlabel, $categorylabel);
     }
 
-    public function getAdvertsByCategory($id)
+    public function getAdvertsByCategory($categorylabel)
     {
-        return $this->advertRepository->findAdvertsByCategory($id);
+        return $this->advertRepository->findAdvertsByCategory($categorylabel);
     }
 
     public function findAdvert($advertslug)
