@@ -47,8 +47,6 @@ class AdvertController extends Controller
 
         if ($formHandler->process()) {
 
-            //dump($formHandler->getForm()->getData()->getSlug());
-
             return $this->redirectToRoute('show_advert' ,
                 ['advertslug' => $formHandler->getForm()->getData()->getSlug() ]);
 

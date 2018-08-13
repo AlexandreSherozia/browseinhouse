@@ -38,7 +38,6 @@
                         <div class="list-group-item">
                             <div class="row">
                                 <div class="col-md-2">
-
                                     {% if advert.photos is not empty %}
                                             <img src="{{ asset('images/advertphotos/'~advert.photos|first.url ) }}" class="thumbnail">
                                     {% else %}
@@ -50,7 +49,7 @@
                                     <a href="{{ path('show_advert', {'advertslug': advert.slug }) }}"><h3 class="col-md-6">{{ advert.title }}</h3></a>
 
                                     <p class="text-left col-md-3">posted by
-                                        <a href="{{ path('show_public_profile', {'pseudo': advert.user.pseudo}) }}">{{ advert.user.pseudo }}</a> on {{ advert.creationDate | date('d-m-Y') }}
+                                        <a href="{{ path('show_public_profile', {'pseudo': advert.user.pseudo}) }}">{{ advert.user.pseudo }}</a> on {{ advert.creationDate | date('d-m-Y H:m:s') }}
                                     </p>
                                     <p class="text-right col-md-3">category :
                                         {{ advert.category.label }} in {{ advert.section.label }}

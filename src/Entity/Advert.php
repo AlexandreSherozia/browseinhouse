@@ -273,4 +273,14 @@ class Advert
         return $this->user;
     }
 
+    /**
+     * @param mixed $creationDate
+     */
+    public function setCreationDate(\DateTime $creationDate): void
+    {
+        $this->creationDate = $creationDate;
+    }
+
+
+
 }
