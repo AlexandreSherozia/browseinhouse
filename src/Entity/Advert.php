@@ -69,7 +69,6 @@ class Advert
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Photo", mappedBy="advert", cascade={"persist"}, orphanRemoval=true)
      * @ORM\JoinColumn(nullable=false)
-     * @Assert\NotBlank()
      */
     private $photos;
 
