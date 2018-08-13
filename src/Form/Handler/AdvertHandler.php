@@ -62,9 +62,9 @@ class AdvertHandler
                     $photo->setAdvert($this->form->getData());
                     $this->onSubmittedWithPhoto($photo);//onSuccess
                 }
-                return true;
+                //return true;
             }
-
+                //dump($this->form->getData());
                 $this->onSubmitted();
                 return true;
         }
@@ -90,7 +90,7 @@ class AdvertHandler
 
     /**
      * Protected method, gets filled form data and
-     *  "myPersist" method, which persists and flushes by native Doctrine methods
+     * "myPersist" method, which persists and flushes by native Doctrine methods
      *  of AdvertManager
      */
     protected function onSubmitted() //onSuccess
