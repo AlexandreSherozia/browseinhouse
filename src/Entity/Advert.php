@@ -33,21 +33,21 @@ class Advert
 
     /**
      * @ORM\Column(type="string", length=120)
-     * @Assert\NotBlank(message="asserts.title.mandatory")
+     * @Assert\NotBlank(message="asserts.notBlank")
      * @Groups({"read"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
-     * @Assert\NotBlank(message="asserts.description.mandatory")
+     * @Assert\NotBlank(message="asserts.notBlank")
      * @Groups({"read"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="float")
-     * @Assert\NotBlank(message="asserts.price.mandatory")
+     * @Assert\NotBlank(message="asserts.notBlank")
      * @Assert\Type(type="float", message="asserts.integer.type")
      * @Groups({"read"})
      */
@@ -68,6 +68,8 @@ class Advert
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Photo", mappedBy="advert", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank()
      */
     private $photos;
 
@@ -123,9 +125,9 @@ class Advert
      */
     public function addPhoto(Photo $photo)
     {
-        $this->photos[] = $photo;
+        $photo->setAdvert($this);
 
-        //$photo->setAdvert($this);
+        $this->photos[] = $photo;
 
         return $this;
     }
