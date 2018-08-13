@@ -42,7 +42,7 @@
                     {% for user in userList %}
                         <div>
                             <td>{{ user.id }}</td>
-                            <td>{{ user.pseudo }}</td>
+                            <td><a href="{{ path('show_public_profile', {'pseudo': user.pseudo}) }}" class="alert-info">{{ user.pseudo }}</a></td>
                             <td>{{ user.email }}</td>
                             <td>{{ user.registrationDate | date('d/m/Y')}}</td>
                             <td>{{ user.firstname }}</td>
