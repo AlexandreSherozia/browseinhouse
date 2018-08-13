@@ -18,40 +18,79 @@
             </div>
         </div>
     {% endfor %}
-    <section class="container">
+    <div class="container">
         <div class="panel panel-default">
             {% for advert in advertdata %}
-                {% if app.user.id is defined %}
-                    {% if app.user.id == advert.user.id %}
 
-                    <div class="panel-body">
-                        <a href="{{ path('advert_edit', {'advertslug' : advert.slug }) }}" class="col-sm-2 btn btn-default">
-                            Edit
-                        </a>
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6">
 
-                        <a href="{{ path('delete_advert', {'id': advert.id }) }}" class="col-sm-2 btn btn-danger">
-                            Delete
-                        </a>
+                            <div class="slideshow owl-carousel">
+
+                                {% if advert.photos %}
+                                    {% for photo in advert.photos %}
+
+                                        {#{{ dump(photo.url) }}#}
+                                        <div class="item">
+                                            <img src="{{ asset('images/advertphotos/'~photo.url ) }}" alt="{{ photo.name }}" title="{{ photo.name }}" class="img-responsive">
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+
+                            </div>
+                        </div>
+                        <div class="col-md-3"></div>
                     </div>
+                {#Si la session existe bien ( - l'utilisateur est connecté )#}
+                {% if app.user %}
+                    {#Si l'annonce appartient à l'utilisateur courrant, on lui affiche les boutons "suppr" et "edition"#}
+                    {% if app.user.id == advert.user.id %}
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6 text-center">
+
+                                <div class="panel-body">
+                                    <a href="{{ path('advert_edit', {'advertslug' : advert.slug }) }}" class="col-sm-2 btn btn-default">
+                                        Edit
+                                    </a>
+
+                                    <a href="{{ path('delete_advert', {'id': advert.id }) }}" class="col-sm-2 btn btn-danger">
+                                        Delete
+                                    </a>
+                                </div>
+
+                            </div>
+                            <div class="col-md-3"></div>
+                        </div>
                     {% endif %}
+
                 {% endif %}
-                    <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-3"></div>
+
+                    <div class="panel-body col-md-6">
+
                         <h2 class="text-center">{{ advert.title }}</h2>
                         <p class="well well-lg">{{ advert.description }}</p>
                         <div class="col-md-6">
                             <p class="badge">{{ advert.price }} €</p>
                             <p><a href="#" class="badge alert-danger">{{ 'advert.button.whishlist' | trans }}</a></p>
                         </div>
+
                         <div class="col-md-6">
                             <p class="text-right">{{ advert.creationDate | date('Y-m-d') ~' '~ advert.creationDate | date('H:i:s') }}</p>
                             <p class="text-right"><a href="{{ path('show_public_profile', {'pseudo': advert.user.pseudo}) }}">{{ advert.user.pseudo }}</a></p>
                         </div>
+
                         <div class="text-center">
                         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                            {% if is_granted('ROLE_USER') %}
-                            <a href="{{ path('user_contact', {'slug': advert.slug}) }}">
-                                <button class="btn btn-primary btn-lg alert-warning">{{ 'advert.button.contactUser' | trans }}</button>
-                            </a>
+
+                            {#N'affiche pas l'envoi de mail sur son propre profil#}
+                            {% if is_granted('ROLE_USER') and app.user.id != advert.user.id %}
+                                <a href="{{ path('user_contact', {'slug': advert.slug}) }}">
+                                    <button class="btn btn-primary btn-lg alert-warning">{{ 'advert.button.contactUser' | trans }}</button>
+                                </a>
                             {% endif %}
                         {% else %}
                             <button class="btn btn-primary btn-lg" disabled="disabled">{{ 'advert.button.contactUser' | trans }}</button>
@@ -63,9 +102,14 @@
 
                         </div>
                     </div>
+
+                    <div class="col-md-3"></div>
+
+                </div>
+
             {% endfor %}
         </div>
-    </section>
+    </div>
 
 {% endblock %}
 

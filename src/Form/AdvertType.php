@@ -4,9 +4,11 @@ namespace App\Form;
 
 use App\Entity\Advert;
 use App\Entity\Category;
+use App\Entity\Photo;
 use App\Entity\Section;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -18,9 +20,20 @@ class AdvertType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->image_url = $options['image_url'];
+
         $builder
             ->add('title', TextType::class, [
                 'label' => 'Product'
+            ])
+            ->add('photos', FileType::class, [
+                'multiple'  => true,
+                'required'  => false,
+                'label'     => 'advert.photo.uploader',
+                'mapped'    => false,
+                'attr'      => [
+                    'data-default-file' => $this->image_url
+                ]
             ])
             ->add('description', TextareaType::class)
             ->add('price', NumberType::class)
@@ -39,7 +52,9 @@ class AdvertType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Advert::class,
+            'data_class'            => Advert::class,
+            'translation_domain'    => 'forms',
+            'image_url'             =>  null
         ]);
     }
 }

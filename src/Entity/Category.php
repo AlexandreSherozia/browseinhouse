@@ -2,10 +2,21 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
+ * @ApiResource(attributes={
+ *          "normalization_context"={"groups"={"read"}},
+ *          "denormalization_context"={"groups"={"write"}}
+ *     },
+ *     collectionOperations={"get" = {"method"="GET"}},
+ *     itemOperations={
+ *          "get" = {"method"="GET"}
+ *     }
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
  */
 class Category
@@ -19,6 +30,7 @@ class Category
 
     /**
      * @ORM\Column(type="string", length=60)
+     * @Groups({"read"})
      */
     private $label;
 

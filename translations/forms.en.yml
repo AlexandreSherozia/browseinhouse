@@ -13,3 +13,4 @@ form.login.submit: 'Sign up'
 form.contact.placeholder.messagetitle: 'Give a title to your message'
 form.contact.placeholder.messagebody: 'Type here your message'
 form.contact.submit: 'Send your message'
+advert.photo.uploader:  "Select 3 photos at most"

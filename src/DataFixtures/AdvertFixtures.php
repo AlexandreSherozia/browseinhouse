@@ -19,6 +19,7 @@ class AdvertFixtures extends Fixture implements OrderedFixtureInterface
     private $sectionRepository;
     private $userRepository;
     private $om;
+    private $photoUrl = 'advert_placeholder.jpg';
 
     public function __construct(ObjectManager $manager)
     {
@@ -29,7 +30,7 @@ class AdvertFixtures extends Fixture implements OrderedFixtureInterface
     }
 
     /**
-     * pick a random Id from a table linked to a Doctrine entity
+     * pick a random Id in db from a table linked to a Doctrine entity
      * @param string $entity the entity required
      * @return int an Id of the entity
      */
@@ -67,6 +68,8 @@ class AdvertFixtures extends Fixture implements OrderedFixtureInterface
     {
         for ($i = 0; $i < $this->numberOfIterations; $i++)
             {
+                $date = new \DateTime('2018-06-04 00:00:01');
+                $date = $date->modify('+'.$i.'minute');
                 $advert = new Advert();
 
                 $category = $this->categoryRepository->find($this->getRandomEntityId('Category'));
@@ -74,17 +77,19 @@ class AdvertFixtures extends Fixture implements OrderedFixtureInterface
                 $user = $this->userRepository->find($this->getRandomEntityId('User'));
 
                 $advert->setTitle('product '.$i);
-                $advert->setDescription($i. 'Vente 2Gîtes 3 Clés tarif 2 nuits:200€, 50€ par nuit 
-                supplémentaire Semaine :380€,460€,560€ selon période. 2 Maisons 70 m², au calme, située au coeur 
-                de la baie de Somme, entre le parc du Marquenterre et le Crotoy ouvert toute l\'année. Toutes 
-                charges comprises, taxe de séjour incluse,dégressif selon durée Animaux acceptés,parking privé, 
-                wifi.');
+                $advert->setDescription('Description '. $i. ': Lorem ipsum dolor sit amet, consectetur 
+                adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim 
+                veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute 
+                irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur 
+                sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.');
                 $advert->setPrice(mt_rand(10, 1000));
                 $advert->setSlug('product-slug'.$i);
 
                 $advert->setCategory($category);
                 $advert->setSection($section);
                 $advert->setUser($user);
+
+                $advert->setCreationDate($date);
 
                 $manager->persist($advert);
             }
@@ -96,3 +101,4 @@ class AdvertFixtures extends Fixture implements OrderedFixtureInterface
         return 4;
     }
 }
+

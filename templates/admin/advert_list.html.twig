@@ -26,12 +26,13 @@
         <div class="col-md-6 col-xs-6">
             {% if advertList and sections %}
                 {% for section in sections %}
-                    <h3>{{ section }}</h3>
+                    <h3 class="alert alert-info">{{ section }}</h3>
                     <table class="table">
                         <tr>
                             <th>ID</th>
                             <th>{{ 'admin.advertlist.creation_date' | trans }}</th>
                             <th>{{ 'admin.advertlist.description' | trans }}</th>
+                            <th>{{ 'admin.advertlist.photo' | trans }}</th>
                             <th>{{ 'admin.advertlist.price' | trans }}</th>
                             <th>{{ 'admin.advertlist.category' | trans }}</th>
                             <th>{{ 'admin.advertlist.pseudo' | trans }}</th>
@@ -42,8 +43,9 @@
                                 <tr>
                                     <td>{{ advert.id }}</td>
                                     <td>{{ advert.creationDate | date('d/m/Y') }}</td>
+                                    <td><img src="{{ asset('images/advertphotos/'~ advert.photos | first.url) }}" height="40px"></td>
                                     <td>
-                                        <a href="{{ path('show_advert' {'advertslug': advert.slug }) }}">
+                                        <a href="{{ path('show_advert', {'advertslug': advert.slug }) }}">
                                             {{ advert.description | shorten_text }}
                                         </a>
                                     </td>

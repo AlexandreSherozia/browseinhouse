@@ -18,7 +18,7 @@ class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->image_url = $options['image_url'];
+        //$this->image_url = $options['image_url'];
 
         $builder
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
@@ -77,9 +77,9 @@ class UserType extends AbstractType
                             'required' => false,
                             'label' => 'form.edit.avatar',
                             'data_class' => null,
-                            'attr' => [
-                               'data-default-file' => $this->image_url
-                            ]
+//                            'attr' => [
+//                               'data-default-file' => $this->image_url
+//                            ]
                         ])
                         ->add('submit', SubmitType::class, [
                             'label' => "form.edit"
@@ -93,7 +93,7 @@ class UserType extends AbstractType
         $resolver->setDefaults([
            'data_class' => User::class,
            'translation_domain' => 'forms',
-            'image_url' => null,
+            //'image_url' => null,
         ]);
     }
 }

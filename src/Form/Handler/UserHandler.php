@@ -2,7 +2,6 @@
 
 namespace App\Form\Handler;
 
-use App\Entity\User;
 use App\Service\ImageUploader;
 use App\Service\UserManager;
 use Symfony\Component\Form\Form;
