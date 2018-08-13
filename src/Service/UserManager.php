@@ -46,9 +46,9 @@ class UserManager
         $this->em->flush();
     }
 
-    public function removeAvatar(int $id)
+    public function removeAvatar(int $user_id)
     {
-        $user = $this->em->getRepository(User::class)->find($id);
+        $user = $this->em->getRepository(User::class)->find($user_id);
 
         $user->setAvatar(null);
         $this->em->flush();

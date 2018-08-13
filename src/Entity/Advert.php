@@ -7,9 +7,18 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource(attributes={"filters"={"advert.search"}})
+ * @ApiResource(
+ *     attributes={
+ *          "filters"={"advert.search"},
+ *          "normalization_context"={"groups"={"read"}}
+ *     },
+ *     collectionOperations={"get" = {"method"="GET"}},
+ *     itemOperations={"get" = {"method"="GET"}
+ *     }
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\AdvertRepository")
  */
 class Advert
@@ -18,53 +27,62 @@ class Advert
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=120)
-     * @Assert\NotBlank(message="asserts.title.mandatory")
+     * @Assert\NotBlank(message="asserts.notBlank")
+     * @Groups({"read"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
-     * @Assert\NotBlank(message="asserts.description.mandatory")
+     * @Assert\NotBlank(message="asserts.notBlank")
+     * @Groups({"read"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="float")
-     * @Assert\NotBlank(message="asserts.price.mandatory")
+     * @Assert\NotBlank(message="asserts.notBlank")
      * @Assert\Type(type="float", message="asserts.integer.type")
+     * @Groups({"read"})
      */
     private $price;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"read"})
      */
     private $creationDate;
 
     /**
      * @Gedmo\Slug(fields={"title"},unique=true)
      * @ORM\Column(length=128, unique=true)
+     * @Groups({"read"})
      */
     private $slug;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Photo", mappedBy="advert", cascade={"persist"}, orphanRemoval=true)
-     * @Assert\Image(maxSize="10M", maxSizeMessage="asserts.article.image.maxsize")
+     * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank()
      */
     private $photos;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="adverts")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"read"})
      */
     private $category;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Section")
+     * @Groups({"read"})
      */
     private $section;
 
@@ -78,6 +96,7 @@ class Advert
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"read"})
      */
     private $user;
 
@@ -106,9 +125,9 @@ class Advert
      */
     public function addPhoto(Photo $photo)
     {
-        $this->photos[] = $photo;
+        $photo->setAdvert($this);
 
-        //$photo->setAdvert($this);
+        $this->photos[] = $photo;
 
         return $this;
     }

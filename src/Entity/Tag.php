@@ -6,7 +6,6 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource(attributes={"filters"={"tag.search"}})
  * @ORM\Entity(repositoryClass="App\Repository\TagRepository")
  */
 class Tag

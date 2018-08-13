@@ -38,11 +38,11 @@
                         <div class="list-group-item">
                             <div class="row">
                                 <div class="col-md-2">
-                                    
-                                    {% if advert.photos %}
+
+                                    {% if advert.photos is not empty %}
                                             <img src="{{ asset('images/advertphotos/'~advert.photos|first.url ) }}" class="thumbnail">
                                     {% else %}
-                                            <img src="{{ asset('images/advertphotos/'~advert.photos|first.url ) }}" class="thumbnail">
+                                            <img src="{{ asset('images/advertphotos/bnh.jpg' ) }}" class="thumbnail">
                                     {% endif %}
 
                                 </div>

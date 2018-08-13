@@ -14,6 +14,7 @@ use App\Entity\Photo;
 use App\Service\AdvertManager;
 use App\Service\AdvertPhotoUploader;
 use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 
 class AdvertHandler
@@ -47,33 +48,27 @@ class AdvertHandler
     public function process()
     {
         $this->form->handleRequest($this->request);
-
-
-
         if ($this->form->isSubmitted() && $this->form->isValid()) {
-
             $this->currentPhoto = $this->form->get('photos')->getData();
             //dump($this->currentPhoto);
-
-            foreach ($this->currentPhoto as $key => $fileBrut)
+            if(null !==$this->currentPhoto )
             {
-
-                $file = $this->advertPhotoUploader->uploadPhoto($fileBrut);
-
-                $photo = new Photo();
-
-                $photo->setUrl($file);
-                $photo->setName($this->form->get('title')->getData() . '-'. ($key+1) );
-                $photo->setAdvert($this->form->getData());
-                $this->onSubmitted($photo);//onSuccess
+                foreach ($this->currentPhoto as $key => $fileBrut)
+                {
+                    $file = $this->advertPhotoUploader->uploadPhoto($fileBrut);
+                    $photo = new Photo();
+                    $photo->setUrl($file);
+                    $photo->setName($this->form->get('title')->getData() . '-'. ($key+1) );
+                    $photo->setAdvert($this->form->getData());
+                    $this->onSubmittedWithPhoto($photo);//onSuccess
+                }
+                return true;
             }
 
-            return true;
-
+                $this->onSubmitted();
+                return true;
         }
-
         return false;
-
     }
 
 
@@ -87,19 +82,26 @@ class AdvertHandler
         return $this->form;
     }
 
+    protected function onSubmittedWithPhoto($photo) //onSuccess
+    {
+        $advert = $this->form->getData();
+        $this->advert = $this->advertManager->myPersistWithPhoto($advert, $photo);
+    }
+
     /**
      * Protected method, gets filled form data and
      *  "myPersist" method, which persists and flushes by native Doctrine methods
      *  of AdvertManager
      */
-    protected function onSubmitted($photo) //onSuccess
+    protected function onSubmitted() //onSuccess
     {
-
         $advert = $this->form->getData();
-
-        $this->advert = $this->advertManager->myPersist($advert, $photo);
-
+        $this->advert = $this->advertManager->myPersist($advert);
     }
+
+
+
+
 
 
 }

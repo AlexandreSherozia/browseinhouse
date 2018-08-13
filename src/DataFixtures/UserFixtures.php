@@ -13,10 +13,13 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class UserFixtures extends Fixture implements OrderedFixtureInterface
 {
 
-    private $numberOfIterations = 10;
+    private $numberOfIterations = 20;
     private $encoder;
 
-    private $firstNames = ['John', 'Michael', 'Alex', 'George', 'Colleen','Lara','Larissa','Matilde','Kauan','Maria','Marcos','Emilly','Breno','Joao','Simon','Simon','Sille','Marius','Anna','Peter'];
+    private $firstNamesF = ['Colleen','Lara','Larissa','Matilde','Kauan','Maria','Emilly','Sille','Anna'];
+    private $firstNamesM = ['John', 'Michael', 'Alex', 'George', 'Marcos','Breno','Joao','Simon','Simon','Marius','Peter'];
+    private $avatarsF = ['fixture_f1.jpg', 'fixture_f2.jpg', 'fixture_f3.jpg', 'fixture_f4.jpg', 'fixture_f5.jpg', 'fixture_f6.jpg', 'fixture_f7.jpg', 'fixture_f8.jpg', 'fixture_f9.jpg'];
+    private $avatarsM = ['fixture_m1.jpg', 'fixture_m2.jpg', 'fixture_m3.jpg', 'fixture_m4.jpg', 'fixture_m5.jpg', 'fixture_m6.jpg', 'fixture_m7.jpg', 'fixture_m8.jpg', 'fixture_m9.jpg', 'fixture_m10.jpg'];
     private $lastNames  = ['Denisov','Yevseyeva','Borodin','Rinkashifu','Hruška','Režná','Beaupré','Duplessis','Jodion','Guérette','Chnadonnet','Boisclair','Lamy','Didiane','Danielsen','Danielsen','Bech','Thom'];
 
     /**
@@ -33,17 +36,44 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
         for ($i = 0; $i < $this->numberOfIterations; $i++)
         {
             $user = new User();
-            $user->setEmail($i . 'user@gmail.com');
+            $user->setEmail('user' .$i . '@gmail.com');
 
-            $key = array_rand($this->firstNames);
-            $randomedFirstName = $this->firstNames[$key];
-            $user->setPseudo($i . $randomedFirstName);
+            $number = rand(1,2);
 
-            $user->setFirstname($randomedFirstName);
+            if($number < 1.51) {
 
-            $key = array_rand($this->lastNames);
-            $randomedLastName = $this->lastNames[$key];
-            $user->setLastname($randomedLastName);
+                $key = array_rand($this->firstNamesF);
+                $randomFirstName = $this->firstNamesF[$key];
+                $user->setPseudo($randomFirstName .$i);
+
+                $user->setFirstname($randomFirstName);
+
+                $key = array_rand($this->lastNames);
+                $randomLastName = $this->lastNames[$key];
+                $user->setLastname($randomLastName);
+
+                $key = array_rand($this->avatarsF);
+                $randomAvatar = $this->avatarsF[$key];
+                $user->setAvatar($randomAvatar);
+
+            }
+
+            else {
+
+                $key = array_rand($this->firstNamesM);
+                $randomFirstName = $this->firstNamesM[$key];
+                $user->setPseudo($randomFirstName . $i);
+
+                $user->setFirstname($randomFirstName);
+
+                $key = array_rand($this->lastNames);
+                $randomLastName = $this->lastNames[$key];
+                $user->setLastname($randomLastName);
+
+                $key = array_rand($this->avatarsM);
+                $randomAvatar = $this->avatarsM[$key];
+                $user->setAvatar($randomAvatar);
+            }
 
             $phones     =  '0' . mt_rand(0, 9) . mt_rand(0, 9) . mt_rand(0, 9) . mt_rand(0, 9) .mt_rand(0, 9) . mt_rand(0, 9) . mt_rand(0, 9) . mt_rand(0, 9) . mt_rand(0, 9);
             $user->setPhone($phones);

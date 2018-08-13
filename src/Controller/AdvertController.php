@@ -47,8 +47,11 @@ class AdvertController extends Controller
 
         if ($formHandler->process()) {
 
+            //dump($formHandler->getForm()->getData()->getSlug());
+
             return $this->redirectToRoute('show_advert' ,
                 ['advertslug' => $formHandler->getForm()->getData()->getSlug() ]);
+
         }
 
         return $this->render('form/createAdvertForm.html.twig',[
@@ -74,21 +77,19 @@ class AdvertController extends Controller
      * @param AdvertManager $manager
      * @Route("/edit-my-advert/{advertslug}", name="advert_edit")
      */
-    public function editAdvert(Request $request, $advertslug)
+    public function editAdvert(Request $request, $advertslug, AdvertPhotoUploader $advertPhotoUploader)
     {
         $this->denyAccessUnlessGranted(['ROLE_USER']);
 
         $advert = $this->manager->findAdvert($advertslug);
         $advertHandler = new AdvertHandler($this->createForm(AdvertType::class, $advert),
             $request,
-            $this->manager);
+            $this->manager, $advertPhotoUploader);
 
         if ($advertHandler->process()) {
             return $this->redirectToRoute('show_advert',[
                 'advertslug' => $advertHandler
-                    ->getForm()
-                    ->getData()
-                    ->getSlug()
+                    ->getForm()->getData()->getSlug()
 
             ] );
         }
@@ -155,13 +156,12 @@ class AdvertController extends Controller
 
 
     /**
-     * Allow an user to contact an other through an advert by sending him an email
-     * @Route("/advert/{slug}/user-contact", name="user_contact")
-     * @Security("has_role('ROLE_USER')")
+     * Allow an user to contact an other through an advert by sending him an email *
      * @param string $slug
      * @param Request $request
      * @param ContactHandler $contactHandler
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @Route("/advert/{slug}/user-contact", name="user_contact")
      */
     public function contactUserFromAdvert(string $slug, Request $request , ContactHandler $contactHandler)
     {
@@ -178,8 +178,8 @@ class AdvertController extends Controller
             $this->addFlash('success', 'advert.email.sent');
 
             return $this->redirectToRoute('show_advert', [
-                'advertslug' => $advert->getSlug(),
-                'advertdata'  => $advert
+                'advertslug'    => $advert->getSlug(),
+                'advertdata'    => $advert
             ]);
         }
 
@@ -189,4 +189,122 @@ class AdvertController extends Controller
             'advert' => $advert
         ]);
     }
+
+
+    /**
+     * show public infos and adverts list of a specific user by clicking on his advert
+     * @Route("/public-profile/{pseudo}", name="show_public_profile")
+     * @param AdvertManager $manager
+     * @param string $pseudo
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function userPublicProfile(AdvertManager $manager, string $pseudo)
+    {
+        $selectedUser = $this->getDoctrine()->getRepository(User::class)->findOneByPseudo($pseudo);
+        $userAdverts = $manager->getAdvertsByUser($selectedUser->getId());
+
+        return $this->render('user/user_publicprofile.html.twig', [
+            'user_public'  => $selectedUser,
+            'user_adverts' => $userAdverts
+        ]);
+    }
+
+
+    /****************************************************************************
+     *                       USER PROFILE PERSONAL PANEL                        *
+     ****************************************************************************/
+
+    /**
+     * Get user adverts from the user private profile page
+     * @Route("/adverts/{pseudo}", name="show_user_adverts")
+     * @Security("has_role('ROLE_USER')")
+     * @param AdvertManager $advertManager
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function showUserAdverts(AdvertManager $advertManager)
+    {
+        $user = $this->getUser();
+
+        /** @var Section $section */
+        foreach($advertManager->getAllSections() as $section){
+            $allSections[] = $section->getLabel();
+        }
+
+        $userAdverts = $advertManager->getAdvertsByUser($user->getId());
+
+        return $this->render('user/userprofile_adverts.html.twig', [
+            'advertList' => $userAdverts,
+        ]);
+    }
+
+    /**
+     * allow an user to delete an advert on his private profile page
+     * @Route("/user_delete_advert/{advert_id}", name="user_delete_advert")
+     * @Security("has_role('ROLE_USER')")
+     * @param AdvertManager $advertManager
+     * @param $advert_id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function deleteUserAdverts(AdvertManager $advertManager, $advert_id)
+    {
+        $advertManager->removeAdvert($advert_id);
+
+        $user = $this->getUser();
+
+        /** @var Section $section */
+        foreach($advertManager->getAllSections() as $section){
+            $allSections[] = $section->getLabel();
+        }
+
+        $userAdverts = $advertManager->getAdvertsByUser($user->getId());
+
+        return $this->render('user/userprofile_adverts.html.twig', [
+            'advertList' => $userAdverts,
+        ]);
+    }
+
+
+    /****************************************************************************
+     *                              ADMINISTRATOR PANEL                         *
+     ****************************************************************************/
+
+    /**
+     * show the list of all adverts for an admin user
+     * @Route("/admin/advert-list", name="advert_list")
+     * @Security("has_role('ROLE_ADMIN')")
+     * @param AdvertManager $advertManager
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function adminShowAdvertList(AdvertManager $advertManager)
+    {
+        $allAdverts = $advertManager->getAllAdvertsInfos();
+        /** @var Section $section */
+        foreach($advertManager->getAllSections() as $section){
+            $allSections[] = $section->getLabel();
+        }
+
+        return $this->render('admin/advert_list.html.twig', [
+            'advertList' => $allAdverts,
+            'sections' => $allSections
+        ]);
+    }
+
+    /**
+     * delete an advert from db in admin page
+     * @Route("/admin/delete-advert/{advert_id}", name="admin_delete_advert")
+     * @Security("has_role('ROLE_ADMIN')")
+     * @param AdvertManager $advertManager
+     * @param int $advert_id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function adminDeleteAdvert(AdvertManager $advertManager, int $advert_id)
+    {
+        $advertManager->removeAdvert($advert_id);
+
+        $this->addFlash('success', 'admin.deleteAdvert.validation');
+
+        return $this->redirectToRoute('advert_list');
+    }
+
 }
+

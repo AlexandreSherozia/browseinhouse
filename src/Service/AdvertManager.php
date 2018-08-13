@@ -35,15 +35,20 @@ class AdvertManager extends PaginatorAware
         return $this->em;
     }
 
-    public function myPersist(Advert $advert, $photo)
+    public function myPersist(Advert $advert)
     {
-
         $advert->setUser($this->connected_User);
+        $this->em->persist($advert);
+        $this->em->flush();
+        return $advert;
+    }
 
+    public function myPersistWithPhoto(Advert $advert, $photo)
+    {
+        $advert->setUser($this->connected_User);
         $this->em->persist($advert);
         $this->em->persist($photo);
         $this->em->flush();
-
         return $advert;
     }
 
@@ -96,6 +101,9 @@ class AdvertManager extends PaginatorAware
         $this->em->flush();
     }
 
+    /**
+     * @return \App\Repository\AdvertRepository|\Doctrine\Common\Persistence\ObjectRepository
+     */
     public function getAdvertRepo()
     {
         return $this->advertRepository;
