@@ -28,7 +28,7 @@ class AdvertType extends AbstractType
             ])
             ->add('photos', FileType::class, [
                 'multiple'  => true,
-                'required'  => false,
+                'required'  => true,
                 'label'     => 'advert.photo.uploader',
                 'mapped'    => false,
                 'attr'      => [

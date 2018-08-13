@@ -11,9 +11,15 @@ namespace App\Service;
 
 use Symfony\Component\HttpFoundation\File\File;
 
+/**
+ * Class AdvertPhotoUploader
+ * @package App\Service
+ */
 class AdvertPhotoUploader
 {
+    protected $mimeTypes;
     protected $photoDirectory;
+    public const NON_EXISTENT_IMAGE = 'bnh.jpeg';
 
     /**
      * AdvertPhotoUploader constructor.
@@ -21,20 +27,35 @@ class AdvertPhotoUploader
      */
     public function __construct(string $photoDirectory)
     {
-        $this->photoDirectory = $photoDirectory;
+        $this->mimeTypes        = ['jpeg','png'];
+        $this->photoDirectory   = $photoDirectory;
     }
 
+    /**
+     * @param File $photo
+     * @return string
+     */
     public function uploadPhoto(File $photo)
     {
 
+        //$photo->getSize();
+       /*if (null!==$photo){*/
 
-        //$fileName = time(). '_' . mt_rand(0,100) . '.' .$photo->guessExtension();
-        $fileName = $this->generateUniqueFileName() . '.' .$photo->guessExtension();
+            foreach ($this->mimeTypes as $mimeType){
 
-        $photo->move($this->getPhotoDirectory(), $fileName);
+                if ($mimeType === $photo->guessExtension()) {
+                    $fileName = $this->generateUniqueFileName() . '.' .$photo->guessExtension();
 
-        return $fileName;
+                    $photo->move($this->getPhotoDirectory(), $fileName);
+
+                    return  $fileName;
+            }
+
+        }
+        return self::NON_EXISTENT_IMAGE;
     }
+
+
 
     private function getPhotoDirectory()
     {

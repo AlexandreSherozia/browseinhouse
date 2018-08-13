@@ -9,8 +9,7 @@
 namespace App\Service\Twig;
 
 
-use Gumlet\ImageResize;
-use Gumlet\ImageResizeException;
+
 use Twig\Extension\AbstractExtension;
 
 class AppExtension extends AbstractExtension
@@ -22,7 +21,7 @@ class AppExtension extends AbstractExtension
     {
         return [
             new \Twig_Filter('shorten_text', array($this, 'textFilter')),
-            new \Twig_Filter('photo_encoder', array($this, 'photoEncoder')),
+            new \Twig_Filter('text_trim', array($this, 'textTrim')),
             ];
         }
 
@@ -46,19 +45,9 @@ class AppExtension extends AbstractExtension
 
         }
 
-        public function photoEncoder($photo)
+        public function textTrim($number)
         {
-            try {
-                $image = new ImageResize($photo);
-                echo $image->scale(50);
-                //$image->crop(100, 100, true, ImageResize::CROPCENTER);
-                $image->save('thumbnail.jpg');
-                $image->output();
-
-            } catch (ImageResizeException $e) {
-                return $e;
-            }
-            return $photo;
+            return $number ." €";
         }
 
     }

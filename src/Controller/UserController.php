@@ -25,23 +25,45 @@ class UserController extends Controller
      * @param ImageUploader $imageUploader
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function userRegistration(UserManager $userManager, Request $request, ImageUploader $imageUploader)
+    public function userRegistration(UserManager $userManager, Request $request, ImageUploader $imageUploader, \Swift_Mailer $swift_Mailer)
     {
         $user = new User();
+
         $form = $this->createForm(UserType::class, $user);
 
         $formHandler = new UserHandler($form, $request, $userManager, $imageUploader);
 
         if ($formHandler->process('new')) {
 
-            $this->addFlash('success', 'login.registration.validation');
+            $message = (new \Swift_Message("Your registration on B'N'H"))
+                ->setFrom('browseinhouse@gmail.com')
+                ->setTo($form->get('email')->getData())
+                ->setBody(
+                    $this->renderView(
+                        'mail/registration.html.twig',
+                        array('name' => $form->get('pseudo')->getData())
+                    ),
+                    'text/html'
+                );
 
-            return $this->redirectToRoute('login');
+            $swift_Mailer->send($message);
+
+            return $this->redirectToRoute('confirm');
+
         }
 
         return $this->render('form/register.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/confirm", name="confirm")
+     */
+    public function confirm()
+    {
+        return $this->render('mail/confirm.html.twig');
     }
 
 

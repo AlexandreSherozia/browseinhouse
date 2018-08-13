@@ -3,9 +3,14 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PhotoRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Photo
 {
@@ -28,9 +33,35 @@ class Photo
     private $advert;
 
     /**
+     * @var File
+     * @Assert\NotBlank(message="asserts.notBlank")
+     * @Assert\Image(mimeTypesMessage="format non valide!")
+     */
+    private $imageFile;
+
+
+    public function setImageFile(File $imageFile )
+    {
+        $this->imageFile = $imageFile;
+    }
+
+    /**
+     * @return File
+     */
+    public function getImageFile(): File
+    {
+        return $this->imageFile;
+    }
+
+    /**
      * @ORM\Column(type="string", length=255)
      */
     private $name;
+
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * @return mixed
@@ -65,11 +96,6 @@ class Photo
         $this->advert = $advert;
 
         return $this;
-    }
-
-    public function getId()
-    {
-        return $this->id;
     }
 
     public function getUrl(): ?string
