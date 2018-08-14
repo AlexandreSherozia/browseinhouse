@@ -23,6 +23,7 @@
                         <tr>
                             <th>{{ 'userprofile.advertlist.creation_date' | trans }}</th>
                             <th>{{ 'userprofile.advertlist.title' | trans }}</th>
+                            <th>{{ 'userprofile.advertlist.photo' | trans }}</th>
                             <th>{{ 'userprofile.advertlist.description' | trans }}</th>
                             <th>{{ 'userprofile.advertlist.price' | trans }}</th>
                             <th>{{ 'userprofile.advertlist.section' | trans }}</th>
@@ -34,6 +35,7 @@
                                 <tr>
                                     <td>{{ advert.creationDate | date('d/m/Y') }}</td>
                                     <td>{{ advert.title }}</td>
+                                    <td><img src="{{ asset('images/advertphotos/'~ advert.photos | first.url) }}" height="40px"></td>
                                     <td>
                                         <a href="{{ path('show_advert', {'advertslug':advert.slug }) }}">
                                             <p>{{ advert.description | shorten_text }}</p>
