@@ -1,9 +1,10 @@
 advert.email.sent: 'Your message has been sent. This user will contact you back in a few days'
 showAdvert.title: 'Advert'
-advert.button.whishlist: 'Add to whishlist'
+advert.button.wishlist: 'Add to wishlist'
 advert.button.contactUser: 'Contact this user about this advert'
 advert.disabledbutton.info1: "You can't contact any user for the moment. Please, "
 advert.disabledbutton.info2: " or "
 advert.login.link: 'Log in'
 advert.register.link: 'Register'
 showAdvert.noAdvertToShow: 'There is no advert for this category in this section for the moment. Post your by clicking the button above!'
+showAdvert.inWhishlist.mention: 'Advert in your wishlist'

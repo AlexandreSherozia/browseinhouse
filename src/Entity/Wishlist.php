@@ -6,10 +6,10 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\WhishlistRepository")
- * @ORM\Table(name="whishlist")
+ * @ORM\Entity(repositoryClass="App\Repository\WishlistRepository")
+ * @ORM\Table(name="wishlist")
  */
-class Whishlist
+class Wishlist
 {
     /**
      * @ORM\Id
