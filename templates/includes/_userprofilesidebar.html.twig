@@ -14,7 +14,7 @@
                 <a href="{{ path('show_user_adverts', {'pseudo' : app.user.pseudo}) }}" class="list-group-item list-group-item-warning">
                     {{ 'userprofile.menu.adverts' | trans }}
                 </a>
-                <a href="#" class="list-group-item list-group-item-warning">
+                <a href="{{ path('show_user_wishlist', {'pseudo' : app.user.pseudo}) }}" class="list-group-item list-group-item-warning">
                     {{ 'userprofile.menu.wishlist' | trans }}
                 </a>
 

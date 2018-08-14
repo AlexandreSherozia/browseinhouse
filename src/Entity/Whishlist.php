@@ -36,7 +36,6 @@ class Whishlist
         return $this->id;
     }
 
-
     /**
      * @return mixed
      */

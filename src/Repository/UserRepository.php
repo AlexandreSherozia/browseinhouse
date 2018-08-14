@@ -22,9 +22,9 @@ class UserRepository extends ServiceEntityRepository
     public function getTotalNumberOfUsers()
     {
         return $this->createQueryBuilder('u')
-
             ->select('COUNT(u)')
             ->getQuery()
             ->getSingleScalarResult();
     }
+
 }

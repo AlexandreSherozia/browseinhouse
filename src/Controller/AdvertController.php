@@ -322,6 +322,25 @@ class AdvertController extends Controller
         ]);
     }
 
+    /**
+     * Get user adverts from the user private profile page
+     * @Route("/whishlist/{pseudo}", name="show_user_wishlist")
+     * @Security("has_role('ROLE_USER')")
+     * @param AdvertManager $advertManager
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function showAdvertsInWishlist(WhishlistManager $manager)
+    {
+        $userId = $this->getUser()->getId();
+
+        $advertList = $manager->getAdvertsInWhislist($userId);
+
+        return $this->render('user/userprofile_whishlist.html.twig', [
+            'advertList' => $advertList,
+        ]);
+    }
+
+
 
     /****************************************************************************
      *                              ADMINISTRATOR PANEL                         *

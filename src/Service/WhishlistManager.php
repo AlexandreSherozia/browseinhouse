@@ -32,4 +32,9 @@ class WhishlistManager
             $this->em->flush();
         }
     }
+
+    public function getAdvertsInWhislist($userId)
+    {
+        return $this->em->getRepository(Whishlist::class)->findAdvertsLinkedByUser($userId);
+    }
 }

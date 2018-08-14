@@ -25,4 +25,18 @@ class WhishlistRepository  extends ServiceEntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
+
+    public function findAdvertsLinkedByUser($userId)
+    {
+        return $this->createQueryBuilder('a')
+            ->select('a','u', 'c', 's', 'w')
+            ->join('a.category', 'c')
+            ->join('a.section', 's')
+            ->join('a.user', 'u')
+            ->where('w.userId = '. $userId)
+            ->andWhere('w.advertId = a.advertId')
+            ->getQuery()
+            ->getResult();
+    }
 }
+
