@@ -119,4 +119,13 @@ class AdvertManager extends PaginatorAware
         return $this->advertRepository->findFiveLastAdverts();
     }
 
+    public function getCategoriesInSections()
+    {
+        return $this->advertRepository->findAdvertsCategoriesInSections();
+    }
+
+    public function getAdvertsNumberInCategoryAndSection($sectionLabel, $categorylabel)
+    {
+        return intval($this->advertRepository->findAdvertsNumberinCategoryAndSection($sectionLabel, $categorylabel));
+    }
 }

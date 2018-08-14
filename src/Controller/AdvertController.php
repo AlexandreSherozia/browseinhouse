@@ -128,7 +128,8 @@ class AdvertController extends Controller
 
         return $this->render('advert/show_adverts_by_section.html.twig', [
             'adverts' => $pagination,
-            'sectionLabel' => $label
+            'sectionLabel' => $label,
+            'advertCategories' => $this->manager->getCategoriesInSections()
         ]);
     }
 
@@ -143,9 +144,13 @@ class AdvertController extends Controller
             $request->query->getInt('page', 1),
             10
         );
+
+
         return $this->render('advert/show_adverts_by_category_and_section.html.twig', [
             'adverts' => $pagination,
-            'category' => $categorylabel
+            'category' => $categorylabel,
+            'section' => $sectionlabel,
+            'advertNb' => $this->manager->getAdvertsNumberInCategoryAndSection($sectionlabel, $categorylabel)
         ]);
     }
 

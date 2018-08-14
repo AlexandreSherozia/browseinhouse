@@ -78,7 +78,7 @@
                                         <a class="btn btn-default" href="{{ path('filter_adverts_by_category_and_section', {'sectionlabel' : advert.section.label, 'categorylabel' : advert.category.label }  ) }}">
                                             {{ advert.category.label }}
                                         </a> in
-                                        <a class="btn btn-default" href="{{ path('filter_adverts_by_category_and_section', {'sectionlabel' : advert.section.label, 'categorylabel' : advert.category.label }  ) }}">
+                                        <a class="btn btn-default" href="{{ path('show_adverts_by_section', {'label' : advert.section.label}) }}">
                                             {{ advert.section.label }}
                                         </a>
                                     </p>

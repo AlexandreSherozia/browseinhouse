@@ -6,6 +6,15 @@
                     <h3>Filter by</h3>
                     <hr/>
                     <ul class="list-inline col-md-12">
+                        {% for advert in advertCategories %}
+
+                        <li>
+                            <a href="{{ path('filter_adverts_by_category_and_section',
+                                {'sectionlabel' : sectionLabel, 'categorylabel' : advert.category.label }) }}" class="badge alert-info">
+                                {{ advert.category.label }}
+                            </a>
+                        </li>
+                        {% endfor %}
                         {#<li class="col-md-1">#}
                             {#<a href="{{ path('filter_adverts_by_category_and_section',#}
                                 {#{'sectionlabel' : adverts.section.label, 'categorylabel' : adverts.category.label }  ) }}">#}

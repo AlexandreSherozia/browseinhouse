@@ -109,4 +109,30 @@ class AdvertRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findAdvertsCategoriesInSections()
+    {
+        return $this->createQueryBuilder('a')
+            ->select('a', 'c', 's')
+            ->leftJoin('a.category', 'c')
+            ->leftJoin('a.section', 's')
+            ->groupBy('c.label')
+            ->orderBy('c.label', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAdvertsNumberinCategoryAndSection($sectionLabel, $categorylabel)
+    {
+        return $this->createQueryBuilder('a')
+            ->select('COUNT(a.id)')
+            ->leftJoin('a.category', 'c')
+            ->leftJoin('a.section', 's')
+            ->where('s.label = :sectionlabel')
+            ->setParameter('sectionlabel', $sectionLabel)
+            ->andWhere('c.label = :categorylabel')
+            ->setParameter('categorylabel', $categorylabel)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
 }
