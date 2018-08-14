@@ -7,12 +7,14 @@ use App\Entity\Advert;
 use App\Entity\Category;
 use App\Entity\Contact;
 use App\Entity\User;
+use App\Entity\Whishlist;
 use App\Form\AdvertType;
 use App\Form\ContactType;
 use App\Form\Handler\AdvertHandler;
 use App\Form\Handler\ContactHandler;
 use App\Service\AdvertManager;
 use App\Service\AdvertPhotoUploader;
+use App\Service\WhishlistManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -63,21 +65,27 @@ class AdvertController extends Controller
     }
 
     /**
-     * @param $slug
      * @Route("/show-advert/{advertslug}", name="show_advert")
+     * @param $advertslug
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showAdvert($advertslug)
     {
+        $whishlists = $this->getDoctrine()->getRepository(Whishlist::class)->findAll();
+
         return $this->render('advert/show_advert.html.twig', [
-            'advertdata'  => $this->manager->getAdvertRepo()->findAdvertBySlug($advertslug)
+            'advertdata'  => $this->manager->getAdvertRepo()->findAdvertBySlug($advertslug),
+            'whishlists' => $whishlists
 
         ]);
     }
 
     /**
-     * @param Request $request
-     * @param AdvertManager $manager
      * @Route("/edit-my-advert/{advertslug}", name="advert_edit")
+     * @param Request $request
+     * @param $advertslug
+     * @param AdvertPhotoUploader $advertPhotoUploader
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function editAdvert(Request $request, $advertslug, AdvertPhotoUploader $advertPhotoUploader)
     {
@@ -119,6 +127,9 @@ class AdvertController extends Controller
 
     /**
      * @Route("/section/{label}", name="show_adverts_by_section")
+     * @param $label
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showAdvertsBySection($label, Request $request)
     {
@@ -138,6 +149,10 @@ class AdvertController extends Controller
 
     /**
      * @Route("/section/{sectionlabel}/category/{categorylabel}", name="filter_adverts_by_category_and_section")
+     * @param $sectionlabel
+     * @param $categorylabel
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function filterAdvertsByCategoryAndSection($sectionlabel, $categorylabel, Request $request)
     {
@@ -159,6 +174,9 @@ class AdvertController extends Controller
 
     /**
      * @Route("/category/{categorylabel}", name="filter_adverts_by_category")
+     * @param $categorylabel
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function filterAdvertsByCategory($categorylabel, Request $request)
     {
@@ -211,6 +229,26 @@ class AdvertController extends Controller
         ]);
     }
 
+    /**
+     * @Route("/advert/{slug}/add-to-whishlist", name="add_to_whishlist")
+     * @param WhishlistManager $manager
+     * @param $slug
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function addAdvertToWhislist(WhishlistManager $manager, $slug)
+    {
+        $advertId = $this->getDoctrine()->getRepository(Advert::class)->findOneBySlug($slug)->getId();
+        $userId = $this->getUser()->getId();
+        $manager->createNewWhishlistRow($advertId, $userId);
+
+        $whishlists = $this->getDoctrine()->getRepository(Whishlist::class)->findAll();
+
+        return $this->render('advert/show_advert.html.twig', [
+            'advertdata'  => $this->manager->getAdvertRepo()->findAdvertBySlug($slug),
+            'whishlists' => $whishlists
+
+        ]);
+    }
 
     /**
      * show public infos and adverts list of a specific user by clicking on his advert

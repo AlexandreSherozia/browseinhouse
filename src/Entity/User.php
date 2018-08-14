@@ -98,6 +98,11 @@ class User implements UserInterface
      */
     private $comments;
 
+//    /**
+//     * @ORM\OneToMany(targetEntity="App\Entity\Advert", mappedBy="user")
+//     */
+//    private $advertsWhished;
+
     public function __construct($role = 'ROLE_USER')
     {
         $this->registrationDate = new \DateTime;
@@ -255,4 +260,21 @@ class User implements UserInterface
     {
         // TODO: Implement eraseCredentials() method.
     }
+
+//    /**
+//     * @return mixed
+//     */
+//    public function getAdvertsWhished()
+//    {
+//        return $this->advertsWhished;
+//    }
+//
+//    /**
+//     * @param mixed $advertsWhished
+//     */
+//    public function setAdvertsWhished($advertsWhished): void
+//    {
+//        $this->advertsWhished = $advertsWhished;
+//    }
+
 }
