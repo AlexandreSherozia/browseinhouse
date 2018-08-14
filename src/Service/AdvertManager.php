@@ -45,6 +45,7 @@ class AdvertManager extends PaginatorAware
 
     public function myPersistWithPhoto(Advert $advert, $photo)
     {
+
         $advert->setUser($this->connected_User);
         $this->em->persist($advert);
         $this->em->persist($photo);
@@ -59,8 +60,7 @@ class AdvertManager extends PaginatorAware
      */
     public function getAdvertsBySection($label)
     {
-        $query = $this->advertRepository->findAdvertsBySection($label);
-        return $query;
+        return $this->advertRepository->findAdvertsBySection($label);
     }
 
 

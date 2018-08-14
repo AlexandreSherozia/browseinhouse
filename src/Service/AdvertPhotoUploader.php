@@ -3,7 +3,10 @@
 namespace App\Service;
 
 
+use ApiPlatform\Core\Validator\ValidatorInterface;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+
 
 /**
  * Class AdvertPhotoUploader
@@ -11,45 +14,95 @@ use Symfony\Component\HttpFoundation\File\File;
  */
 class AdvertPhotoUploader
 {
+    protected $flashBag;
     protected $mimeTypes;
+    protected $validator;
     protected $photoDirectory;
-    public const NON_EXISTENT_IMAGE = 'bnh.jpeg';
+
 
     /**
      * AdvertPhotoUploader constructor.
-     * @param $photo
+     * @param string $photoDirectory
+     * @param FlashBagInterface $flashBag
+     * @param ValidatorInterface $validator
      */
-    public function __construct(string $photoDirectory)
+    public function __construct(string $photoDirectory, FlashBagInterface $flashBag/*, ValidatorInterface $validator*/)
     {
         $this->mimeTypes        = ['jpeg','png'];
         $this->photoDirectory   = $photoDirectory;
+        $this->flashBag         = $flashBag;
+        /*$this->validator        = $validator;*/
     }
 
     /**
      * @param File $photo
      * @return string
      */
-    public function uploadPhoto(File $photo)
+    public function uploadPhoto(File $photo): ?string
     {
+        //dump($photo->getSize());
+        if($this->filterFileSize($photo) && $this->filterMimesTypes($photo)){
 
-        //$photo->getSize();
-       /*if (null!==$photo){*/
+                $fileName = $this->generateUniqueFileName() . '.' .$photo->guessExtension();
 
-            foreach ($this->mimeTypes as $mimeType){
+                $photo->move($this->getPhotoDirectory(), $fileName);
 
-                if ($mimeType === $photo->guessExtension()) {
-                    $fileName = $this->generateUniqueFileName() . '.' .$photo->guessExtension();
+            //return false; //for dump debug
 
-                    $photo->move($this->getPhotoDirectory(), $fileName);
-
-                    return  $fileName;
-            }
+              return  $fileName;
 
         }
-        return self::NON_EXISTENT_IMAGE;
+
+        return false;
+    }
+
+    /**
+     * @param $photo
+     * @return bool
+     * filters whether mimetypes are good and size of each file
+     */
+    private function filterMimesTypes($photo)//: bool
+    {dump($photo->guessExtension());
+            if (\in_array($photo->guessExtension(), $this->mimeTypes, true)&&
+                is_file($photo)) {
+
+                /* if($this->validator->validate($photo, array(
+               new Image(array('mimeTypes'   => ['image/jpeg', 'image/png']))
+           ))){*/
+
+                return true;
+
+        }
+
+        $this->flashBag->set('error', 'Only jpeg. jpg. and png. files accepted');
+
+        return false;
     }
 
 
+
+    /**
+     * @param $photo
+     * @return bool
+     * Filter greater than 1Mo files
+     */
+    public function filterFileSize($photo): bool
+    {
+        /*$validator = Validation::createValidator();
+        if($validator->validate($photo, array(
+            new Image(array('maxSize'   => 1))
+        ))){*/
+        if ($photo->getSize() < 1000000 &&
+                is_file($photo)){
+
+            return true;
+        }
+
+        $this->flashBag->set('error', 'You can only upload 1MB per file');
+
+        return false;
+
+    }
 
     private function getPhotoDirectory()
     {
