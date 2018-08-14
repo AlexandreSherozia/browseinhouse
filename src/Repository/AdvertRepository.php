@@ -50,14 +50,14 @@ class AdvertRepository extends ServiceEntityRepository
 
     }
 
-    public function findAdvertsByCategory($id)
+    public function findAdvertsByCategory($categorylabel)
     {
         return $this->createQueryBuilder('a')
-            ->where('a.section = :val')
-            ->setParameter('val', 1)
-            ->andWhere('a.category = :category')
-            ->setParameter('category', $id)
-            ->orderBy('a.id','DESC')
+            ->select('a','c')
+            ->leftJoin('a.category', 'c')
+            ->where('c.label = :label')
+            ->setParameter('label', $categorylabel)
+            ->orderBy('a.creationDate', 'DESC')
             ->getQuery()
             ->getResult()
             ;
@@ -107,6 +107,32 @@ class AdvertRepository extends ServiceEntityRepository
             ->setMaxResults(5)
             ->getQuery()
             ->getResult();
+    }
+
+    public function findAdvertsCategoriesInSections()
+    {
+        return $this->createQueryBuilder('a')
+            ->select('a', 'c', 's')
+            ->leftJoin('a.category', 'c')
+            ->leftJoin('a.section', 's')
+            ->groupBy('c.label')
+            ->orderBy('c.label', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAdvertsNumberinCategoryAndSection($sectionLabel, $categorylabel)
+    {
+        return $this->createQueryBuilder('a')
+            ->select('COUNT(a.id)')
+            ->leftJoin('a.category', 'c')
+            ->leftJoin('a.section', 's')
+            ->where('s.label = :sectionlabel')
+            ->setParameter('sectionlabel', $sectionLabel)
+            ->andWhere('c.label = :categorylabel')
+            ->setParameter('categorylabel', $categorylabel)
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 
 }

@@ -69,9 +69,9 @@ class AdvertManager extends PaginatorAware
         return $this->advertRepository->findAdvertsByCategoryAndSection($sectionlabel, $categorylabel);
     }
 
-    public function getAdvertsByCategory($id)
+    public function getAdvertsByCategory($categorylabel)
     {
-        return $this->advertRepository->findAdvertsByCategory($id);
+        return $this->advertRepository->findAdvertsByCategory($categorylabel);
     }
 
     public function findAdvert($advertslug)
@@ -119,4 +119,13 @@ class AdvertManager extends PaginatorAware
         return $this->advertRepository->findFiveLastAdverts();
     }
 
+    public function getCategoriesInSections()
+    {
+        return $this->advertRepository->findAdvertsCategoriesInSections();
+    }
+
+    public function getAdvertsNumberInCategoryAndSection($sectionLabel, $categorylabel)
+    {
+        return intval($this->advertRepository->findAdvertsNumberinCategoryAndSection($sectionLabel, $categorylabel));
+    }
 }

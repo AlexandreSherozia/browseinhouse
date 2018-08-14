@@ -4,23 +4,31 @@
 
 {% block title %}
 
-    {{ parent() }}Section
-    
+    {% for advert in adverts %}
+
+        {#{{ parent() }} #}{{ advert.title }}
+
+    {% endfor %}
 {% endblock %}
 
 {% block content %}
 
     <div class="row">
-        <h1 class="text-center">{{ sectionLabel }} Section</h1>
+        <h2 class="text-center">Every {{ category }} in {{ section }}</h2>
     </div>
 
-    {% include 'includes/_categories.html.twig' %}
+    {#{% include 'includes/_categories.html.twig' %}#}
 
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="list-group">
+                    {% if advertNb == 0 %}
+                        <p class="text-center">{{ 'showAdvert.noAdvertToShow' | trans }}</p>
+                    {% endif %}
+
                     {% for advert in adverts %}
+
                         <div class="list-group-item">
                             <div class="row">
                                 <div class="col-md-2">
@@ -52,7 +60,6 @@
                             </div>
                         </div>
                     {% endfor %}
-
                 </div>
             </div>
         </div>
@@ -64,4 +71,3 @@
     </div>
 
 {% endblock %}
-

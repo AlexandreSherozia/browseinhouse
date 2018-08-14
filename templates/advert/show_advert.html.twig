@@ -25,9 +25,7 @@
                     <div class="row">
                         <div class="col-md-3"></div>
                         <div class="col-md-6">
-
                             <div class="slideshow owl-carousel">
-
                                 {% if advert.photos %}
                                     {% for photo in advert.photos %}
 
@@ -37,35 +35,11 @@
                                         </div>
                                     {% endfor %}
                                 {% endif %}
-
                             </div>
                         </div>
                         <div class="col-md-3"></div>
                     </div>
-                {#Si la session existe bien ( - l'utilisateur est connecté )#}
-                {% if app.user %}
-                    {#Si l'annonce appartient à l'utilisateur courrant, on lui affiche les boutons "suppr" et "edition"#}
-                    {% if app.user.id == advert.user.id %}
-                        <div class="row">
-                            <div class="col-md-3"></div>
-                            <div class="col-md-6 text-center">
 
-                                <div class="panel-body">
-                                    <a href="{{ path('advert_edit', {'advertslug' : advert.slug }) }}" class="col-sm-2 btn btn-default">
-                                        Edit
-                                    </a>
-
-                                    <a href="{{ path('delete_advert', {'id': advert.id }) }}" class="col-sm-2 btn btn-danger">
-                                        Delete
-                                    </a>
-                                </div>
-
-                            </div>
-                            <div class="col-md-3"></div>
-                        </div>
-                    {% endif %}
-
-                {% endif %}
                 <div class="row">
                     <div class="col-md-3"></div>
 
@@ -103,7 +77,30 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3"></div>
+                    {#Si la session existe bien ( - l'utilisateur est connecté )#}
+                    {% if app.user %}
+                        {#Si l'annonce appartient à l'utilisateur courrant, on lui affiche les boutons "suppr" et "edition"#}
+                        {% if app.user.id == advert.user.id %}
+                            <div class="row">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-6 col-md-offset-3 text-center">
+
+                                    <div class="panel-body">
+                                        <a href="{{ path('advert_edit', {'advertslug' : advert.slug }) }}" class="col-sm-2 btn btn-default">
+                                            Edit
+                                        </a>
+
+                                        <a href="{{ path('delete_advert', {'id': advert.id }) }}" class="col-sm-2 col-sm-push-1 btn btn-danger">
+                                            Delete
+                                        </a>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-3"></div>
+                            </div>
+                        {% endif %}
+
+                    {% endif %}
 
                 </div>
 
