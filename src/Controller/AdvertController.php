@@ -15,6 +15,8 @@ use App\Service\AdvertPhotoUploader;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AdvertController extends Controller
@@ -22,11 +24,12 @@ class AdvertController extends Controller
     /**
      * @var AdvertManager
      */
-    private $manager;
+    private $manager, $flashBag;
 
-    public function __construct(AdvertManager $manager)
+    public function __construct(AdvertManager $manager, FlashBagInterface $flashBag)
     {
         $this->manager = $manager;
+        $this->flashBag= $flashBag;
     }
 
     /**
@@ -43,7 +46,7 @@ class AdvertController extends Controller
         $formHandler = new AdvertHandler($this->createForm(AdvertType::class, new Advert()),
                                         $request,
                                         $this->manager,
-                                        $advertPhotoUploader);
+                                        $advertPhotoUploader, $this->flashBag);
 
         if ($formHandler->process()) {
 
@@ -82,7 +85,7 @@ class AdvertController extends Controller
         $advert = $this->manager->findAdvert($advertslug);
         $advertHandler = new AdvertHandler($this->createForm(AdvertType::class, $advert),
             $request,
-            $this->manager, $advertPhotoUploader);
+            $this->manager, $advertPhotoUploader, $this->flashBag);
 
         if ($advertHandler->process()) {
             return $this->redirectToRoute('show_advert',[
