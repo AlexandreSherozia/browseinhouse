@@ -7,22 +7,27 @@
 
     <div class="slideshow owl-carousel">
         <div class="item">
-           {# <img src="{{ asset('images/banner.jpg') }}" alt="banner" title="banner" class="img-responsive"/>#}
-            <section class="banner-1">
 
-                <h2 class="text-center">Ceci est un vrai template</h2>
+            <section class="banner-1" style="background: linear-gradient(
+                    rgba(0, 0, 0, 0.05),
+                    rgba(0, 0, 0, 0.60)
+                    ), url({{ asset('images/banner2.jpg') }}) no-repeat center; background-size: cover">
+                {#<img src="{{ asset('images/banner2.jpg') }}" alt="banner" title="banner" />#}
+                <h2 class="text-center" style="color:white">{{ 'home.banner1.title1' | trans }}</h2>
+                <h2 class="text-center" style="color:white">{{ 'home.banner1.title2' | trans }}</h2>
 
-                <a href="" class="btn btn-default">About us</a>
+                {#<a href="" class="btn btn-default">About us</a>#}
 
-                <h1 class="text-center">Remplir le truc</h1>
+                {#<h1 class="text-center">Remplir le truc</h1>#}
+
             </section>
         </div>
-        <div class="item">
-            <img src="{{ asset('images/banner.jpg') }}" alt="banner" title="banner" class="img-responsive"/>
-        </div>
-        <div class="item">
-            <img src="{{ asset('images/banner.jpg') }}" alt="banner" title="banner" class="img-responsive"/>
-        </div>
+        {#<div class="item">#}
+            {#<img src="{{ asset('images/banner.jpg') }}" alt="banner" title="banner" class="img-responsive"/>#}
+        {#</div>#}
+        {#<div class="item">#}
+            {#<img src="{{ asset('images/banner.jpg') }}" alt="banner" title="banner" class="img-responsive"/>#}
+        {#</div>#}
     </div>
     <!-- slider ends here -->
 
