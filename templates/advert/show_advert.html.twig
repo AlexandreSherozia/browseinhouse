@@ -49,20 +49,22 @@
                         <p class="well well-lg">{{ advert.description }}</p>
                         <div class="col-md-6">
                             <p class="badge">{{ advert.price }} €</p>
-                            {% if whishlists != null %}
-                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                                {% if is_granted('ROLE_USER')  %}
-                                    {% for whishlist in whishlists %}
-                                        {% if whishlist.advertId == advert.id and whishlist.userId == app.user.id %}
-                                            <p style="color: deeppink"><i class="la la-heart" ></i>Advert in whishlist<i class="la la-heart"></i></p>
-                                        {% else %}
-                                            <p ><a href="{{ path('add_to_whishlist', {'slug': advert.slug}) }}" id="whishlist" class="badge alert-danger">{{ 'advert.button.whishlist' | trans }}</a></p>
-                                        {% endif %}
-                                    {% endfor %}
+                            {% if (whishlists | length) != 0 %}
+                                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                    {% if is_granted('ROLE_USER')  %}
+                                        {% for whishlist in whishlists %}
+                                            {% if whishlist.advertId == advert.id and whishlist.userId == app.user.id %}
+                                                <p style="color: deeppink"><i class="la la-heart" ></i>Advert in whishlist<i class="la la-heart"></i></p>
+                                            {% else %}
+                                                {% if loop.last %}
+                                                    <p><a href="{{ path('add_to_whishlist', {'slug': advert.slug}) }}" id="whishlist2" class="badge alert-danger">{{ 'advert.button.whishlist' | trans }}</a></p>
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
                                 {% endif %}
-                            {% endif %}
                             {% else %}
-                                <p><a href="{{ path('add_to_whishlist', {'slug': advert.slug}) }}" id="whishlist" class="badge alert-danger">{{ 'advert.button.whishlist' | trans }}</a></p>
+                                <p><a href="{{ path('add_to_whishlist', {'slug': advert.slug}) }}" id="whishlist2" class="badge alert-danger">{{ 'advert.button.whishlist' | trans }}</a></p>
                             {% endif %}
                         </div>
 
