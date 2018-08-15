@@ -23,26 +23,26 @@
     </div>
     <div class="row">
         {% include 'includes/_userprofilesidebar.html.twig' %}
-        <div class="col-md-6 col-xs-6">
+        <div class="col-md-7 col-xs-6">
             {% if advertList %}
                 <div class="list-group">
                     {% for advert in advertList %}
                         <div class="list-group-item">
                             <div class="row">
-                                <div class="col-md-2">
+                                <div class="col-md-1">
                                     {% if advert.photo is not empty %}
-                                        <img src="{{ asset('images/advertphotos/'~advert.photo) }}" class="thumbnail">
+                                        <img src="{{ asset('images/advertphotos/'~advert.photo) }}" class="thumbnail" style="width: 150px">
                                     {% else %}
                                         <img src="{{ asset('images/advertphotos/bnh.jpg' ) }}" class="thumbnail">
                                     {% endif %}
                                 </div>
-                                <div class="col-md-10">
-                                    <a href="{{ path('show_advert', {'advertslug': advert.slug }) }}"><h3 class="col-md-6">{{ advert.title }}</h3></a>
+                                <div class="col-md-9 col-md-push-1">
+                                    <a href="{{ path('show_advert', {'advertslug': advert.slug }) }}"><h3 class="col-md-4">{{ advert.title }}</h3></a>
 
-                                    <p class="text-left col-md-3">posted by
+                                    <p class="text-left col-md-4">posted by
                                         <a href="{{ path('show_public_profile', {'pseudo': advert.pseudo}) }}">{{ advert.pseudo }}</a> on {{ advert.creation_date | date('d-m-Y H:m:s') }}
                                     </p>
-                                    <p class="text-right col-md-3">
+                                    <p class="text-right col-md-4">
                                         <a class="btn btn-default" href="{{ path('filter_adverts_by_category', {'categorylabel' : advert.category}) }}">
                                             {{ advert.category }}
                                         </a> in
