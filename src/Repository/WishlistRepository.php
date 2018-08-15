@@ -14,6 +14,38 @@ class WishlistRepository  extends ServiceEntityRepository
         parent::__construct($registry, Wishlist::class);
     }
 
+        public function findAdvertsLinkedByUser($userId)
+    {
+//        return $this->createQueryBuilder('w')
+//            ->select('a', 'c', 's', 'u')
+//            ->leftJoin('\App\Entity\Advert', 'a', 'a.id = w.advertId')
+//            ->leftjoin('a.category', 'c')
+//            ->leftjoin('a.section', 's')
+//            ->leftjoin('a.user', 'u')
+//            ->where('w.userId = :userId')
+//            ->setParameter('userId', $userId)
+//            ->getQuery()
+//            ->getResult();
+
+            $conn = $this->getEntityManager()->getConnection();
+            $sql = "SELECT w.user_id, a.title, a.description, a.price, a.creation_date, a.slug, 
+                    c.label AS category, 
+                    s.label AS section, 
+                    u.pseudo AS pseudo,
+                    p.url AS photo 
+                    FROM wishlist w 
+                    LEFT JOIN advert a ON a.id = w.advert_id 
+                    LEFT JOIN category c ON a.category_id = c.id 
+                    LEFT JOIN section s ON a.section_id = s.id 
+                    LEFT JOIN user u ON a.user_id = u.id
+                    LEFT JOIN photo p ON a.id = p.advert_id
+                    WHERE w.user_id = :userId";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute(['userId' => $userId]);
+
+            return $stmt->fetchAll();
+    }
+
     public function findLinkBetweenAdvertAndUser($advertId, $userId)
     {
         return $this->createQueryBuilder('w')
@@ -24,19 +56,6 @@ class WishlistRepository  extends ServiceEntityRepository
             ->setParameter('advertId', $advertId)
             ->getQuery()
             ->getSingleScalarResult();
-    }
-
-    public function findAdvertsLinkedByUser($userId)
-    {
-        return $this->createQueryBuilder('a')
-            ->select('a','u', 'c', 's', 'w')
-            ->join('a.category', 'c')
-            ->join('a.section', 's')
-            ->join('a.user', 'u')
-            ->where('w.userId = '. $userId)
-            ->andWhere('w.advertId = a.advertId')
-            ->getQuery()
-            ->getResult();
     }
 }
 

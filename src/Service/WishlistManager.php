@@ -33,7 +33,7 @@ class WishlistManager
         }
     }
 
-    public function getAdvertsInWhislist($userId)
+    public function getAdvertsInWishlist($userId)
     {
         return $this->em->getRepository(Wishlist::class)->findAdvertsLinkedByUser($userId);
     }
