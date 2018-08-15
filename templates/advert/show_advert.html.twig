@@ -52,19 +52,17 @@
                             {% if (wishlists | length) != 0 %}
                                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                                     {% if is_granted('ROLE_USER')  %}
-                                        {% for wishlist in wishlists %}
-                                            {% if wishlist.advertId == advert.id and wishlist.userId == app.user.id %}
-                                                <p style="color: deeppink"><i class="la la-heart" ></i>{{ 'showAdvert.inWhishlist.mention' | trans }}<i class="la la-heart"></i></p>
-                                            {% else %}
-                                                {% if loop.last %}
-                                                    <p><a href="{{ path('add_to_wishlist', {'slug': advert.slug}) }}" id="wishlist2" class="badge alert-danger">{{ 'advert.button.wishlist' | trans }}</a></p>
-                                                {% endif %}
-                                            {% endif %}
+                                        {% set advertNb = 0 %}
+                                        {% for wishlist in wishlists if wishlist.advertId == advert.id and wishlist.userId == app.user.id %}
+                                            {% set advertNb = 1 %}
                                         {% endfor %}
+                                        {% if advertNb == 1 %}
+                                            <p style="color: deeppink"><i class="la la-heart" ></i>{{ 'showAdvert.inWhishlist.mention' | trans }}<i class="la la-heart"></i></p>
+                                        {% else %}
+                                            <p><a href="{{ path('add_to_wishlist', {'slug': advert.slug}) }}" id="wishlist1" class="badge alert-danger">{{ 'advert.button.wishlist' | trans }}</a></p>
+                                        {% endif %}
                                     {% endif %}
                                 {% endif %}
-                            {% else %}
-                                <p><a href="{{ path('add_to_wishlist', {'slug': advert.slug}) }}" id="wishlist2" class="badge alert-danger">{{ 'advert.button.wishlist' | trans }}</a></p>
                             {% endif %}
                         </div>
 

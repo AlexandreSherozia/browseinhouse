@@ -7,4 +7,4 @@ advert.disabledbutton.info2: " or "
 advert.login.link: 'Log in'
 advert.register.link: 'Register'
 showAdvert.noAdvertToShow: 'There is no advert for this category in this section for the moment. Post your by clicking the button above!'
-showAdvert.inWhishlist.mention: 'Advert in your wishlist'
+showAdvert.inWhishlist.mention: ' In your wishlist! '
