@@ -92,6 +92,8 @@ class Advert
      */
     private $comments;
 
+
+    // TODO verify inversedBy, nothing to do here
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)

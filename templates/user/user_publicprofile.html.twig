@@ -22,7 +22,20 @@
             <div class="col-md-4">
                 <p>{{ user_public.pseudo }}</p>
                 <p>{{ 'userprofile.registeredsince' | trans }}{{ user_public.registrationDate | date('d-m-Y') }}</p>
-                <p><a href="#" class="badge alert-warning">{{ 'userprofile.follow' | trans }}</a></p>
+                {#<button class="btn btn-default"></button>#}
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+
+                    {% if is_granted('ROLE_USER') %}
+
+                        <button class="{% if subscription %}btn btn-success{% else %}btn btn-default{% endif %}" id="btn-ajax" data-pseudo="{{ user_public.pseudo }}">{% if subscription %}{{ 'userprofile.subscribed' | trans }}{% else %}{{ 'userprofile.follow' | trans }}{% endif %}</button>
+
+                    {% endif %}
+
+                {% else %}
+
+                    <a href="{{ path('login') }}"><button class="btn btn-block">{{ userprofile.loginforfollowing | trans }}</button></a>
+
+                {% endif %}
             </div>
         </div>
     </div>

@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Entity\Advert;
 use App\Entity\Category;
 use App\Entity\Contact;
+use App\Entity\Subscription;
 use App\Entity\User;
 use App\Form\AdvertType;
 use App\Form\ContactType;
@@ -15,6 +16,7 @@ use App\Service\AdvertManager;
 use App\Service\AdvertPhotoUploader;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
@@ -213,20 +215,61 @@ class AdvertController extends Controller
 
 
     /**
-     * show public infos and adverts list of a specific user by clicking on his advert
+     * shows public infos and adverts list of a specific user by clicking on his advert
      * @Route("/public-profile/{pseudo}", name="show_public_profile")
      * @param AdvertManager $manager
      * @param string $pseudo
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function userPublicProfile(AdvertManager $manager, string $pseudo)
+    public function userPublicProfile(Request $request, string $pseudo)
     {
+        $follower   = $this->getUser();
+
+        if ($request->isXmlHttpRequest()){
+
+            $star = $this->getDoctrine()->getRepository(User::class)->findOneBy(['pseudo' => $request->get('pseudo')]);
+
+
+            if(!$this->getDoctrine()->getRepository(Subscription::class)->ifFollowingExists($follower, $star)) {
+
+                $subscription = new Subscription();
+                $subscription->setFollower($follower);
+
+                $subscription->setSubscribed($star);
+
+                //l'objet response contient le retour du serveur, qui sera récupéré en ajax avec la méthode ".done"
+                $response = true;
+
+                $this->manager->getEm()->persist($subscription);
+                $this->manager->getEm()->flush();
+
+            } else {
+
+
+                $existingSubscription = $this->getDoctrine()->getRepository(Subscription::class)->followingRelation($follower, $star);
+
+                $response = false;
+
+                $this->manager->getEm()->remove($existingSubscription);
+                $this->manager->getEm()->flush();
+
+            }
+
+            return new JsonResponse($response);
+
+
+        }
+
+        //Si la relation existe entre ces deux utilisateurs, en arrivant sur la page, le bouton aura la classe appropriée
+        $subscriptionStatus = $this->getDoctrine()->getRepository(Subscription::class)->subscriptionStatus($follower, $pseudo);
+        /*dump($subscriptionStatus);*/
         $selectedUser = $this->getDoctrine()->getRepository(User::class)->findOneByPseudo($pseudo);
-        $userAdverts = $manager->getAdvertsByUser($selectedUser->getId());
+        $userAdverts = $this->manager->getAdvertsByUser($selectedUser->getId());
 
         return $this->render('user/user_publicprofile.html.twig', [
             'user_public'  => $selectedUser,
-            'user_adverts' => $userAdverts
+            'user_adverts' => $userAdverts,
+            'subscription' => $subscriptionStatus
         ]);
     }
 
