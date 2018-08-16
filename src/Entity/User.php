@@ -95,23 +95,13 @@ class User implements UserInterface
      */
     private $roles;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="user")
-     */
-    private $comments;
-
-//    /**
-//     * @ORM\OneToMany(targetEntity="App\Entity\Advert", mappedBy="user")
-//     */
-//    private $advertsWhished;
-
-    public function __construct($role = 'ROLE_USER')
+    public function __construct(string $role = 'ROLE_USER')
     {
         $this->registrationDate = new \DateTime;
         $this->roles[] = $role;
     }
 
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -140,23 +130,15 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getPseudo()
+    public function getPseudo(): ?string
     {
         return $this->pseudo;
     }
 
-    /**
-     * @param mixed $pseudo
-     */
-    public function setPseudo($pseudo): void
+    public function setPseudo(string $pseudo): void
     {
         $this->pseudo = $pseudo;
     }
-
-
 
     public function getPassword(): ?string
     {
@@ -175,7 +157,7 @@ class User implements UserInterface
         return $this->firstname;
     }
 
-    public function setFirstname(?string $firstname): self
+    public function setFirstname(string $firstname): self
     {
         $this->firstname = $firstname;
 
@@ -187,7 +169,7 @@ class User implements UserInterface
         return $this->lastname;
     }
 
-    public function setLastname(?string $lastname): self
+    public function setLastname(string $lastname): self
     {
         $this->lastname = $lastname;
 
@@ -199,7 +181,7 @@ class User implements UserInterface
         return $this->phone;
     }
 
-    public function setPhone(?string $phone): self
+    public function setPhone(string $phone): self
     {
         $this->phone = $phone;
 
@@ -211,7 +193,7 @@ class User implements UserInterface
         return $this->avatar;
     }
 
-    public function setAvatar(?string $avatar): self
+    public function setAvatar(string $avatar): self
     {
         $this->avatar = $avatar;
 
@@ -223,11 +205,16 @@ class User implements UserInterface
         return $this->roles;
     }
 
-    public function setRoles(?array $roles): self
+    public function setRoles(string $roles): self
     {
-        $this->roles = $roles;
+        $this->roles = [$roles];
 
         return $this;
+    }
+
+    public function addRoles(string $roles): void
+    {
+        $this->roles[] = $roles;
     }
 
     /**
@@ -237,9 +224,9 @@ class User implements UserInterface
      *
      * @return string|null The salt
      */
-    public function getSalt()
+    public function getSalt(): void
     {
-        // TODO: Implement getSalt() method.
+        return;
     }
 
     /**
@@ -247,7 +234,7 @@ class User implements UserInterface
      *
      * @return string The username
      */
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->getEmail();
     }
@@ -258,25 +245,9 @@ class User implements UserInterface
      * This is important if, at any given point, sensitive information like
      * the plain-text password is stored on this object.
      */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
-        // TODO: Implement eraseCredentials() method.
+        return;
     }
-
-//    /**
-//     * @return mixed
-//     */
-//    public function getAdvertsWhished()
-//    {
-//        return $this->advertsWhished;
-//    }
-//
-//    /**
-//     * @param mixed $advertsWhished
-//     */
-//    public function setAdvertsWhished($advertsWhished): void
-//    {
-//        $this->advertsWhished = $advertsWhished;
-//    }
 
 }
