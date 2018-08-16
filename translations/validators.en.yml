@@ -1,16 +1,16 @@
-asserts.email.notblank: 'Warning: email needed!'
-asserts.email.toolong: 'Warning: email is too long!'
-asserts.email.wrongtype: 'Warning: email is not valid!'
-asserts.pseudo.notblank: 'Warning: pseudo needed!'
-asserts.pseudo.tooshort: 'Warning: pseudo is too short!'
-asserts.pseudo.toolong: 'Warning: pseudo is too long!'
-asserts.password.notblank: 'Warning: password needed!'
-asserts.password.tooshort: 'Warning: password is too short!'
-asserts.password.toolong: 'Warning: password is too long!'
+asserts.email.notblank: 'Email is needed!'
+asserts.email.toolong: "Email can't contain more than {{ limit }} characters"
+asserts.email.wrongtype: 'Email is not valid!'
+asserts.pseudo.notblank: 'Pseudo is needed!'
+asserts.pseudo.tooshort: "Pseudo must contain at least {{ limit }} characters"
+asserts.pseudo.toolong: "Pseudo can't contain more than {{ limit }} characters"
+asserts.password.notblank: 'Password is needed!'
+asserts.password.tooshort: 'Password must contain at least {{ limit }} characters'
+asserts.password.toolong: "Password can't contain more than {{ limit }} characters"
 asserts.article.image.mimetype: 'Extension not recognized'
 asserts.article.image.maxsize: 'Your image is too heavy (1MB max)'
-asserts.email.alreadyused: 'This email is already used'
-asserts.pseudo.alreadyused: 'This pseudo is already used'
+asserts.email.alreadyused: 'Sorry, this email is already used by someone else.'
+asserts.pseudo.alreadyused: 'Sorry, this pseudo is already used by someone else.'
 asserts.notBlank: 'This field is required'
 asserts.integer.type: 'This field requires numbers'
 asserts.messagetitle.notblank: 'You have to enter a title'
