@@ -36,6 +36,6 @@ userprofile.publictitle: 'User infos'
 userprofile.registeredsince: 'Registered since '
 userprofile.follow: 'Subscribe to this user'
 userprofile.subscribed: "You're subscribed"
-userprofile.loginforfollowing: 'Log in for subscribe'
+userprofile.loginforfollowing: 'Log in for subscribing'
 userprofile.advertstitle: 'All adverts of this user'
 userprofile.advertlist.photo: 'Main Photo'
