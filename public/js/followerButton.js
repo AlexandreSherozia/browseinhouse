@@ -1,6 +1,7 @@
 $(document).ready(function () {
 
-    const FOLLOWER_STATE = "Follow this user" ;
+    const TO_SUBSCRIBE = "Subscribe again" ;
+    const TO_UNSUBSCRIBE = "You're subscribed" ;
 
     $('#btn-ajax').click(function () {
         $.ajax({
@@ -9,15 +10,16 @@ $(document).ready(function () {
 
             data: 'pseudo='+$(this).data('pseudo')
 
-        }).done(function (jqXHR) {
-            /*var user = response.user;*/
+        }).done(function(jqXHR) {
+
             console.log(jqXHR);
-            if(jqXHR) {
-                $('#btn-ajax').text('followed');
+
+            if(true === jqXHR) {
+                $('#btn-ajax').text(TO_UNSUBSCRIBE);
 
                 $('#btn-ajax').addClass('btn btn-success');
             } else {
-                $('#btn-ajax').text(FOLLOWER_STATE);
+                $('#btn-ajax').text(TO_SUBSCRIBE);
                 $('#btn-ajax').removeClass('btn btn-success');
                 $('#btn-ajax').addClass('btn btn-default');
             }
