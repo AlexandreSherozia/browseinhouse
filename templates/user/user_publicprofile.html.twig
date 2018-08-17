@@ -37,32 +37,36 @@
             <div class="list-group">
 
                 {% for advert in user_adverts %}
-                <a href="{{ path('show_advert', {'advertslug': advert.slug }) }}" class="list-group-item">
-                    <div class="row">
-                        <div class="col-md-2">
-                            {% if advert.photos is not empty %}
-                                <img src="{{ asset('images/advertphotos/'~advert.photos|first.url ) }}" class="thumbnail">
-                            {% else %}
-                                <img src="{{ asset('images/advertphotos/bnh.jpg' ) }}" class="thumbnail">
-                            {% endif %}
+                    <div class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-2">
+                                {% if advert.photos is not empty %}
+                                    <img src="{{ asset('images/advertphotos/'~advert.photos|first.url ) }}" class="thumbnail">
+                                {% else %}
+                                    <img src="{{ asset('images/advertphotos/bnh.jpg' ) }}" class="thumbnail">
+                                {% endif %}
+                            </div>
+                            <div class="col-md-10">
+                                <a href="{{ path('show_advert', {'advertslug': advert.slug }) }}"><h3 class="col-md-6">{{ advert.title }}</h3></a>
 
-                        </div>
-                        <div class="col-md-10">
-                            <h3 class="col-md-6">{{ advert.title }}</h3>
-
-                            <p class="text-left col-md-3">posted by
-                                {{ advert.user.pseudo }} on {{ advert.creationDate | date('d-m-Y') }}
-                            </p>
-                            <p class="text-right col-md-3">category :
-                                {{ advert.category.label }} in {{ advert.section.label }}
-                            </p>
-                            <p class="col-md-10">
-                                {{ advert.description | shorten_text }} -
-                            </p>
-                            <h4 class="text-right col-md-1 badge">{{ advert.price | text_trim }} </h4>
+                                <p class="text-left col-md-3">posted by
+                                    <a href="{{ path('show_public_profile', {'pseudo': advert.user.pseudo}) }}">{{ advert.user.pseudo }}</a> on {{ advert.creationDate | date('d-m-Y H:m:s') }}
+                                </p>
+                                <p class="text-right col-md-3">
+                                    <a class="btn btn-default" href="{{ path('filter_adverts_by_category', {'categorylabel' : advert.category.label}) }}">
+                                        {{ advert.category.label }}
+                                    </a> in
+                                    <a class="btn btn-default" href="{{ path('show_adverts_by_section', {'label' : advert.section.label}) }}">
+                                        {{ advert.section.label }}
+                                    </a>
+                                </p>
+                                <p class="col-md-10">
+                                    {{ advert.description | shorten_text }} -
+                                </p>
+                                <h4 class="text-right col-md-1 badge">{{ advert.price | text_trim }} </h4>
+                            </div>
                         </div>
                     </div>
-                </a>
                 {% endfor %}
 
             </div>

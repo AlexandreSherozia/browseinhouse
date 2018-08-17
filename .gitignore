@@ -17,5 +17,7 @@
 ###< symfony/phpunit-bridge ###
 /.node_modules
 
+/rapport.html
+
 
 

@@ -85,15 +85,8 @@ class Advert
      */
     private $section;
 
-
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="advert")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $comments;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="comments")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="adverts")
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"read"})
      */
@@ -237,25 +230,6 @@ class Advert
     }
 
 
-
-    /**
-     * @return mixed
-     */
-    public function getComments()
-    {
-        return $this->comments;
-    }
-
-    /**
-     * @param mixed $comments
-     * @return Advert
-     */
-    public function setComments($comments)
-    {
-        $this->comments = $comments;
-        return $this;
-    }
-
     /**
      * @param mixed $user
      */
@@ -279,7 +253,5 @@ class Advert
     {
         $this->creationDate = $creationDate;
     }
-
-
 
 }
