@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Subscription;
 use App\Entity\User;
 use App\Entity\Section;
 use App\Form\UserType;
@@ -9,6 +10,7 @@ use App\Form\Handler\UserHandler;
 use App\Service\AdvertManager;
 use App\Service\ImageUploader;
 use App\Service\UserManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -130,6 +132,25 @@ class UserController extends Controller
             'pseudo' => $user->getPseudo()
         ]);
     }
+
+    /**
+     * @param UserManager $userManager
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/my-subscription-list", name="my_subscription_list")
+     */
+    public function mySubscriptionList(UserManager $userManager)
+    {
+        $this->denyAccessUnlessGranted(['ROLE_USER']);
+
+        $follower = $this->getUser();
+
+        $subscription = $userManager->getSubscriptionList($follower);
+
+        return $this->render('user/mySubscriptionList.html.twig', [
+            'my_subscription_list' => $subscription
+        ]);
+    }
+
 
 
     /****************************************************************************

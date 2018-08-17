@@ -4,9 +4,11 @@ namespace App\Service;
 
 
 use App\Entity\Advert;
+use App\Entity\Subscription;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Security;
 
 class UserManager
 {
@@ -56,9 +58,12 @@ class UserManager
 
     public function getUserList()
     {
-        $userList = $this->em->getRepository(User::class)->findAll();
+        return $this->em->getRepository(User::class)->findAll();
+    }
 
-        return $userList;
+    public function getSubscriptionList($follower)
+    {
+        return $this->em->getRepository(Subscription::class)->findBy(['follower' => $follower]);
     }
 
     public function removeUser($user_id)

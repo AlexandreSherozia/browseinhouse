@@ -1,0 +1,45 @@
+{% extends 'layout.html.twig' %}
+{% trans_default_domain 'userprofile' %}
+
+{% block title %}{{ parent() }} | subscriptions{#{{ 'userprofile.pagename' | trans }}#}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6 col-md-push-4">
+            <h2 class="text-center">Users, i'm subscribed to{#{{ 'userprofile.title' | trans }}#}</h2>
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success alert-dismissible text-center" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    {{ message | trans }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row">
+        {% include 'includes/_userprofilesidebar.html.twig' %}
+        <div class="col-md-6 col-xs-6">
+
+            {% if my_subscription_list %}
+                <table class="table">
+                    <tr>
+                        <th>avatar</th>
+                        <th>{{ 'userprofile.pseudo' | trans}}</th>
+                        <th>{{ 'userprofile.registeredsince' | trans}}</th>
+                        <th>email</th>
+                    </tr>
+                    {% for star in my_subscription_list %}
+                        <tr>
+                            <td><img src="{{ asset('images/avatars/'~ star.subscribed.avatar ) }}" height="40px"></td>
+                            <td><a href="{{ path('show_public_profile', {'pseudo' : star.subscribed.pseudo }) }}">{{ star.subscribed.pseudo }}</a></td>
+                            <td>{{ star.subscribed.registrationDate | date('d/m/Y') }}</td>
+                            <td>{{ star.subscribed.email }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% else %}
+                <div class="text-center"><br/><br/>{{ 'serprofile.advertlist.no_subscription_to_show' | trans }}</div>
+            {% endif %}
+
+        </div>
+    </div>
+{% endblock %}
