@@ -95,6 +95,13 @@ class User implements UserInterface
      */
     private $roles;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Advert", mappedBy="user")
+     * @ORM\JoinColumn(nullable=false)
+     * @Groups({"read"})
+     */
+    private $adverts;
+
     public function __construct(string $role = 'ROLE_USER')
     {
         $this->registrationDate = new \DateTime;

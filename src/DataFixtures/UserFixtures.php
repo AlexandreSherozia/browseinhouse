@@ -82,7 +82,7 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
 
             $user->setPassword($pass);
 
-            $user->setRoles(['ROLE_USER']);
+            $user->setRoles('ROLE_USER');
 
             $manager->persist($user);
         }
