@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Entity\Advert;
 use App\Entity\Contact;
 use App\Entity\Section;
+use App\Entity\Subscription;
 use App\Entity\User;
 use App\Entity\Wishlist;
 use App\Form\AdvertType;
@@ -15,8 +16,10 @@ use App\Form\Handler\ContactHandler;
 use App\Service\AdvertManager;
 use App\Service\AdvertPhotoUploader;
 use App\Service\WishlistManager;
+use App\Service\UserSubscriber;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -194,7 +197,38 @@ class AdvertController extends Controller
 
 
     /**
-     * Allow an user to contact an other through an advert by sending him an email *
+     * Shows public infos and adverts list of a specific user by clicking on his advert and
+     * recieves ajax subscribing request
+     * @param Request $request
+     * @param UserSubscriber $userSubscriber
+     * @param string $pseudo
+     * @return JsonResponse|\Symfony\Component\HttpFoundation\Response
+     * @Route("/public-profile/{pseudo}", name="show_public_profile")
+     */
+    public function userPublicProfile(Request $request, UserSubscriber $userSubscriber, string $pseudo)
+    {
+        $follower   = $this->getUser();
+
+        if ($response = $userSubscriber->subscriptionRequest($request)) {
+            return new JsonResponse($response);
+        }
+
+        //Si la relation existe entre ces deux utilisateurs, en arrivant sur la page, le bouton aura la classe appropriée
+        $subscriptionStatus = $this->getDoctrine()->getRepository(Subscription::class)->subscriptionStatus($follower, $pseudo);
+        /*dump($subscriptionStatus);*/
+        $selectedUser = $this->getDoctrine()->getRepository(User::class)->findOneByPseudo($pseudo);
+        $userAdverts = $this->manager->getAdvertsByUser($selectedUser->getId());
+
+        return $this->render('user/user_publicprofile.html.twig', [
+            'user_public'  => $selectedUser,
+            'user_adverts' => $userAdverts,
+            'subscription' => $subscriptionStatus
+        ]);
+    }
+
+
+    /**
+     * Allows an user to contact another user through an advert by sending him an email *
      * @param string $slug
      * @param Request $request
      * @param ContactHandler $contactHandler
@@ -248,25 +282,6 @@ class AdvertController extends Controller
 
         ]);
     }
-
-    /**
-     * show public infos and adverts list of a specific user by clicking on his advert
-     * @Route("/public-profile/{pseudo}", name="show_public_profile")
-     * @param AdvertManager $manager
-     * @param string $pseudo
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function userPublicProfile(AdvertManager $manager, string $pseudo)
-    {
-        $selectedUser = $this->getDoctrine()->getRepository(User::class)->findOneByPseudo($pseudo);
-        $userAdverts = $manager->getAdvertsByUser($selectedUser->getId());
-
-        return $this->render('user/user_publicprofile.html.twig', [
-            'user_public'  => $selectedUser,
-            'user_adverts' => $userAdverts
-        ]);
-    }
-
 
     /****************************************************************************
      *                       USER PROFILE PERSONAL PANEL                        *
@@ -338,6 +353,7 @@ class AdvertController extends Controller
             'advertList' => $advertList,
         ]);
     }
+
 
 
 
