@@ -4,19 +4,20 @@ namespace App\Controller;
 
 
 use App\Entity\Advert;
-use App\Entity\Category;
 use App\Entity\Contact;
+use App\Entity\Section;
 use App\Entity\User;
+use App\Entity\Wishlist;
 use App\Form\AdvertType;
 use App\Form\ContactType;
 use App\Form\Handler\AdvertHandler;
 use App\Form\Handler\ContactHandler;
 use App\Service\AdvertManager;
 use App\Service\AdvertPhotoUploader;
+use App\Service\WishlistManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -63,21 +64,27 @@ class AdvertController extends Controller
     }
 
     /**
-     * @param $slug
      * @Route("/show-advert/{advertslug}", name="show_advert")
+     * @param $advertslug
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showAdvert($advertslug)
     {
+        $wishlists = $this->getDoctrine()->getRepository(Wishlist::class)->findAll();
+
         return $this->render('advert/show_advert.html.twig', [
-            'advertdata'  => $this->manager->getAdvertRepo()->findAdvertBySlug($advertslug)
+            'advertdata'  => $this->manager->getAdvertRepo()->findAdvertBySlug($advertslug),
+            'wishlists' => $wishlists
 
         ]);
     }
 
     /**
-     * @param Request $request
-     * @param AdvertManager $manager
      * @Route("/edit-my-advert/{advertslug}", name="advert_edit")
+     * @param Request $request
+     * @param $advertslug
+     * @param AdvertPhotoUploader $advertPhotoUploader
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function editAdvert(Request $request, $advertslug, AdvertPhotoUploader $advertPhotoUploader)
     {
@@ -119,6 +126,9 @@ class AdvertController extends Controller
 
     /**
      * @Route("/section/{label}", name="show_adverts_by_section")
+     * @param $label
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showAdvertsBySection($label, Request $request)
     {
@@ -138,6 +148,10 @@ class AdvertController extends Controller
 
     /**
      * @Route("/section/{sectionlabel}/category/{categorylabel}", name="filter_adverts_by_category_and_section")
+     * @param $sectionlabel
+     * @param $categorylabel
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function filterAdvertsByCategoryAndSection($sectionlabel, $categorylabel, Request $request)
     {
@@ -159,6 +173,9 @@ class AdvertController extends Controller
 
     /**
      * @Route("/category/{categorylabel}", name="filter_adverts_by_category")
+     * @param $categorylabel
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function filterAdvertsByCategory($categorylabel, Request $request)
     {
@@ -211,6 +228,26 @@ class AdvertController extends Controller
         ]);
     }
 
+    /**
+     * @Route("/advert/{slug}/add-to-wishlist", name="add_to_wishlist")
+     * @param WishlistManager $manager
+     * @param $slug
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function addAdvertToWishlist(WishlistManager $manager, $slug)
+    {
+        $advertId = $this->getDoctrine()->getRepository(Advert::class)->findOneBySlug($slug)->getId();
+        $userId = $this->getUser()->getId();
+        $manager->createNewWishlistRow($advertId, $userId);
+
+        $wishlists = $this->getDoctrine()->getRepository(Wishlist::class)->findAll();
+
+        return $this->render('advert/show_advert.html.twig', [
+            'advertdata'  => $this->manager->getAdvertRepo()->findAdvertBySlug($slug),
+            'wishlists' => $wishlists
+
+        ]);
+    }
 
     /**
      * show public infos and adverts list of a specific user by clicking on his advert
@@ -283,6 +320,25 @@ class AdvertController extends Controller
             'advertList' => $userAdverts,
         ]);
     }
+
+    /**
+     * Get user adverts from the user private profile page
+     * @Route("/wishlist/{pseudo}", name="show_user_wishlist")
+     * @Security("has_role('ROLE_USER')")
+     * @param AdvertManager $advertManager
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function showAdvertsInWishlist(WishlistManager $manager)
+    {
+        $userId = $this->getUser()->getId();
+
+        $advertList = $manager->getAdvertsInWishlist($userId);
+
+        return $this->render('user/userprofile_wishlist.html.twig', [
+            'advertList' => $advertList,
+        ]);
+    }
+
 
 
     /****************************************************************************

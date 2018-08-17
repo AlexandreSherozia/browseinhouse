@@ -6,17 +6,13 @@ namespace App\Service;
 use App\Entity\Advert;
 use App\Entity\Category;
 use App\Entity\Section;
-use App\Entity\User;
-use App\Repository\SectionRepository;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\PaginatorBundle\Definition\PaginatorAware;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 
 class AdvertManager extends PaginatorAware
 {
-    private $em, $advertRepository, $connected_User;
+    private $em, $advertRepository, $connected_User, $whishlist;
 
     /**
      * AdvertManager constructor.
@@ -128,4 +124,5 @@ class AdvertManager extends PaginatorAware
     {
         return intval($this->advertRepository->findAdvertsNumberinCategoryAndSection($sectionLabel, $categorylabel));
     }
+
 }

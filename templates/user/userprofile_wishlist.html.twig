@@ -1,0 +1,68 @@
+{% extends 'layout.html.twig' %}
+{% trans_default_domain 'userprofile' %}
+
+{% block title %}{{ parent() }} | {{ 'userprofile.pagename' | trans }}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6 col-md-push-4">
+            <h2 class="text-center">{{ 'userprofile.whishlist.title' | trans }}</h2>
+            {#{% for message in app.flashes('success') %}#}
+                {#<div class="alert alert-success alert-dismissible text-center" role="alert">#}
+                    {#<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>#}
+                    {#{{ message | trans }}#}
+                {#</div>#}
+            {#{% endfor %}#}
+            {#{% for message in app.flashes('danger') %}#}
+                {#<div class="alert alert-danger alert-dismissible text-center" role="alert">#}
+                    {#<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>#}
+                    {#{{ message | trans }}#}
+                {#</div>#}
+            {#{% endfor %}#}
+        </div>
+    </div>
+    <div class="row">
+        {% include 'includes/_userprofilesidebar.html.twig' %}
+        <div class="col-md-8 col-xs-6">
+            {% if advertList %}
+                <div class="list-group">
+                    {% for advert in advertList %}
+                        <div class="list-group-item">
+                            <div class="row">
+                                <div class="col-md-1">
+                                    {% if advert.photo is not empty %}
+                                        <img src="{{ asset('images/advertphotos/'~advert.photo) }}" class="thumbnail" style="width: 150px">
+                                    {% else %}
+                                        <img src="{{ asset('images/advertphotos/bnh.jpg' ) }}" class="thumbnail">
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-10 col-md-push-1">
+                                    <a href="{{ path('show_advert', {'advertslug': advert.slug }) }}"><h3 class="col-md-4">{{ advert.title }}</h3></a>
+
+                                    <p class="text-left col-md-4">posted by
+                                        <a href="{{ path('show_public_profile', {'pseudo': advert.pseudo}) }}">{{ advert.pseudo }}</a> on {{ advert.creation_date | date('d-m-Y H:m:s') }}
+                                    </p>
+                                    <p class="text-right col-md-4">
+                                        <a class="btn btn-default" href="{{ path('filter_adverts_by_category', {'categorylabel' : advert.category}) }}">
+                                            {{ advert.category }}
+                                        </a> in
+                                        <a class="btn btn-default" href="{{ path('show_adverts_by_section', {'label' : advert.section}) }}">
+                                            {{ advert.section }}
+                                        </a>
+                                    </p>
+                                    <p class="col-md-10">
+                                        {{ advert.description | shorten_text }} -
+                                    </p>
+                                    <h4 class="text-right col-md-1 badge">{{ advert.price | text_trim }} </h4>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                </div>
+            {% else %}
+                <div class="text-center"><br/><br/>{{ 'userprofile.whishlist.noAdvertToShow' | trans }}</div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
