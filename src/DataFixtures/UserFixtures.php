@@ -39,6 +39,7 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
             $user->setEmail('user' .$i . '@gmail.com');
 
             $number = rand(1,2);
+            $gender = ($number < 1.51) ? 'F' : 'M';
 
             if($number < 1.51) {
 

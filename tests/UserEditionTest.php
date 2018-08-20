@@ -8,12 +8,22 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class UserEditionTest extends WebTestCase
 {
+    private function login($username = 'login', $password = 'password')
+    {
+        // Login...
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/login');
+        $form = $crawler->selectButton('Register')->form();
+        $form['...'] = $username;
+
+        $client->submit($form);
+        //$client->followRedirect();
+        return $client;
+    }
+
     public function testUserCantEditProfileWithoutBeingLoggedIn()
     {
-        $user = new User();
-        $user->setPseudo('pseudoTest');
-
-        $client = static::createClient();
+        $client = $this->login();
         $client->request('GET', '/edit-profile/pseudoTest');
         $crawler = $client->getCrawler();
 
@@ -30,9 +40,6 @@ class UserEditionTest extends WebTestCase
 
 //    public function testFirstnameCannotExceedFiftyCharactersInForm()
 //    {
-//        $user = new User();
-//        $user->setPseudo('pseudoTest');
-//
 //        $client = static::createClient();
 //        $client->request('GET', '/edit-profile/pseudoTest');
 //        $crawler = $client->getCrawler();

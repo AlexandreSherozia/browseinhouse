@@ -37,20 +37,16 @@ class AdvertPhotoUploader
     /**
      * @param File $photo
      * @return string
+     * @throws \Exception
      */
     public function uploadPhoto(File $photo): ?string
     {
         //dump($photo->getSize());
-        if($this->filterFileSize($photo) && $this->filterMimesTypes($photo)){
+        if ($this->filterFileSize($photo) && $this->filterMimesTypes($photo)) {
+            $fileName = $this->generateUniqueFileName() . '.' .$photo->guessExtension();
+            $photo->move($this->getPhotoDirectory(), $fileName);
 
-                $fileName = $this->generateUniqueFileName() . '.' .$photo->guessExtension();
-
-                $photo->move($this->getPhotoDirectory(), $fileName);
-
-            //return false; //for dump debug
-
-              return  $fileName;
-
+            return $fileName;
         }
 
         return false;
