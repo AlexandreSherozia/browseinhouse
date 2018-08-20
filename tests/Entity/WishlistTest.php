@@ -22,5 +22,5 @@ class WishlistTest extends TestCase
 
         $this->assertEquals(2, $wishlist->getUserId());
     }
-    
+
 }
