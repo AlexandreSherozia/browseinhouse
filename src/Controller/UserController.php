@@ -2,15 +2,11 @@
 
 namespace App\Controller;
 
-use App\Entity\Subscription;
 use App\Entity\User;
-use App\Entity\Section;
 use App\Form\UserType;
 use App\Form\Handler\UserHandler;
-use App\Service\AdvertManager;
 use App\Service\ImageUploader;
 use App\Service\UserManager;
-use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -67,12 +63,6 @@ class UserController extends Controller
     {
         return $this->render('mail/confirm.html.twig');
     }
-
-
-
-    /****************************************************************************
-     *                       USER PROFILE PERSONAL PANEL                        *
-     ****************************************************************************/
 
     /**
      * Get user personnal infos for his profile landing page
@@ -149,45 +139,6 @@ class UserController extends Controller
         return $this->render('user/mySubscriptionList.html.twig', [
             'my_subscription_list' => $subscription
         ]);
-    }
-
-
-
-    /****************************************************************************
-     *                              ADMINISTRATOR PANEL                         *
-     ****************************************************************************/
-
-    /**
-     * show the list of all users for an admin user
-     * @Route("/admin/user-list", name="user_list")
-     * @Security("has_role('ROLE_ADMIN')")
-     * @param UserManager $userManager
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function adminShowUserList(UserManager $userManager)
-    {
-        $userList = $userManager->getUserList();
-
-        return $this->render('admin/user_list.html.twig', [
-            'userList' => $userList
-        ]);
-    }
-
-    /**
-     * delete an user from db in admin page
-     * @Route("/admin/delete-user/{user_id}", name="delete_user")
-     * @Security("has_role('ROLE_ADMIN')")
-     * @param UserManager $userManager
-     * @param int $user_id
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function adminDeleteUser(UserManager $userManager, int $user_id)
-    {
-        $userManager->removeUser($user_id);
-
-        $this->addFlash('success', 'admin.deleteUser.validation');
-
-        return $this->redirectToRoute('user_list');
     }
 
 }

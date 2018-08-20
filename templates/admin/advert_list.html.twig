@@ -43,7 +43,12 @@
                                 <tr>
                                     <td>{{ advert.id }}</td>
                                     <td>{{ advert.creationDate | date('d/m/Y') }}</td>
-                                    <td><img src="{{ asset('images/advertphotos/'~ advert.photos | first.url) }}" height="40px"></td>
+                                    <td>{% if advert.photos is not empty %}
+                                            <img src="{{ asset('images/advertphotos/'~advert.photos|first.url ) }}" height="40px">
+                                        {% else %}
+                                            <img src="{{ asset('images/advertphotos/bnh.jpg' ) }}" height="40px">
+                                        {% endif %}
+                                    </td>
                                     <td>
                                         <a href="{{ path('show_advert', {'advertslug': advert.slug }) }}">
                                             {{ advert.description | shorten_text }}
