@@ -1,6 +1,8 @@
 <?php
 
 use App\Entity\Advert;
+use App\Entity\Photo;
+use App\Entity\User;
 use PHPUnit\Framework\TestCase;
 
 class AdvertTest extends TestCase
@@ -11,7 +13,7 @@ class AdvertTest extends TestCase
         $this->assertInstanceOf(Advert::class, $advert);
     }
 
-    public function testAdvertHasACreationDateByDefaultAndCanBeGetted()
+    public function testAdvertHasACreationDateByDefaultAndCanGetIt()
     {
         $advert = new Advert();
         $date = new \DateTime;
@@ -65,6 +67,25 @@ class AdvertTest extends TestCase
         $advert->setSection(2);
 
         $this->assertEquals(2, $advert->getSection());
+    }
+
+    public function testAdvertCanSetAndGetAnUserEntity()
+    {
+        $advert = new Advert();
+        $user = new User();
+
+        $advert->setUser($user);
+
+        $this->assertEquals($user, $advert->getUser());
+    }
+
+    public function testAdvertCanAddAndGetPhotoEntity()
+    {
+        $advert = new Advert();
+        $photo = $this->createMock(Photo::class);
+
+        $this->assertSame($advert, $advert->addPhoto($photo));
+        $this->assertContainsOnlyInstancesOf(Photo::class, $advert->getPhotos());
     }
 
 }

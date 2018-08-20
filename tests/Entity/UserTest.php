@@ -11,15 +11,14 @@ class UserTest extends TestCase
         $this->assertInstanceOf(User::class, $user);
     }
 
-    public function testUserHasARegistrationDateByDefaultAndCanBeGetted()
+    public function testUserHasARegistrationDateByDefaultAndCanGetIt()
     {
         $user = new User();
-        $date = new \DateTime;
 
-        $this->assertEquals($date, $user->getRegistrationDate());
+        $this->assertInstanceOf(\DateTime::class, $user->getRegistrationDate());
     }
 
-    public function testUserHasAUserRoleByDefaultAndCanBeGetted()
+    public function testUserHasAUserRoleByDefaultAndCanGetIt()
     {
         $user = new User();
 
