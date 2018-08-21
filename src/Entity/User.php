@@ -109,7 +109,7 @@ class User implements UserInterface
     public function __construct()
     {
         $this->registrationDate = new \DateTime;
-        $this->roles[] = '';
+        $this->roles[] = 'ROLE_USER';
     }
 
     public function getId(): ?int
@@ -219,11 +219,6 @@ class User implements UserInterface
     public function addRole(string $role): void
     {
         $this->roles[] = $role;
-    }
-
-    public function setFixtureRole(string $role): void
-    {
-        $this->roles[0] = $role;
     }
 
     /**

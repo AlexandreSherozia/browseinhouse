@@ -186,7 +186,7 @@ class UserRegistrationTest extends WebTestCase
         );
     }
 
-    public function testUserRegistrationFormIsOk()
+    public function testUserRegistrationFormIsOkAndUserHasAValidRole()
     {
         $client = static::createClient();
         $client->request('GET', '/register');

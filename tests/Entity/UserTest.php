@@ -18,19 +18,19 @@ class UserTest extends TestCase
         $this->assertInstanceOf(\DateTime::class, $user->getRegistrationDate());
     }
 
-    public function testUserHasNoRoleByDefault()
+    public function testUserHasARoleByDefault()
     {
         $user = new User();
 
-        $this->assertEquals([''], $user->getRoles());
+        $this->assertEquals(['ROLE_USER'], $user->getRoles());
     }
 
     public function testUserCanAddARoleAndGetIt()
     {
         $user = new User();
-        $user->addRole('ROLE_USER');
+        $user->addRole('ROLE_ADMIN');
 
-        $this->assertEquals(['','ROLE_USER'], $user->getRoles());
+        $this->assertEquals(['ROLE_USER', 'ROLE_ADMIN'], $user->getRoles());
     }
 
     public function testUserCanSetAndGetAnEmail()

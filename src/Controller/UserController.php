@@ -33,7 +33,7 @@ class UserController extends Controller
 
         if ($userHandler->process('new', $form, $request)) {
 
-            return $this->redirectToRoute('waiting_for_confirmation');
+           return $this->redirectToRoute('waiting_for_confirmation');
         }
 
         return $this->render(
