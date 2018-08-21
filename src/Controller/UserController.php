@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\EditionUserType;
 use App\Form\RegistrationUserType;
-use App\Form\UserType;
 use App\Form\Handler\UserHandler;
 use App\Service\UserManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -117,7 +116,11 @@ class UserController extends Controller
             );
         }
 
-        return $this->render('form/editprofile.html.twig', ['form' => $form->createView()]);
+        return $this->render('form/editprofile.html.twig',
+            [
+                'form' => $form->createView()
+            ]
+        );
     }
 
 

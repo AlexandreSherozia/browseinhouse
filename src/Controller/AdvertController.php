@@ -371,15 +371,13 @@ class AdvertController extends Controller
      * @Route("/adverts/{pseudo}", name="show_user_adverts")
      * @Security("has_role('ROLE_USER')")
      *
-     * @param AdvertManager $advertManager
-     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function showUserAdverts(AdvertManager $advertManager)
+    public function showUserAdverts()
     {
         $user = $this->getUser();
 
-        $userAdverts = $advertManager->getAdvertsByUser($user->getId());
+        $userAdverts = $this->manager->getAdvertsByUser($user->getId());
 
         return $this->render(
             'user/userprofile_adverts.html.twig',
@@ -401,13 +399,13 @@ class AdvertController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      */
 
-    public function deleteUserAdverts(AdvertManager $advertManager, int $advert_id)
+    public function deleteUserAdverts(int $advert_id)
     {
-        $advertManager->removeAdvert($advert_id);
+        $this->manager->removeAdvert($advert_id);
 
         $user = $this->getUser();
 
-        $userAdverts = $advertManager->getAdvertsByUser($user->getId());
+        $userAdverts = $this->manager->getAdvertsByUser($user->getId());
 
         return $this->render('user/userprofile_adverts.html.twig', [
             'advertList' => $userAdverts,
