@@ -77,7 +77,7 @@ class Category
     }
 
     /**
-     * @return mixed
+     * @return ArrayCollection
      */
     public function getAdverts()
     {
@@ -85,8 +85,8 @@ class Category
     }
 
     /**
-     * @param mixed $adverts
-     * @return Category
+     * @param Advert $advert
+     * @return $this
      */
     public function addAdvert(Advert $advert)
     {
@@ -96,6 +96,5 @@ class Category
 
         return $this;
     }
-
 
 }

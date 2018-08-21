@@ -42,16 +42,22 @@ class AdvertController extends Controller
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @Route("/create-advert", name="create_advert")
      */
-    public function addNewAdvert(Request $request, AdvertPhotoUploader $advertPhotoUploader)
+    public function addNewAdvert(Request $request, AdvertPhotoUploader $advertPhotoUploader, AdvertHandler $advertHandler)
     {
 
         $this->denyAccessUnlessGranted(['ROLE_USER']);
 
+        /***************************************************************************************/
+        //$formHandler = $advertHandler->createHandler(AdvertType::class, $advert = new Advert());
+/**************************************************************************************************/
 
-        $formHandler = new AdvertHandler($this->createForm(AdvertType::class, new Advert()),
-                                        $request,
-                                        $this->manager,
-                                        $advertPhotoUploader, $this->flashBag);
+        $formHandler = new AdvertHandler(
+            $this->createForm(AdvertType::class, new Advert()),
+            $request,
+            $this->manager,
+            $advertPhotoUploader,
+            $this->flashBag
+        );
 
         if ($formHandler->process()) {
 
@@ -226,6 +232,15 @@ class AdvertController extends Controller
         ]);
     }
 
+    /**
+     * Endpoint to follow an user.
+     *
+     * @Route("/follow/{pseudo}", name="follow_public_user")
+     */
+    public function followUser()
+    {
+
+    }
 
     /**
      * Allows an user to contact another user through an advert by sending him an email *

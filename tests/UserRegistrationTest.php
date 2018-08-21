@@ -6,7 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class UserRegistrationTest extends WebTestCase
 {
-
     public function testPseudoCannotBeBlankInForm()
     {
         $client = static::createClient();
