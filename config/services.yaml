@@ -8,6 +8,12 @@ parameters:
     advert_photos_directory: '%kernel.project_dir%/public/images/advertphotos'
     locale: 'en'
 
+fos_ck_editor:
+    configs:
+        my_config:
+            toolbar: basic
+            uiColor: "#fed700"
+
 services:
     # default configuration for services in *this* file
     _defaults:

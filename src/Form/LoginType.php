@@ -3,6 +3,7 @@
 namespace App\Form;
 
 
+use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -17,7 +18,7 @@ class LoginType extends AbstractType
         $builder
 
             ->add('email', EmailType::class, [
-                'label' => false,
+                'label' => 'Email',
                 'attr' => [
                     'placeholder' => 'form.login.placeholder.email'
                 ]

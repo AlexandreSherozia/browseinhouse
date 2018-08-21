@@ -37,7 +37,7 @@ class UserManager
      *
      * @return User
      */
-    public function addNewUserToDb(User $user)
+    public function addNewUserToDb(User $user): User
     {
         $user->setPassword(
             $this->encoder->encodePassword($user, $user->getPassword())
@@ -48,16 +48,16 @@ class UserManager
         return $user;
     }
 
-    public function updateUserIntoDb(User $user, string $imageName)
+    public function updateUserIntoDb(User $user, string $imageName): void
     {
         $user->setAvatar($imageName);
         $this->em->persist($user);
         $this->em->flush();
     }
 
-    public function removeAvatar(int $user_id)
+    public function removeAvatar(int $user_id): void
     {
-        $user = $this->em->getRepository(User::class)->find($user_id);
+        $user = $this->repository->find($user_id);
 
         $user->setAvatar(null);
         $this->em->flush();
@@ -68,13 +68,14 @@ class UserManager
         return $this->em->getRepository(User::class)->findAll();
     }
 
-    public function getSubscriptionList($follower)
+    public function getSubscriptionList($follower): array
     {
         return $this->em->getRepository(Subscription::class)
             ->findBy(['follower' => $follower]);
     }
 
-    public function removeUser($user_id)
+    public function removeUser($user_id): void
+
     {
         $user = $this->em->getRepository(User::class)->find($user_id);
         $adverts = $this->em->getRepository(Advert::class)->findBy(['user'=>$user_id]);

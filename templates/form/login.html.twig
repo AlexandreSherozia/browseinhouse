@@ -5,6 +5,7 @@
 {% block title %}{{ parent() }} | {{ 'login.pagename' | trans }}{% endblock %}
 
 {% block content %}
+    {#{{ accountNotEnabled }}#}
     <div class="row">
         <div class="col-xs-6 col-xs-push-3">
             <h2 class="text-center">
@@ -16,6 +17,8 @@
                     {{ message  | trans }}
                 </div>
             {% endfor %}
+
+            {#{{ dump(test) }}#}
 
             {% if errorMessage %}
                 <div class="alert alert-danger">

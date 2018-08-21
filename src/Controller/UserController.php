@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\UserType;
 use App\Form\Handler\UserHandler;
 use App\Service\ImageUploader;
+use App\Service\Mailer;
 use App\Service\UserManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -24,8 +25,10 @@ class UserController extends Controller
      * @param ImageUploader $imageUploader
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * Registration form page and process of a new user after submit
+     * @Route("/register", name="register")
      */
-    public function userRegistration(UserManager $userManager, Request $request, ImageUploader $imageUploader, \Swift_Mailer $swift_Mailer)
+    public function userRegistration(UserManager $userManager, Request $request, ImageUploader $imageUploader, Mailer $mailer)
     {
         $user = new User();
 
@@ -33,9 +36,9 @@ class UserController extends Controller
 
         $formHandler = new UserHandler($form, $request, $userManager, $imageUploader);
 
-        if ($formHandler->process('new')) {
+        if ($formHandler->process('new' , $mailer)) {
 
-            $message = (new \Swift_Message("Your registration on B'N'H"))
+           /* $message = (new \Swift_Message("Your registration on B'N'H"))
                 ->setFrom('browseinhouse@gmail.com')
                 ->setTo($form->get('email')->getData())
                 ->setBody(
@@ -46,9 +49,12 @@ class UserController extends Controller
                     'text/html'
                 );
 
-            $swift_Mailer->send($message);
+            $swift_Mailer->send($message);*/
 
-            return $this->redirectToRoute('confirm');
+
+
+            return $this->redirectToRoute('waiting_for_confirmation');
+
         }
 
         return $this->render(
@@ -57,9 +63,8 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/confirm", name="confirm")
-     *
      * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/waiting-for-confirmation", name="waiting_for_confirmation")
      */
     public function confirm()
     {

@@ -7,6 +7,7 @@
         "ext-iconv": "*",
         "api-platform/api-pack": "^1.1",
         "doctrine/annotations": "^1.6",
+        "friendsofsymfony/ckeditor-bundle": "^1.1",
         "knplabs/knp-paginator-bundle": "^2.8",
         "liip/imagine-bundle": "^2.1",
         "sensio/framework-extra-bundle": "^5.2",
