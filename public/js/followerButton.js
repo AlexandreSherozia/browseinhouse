@@ -6,7 +6,8 @@ $(document).ready(function () {
     $('#btn-ajax').click(function () {
         $.ajax({
             method: 'POST',
-            url: '/follow/'+$(this).data('pseudo'),
+            url: '/public-profile/'+$(this).data('pseudo'),
+            //url: '/follow/'+$(this).data('pseudo'),
 
             data: 'pseudo='+$(this).data('pseudo')
 

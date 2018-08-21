@@ -11,50 +11,48 @@ use Symfony\Component\HttpFoundation\Request;
 
 class UserHandler
 {
-    protected   $form,
-                $request,
-                $userManager,
-                $imageUploader,
-                $currentAvatar;
+    protected $form,
+        $request,
+        $userManager,
+        $imageUploader,
+        $currentAvatar;
 
     /**
-     * UserHandler constructor.
      * @param Form $form
      * @param Request $request
      * @param UserManager $userManager
-     * @param string $avatarDir
+     * @param string $avatarDir the directory where the picture will be stored
      */
     public function __construct(Form $form, Request $request, UserManager $userManager, ImageUploader $imageUploader)
     {
-        $this->form             = $form;
-        $this->request          = $request;
-        $this->userManager      = $userManager;
-        $this->imageUploader    = $imageUploader;
+        $this->form = $form;
+        $this->request = $request;
+        $this->userManager = $userManager;
+        $this->imageUploader = $imageUploader;
     }
 
     /**
-     * @param string $type
-     * @param Mailer $mailer
-     * @param \Swift_Message $swift_Message
+     * Processing the user form
+     *
+     * @param string $type purpose of the form (registration or edition of a user profile)
+     * @param Mailer|null $mailer
+     *
      * @return bool
      */
-    public function process(string $type, Mailer $mailer)
+    public function process(string $type, Mailer $mailer = null)
     {
         $this->currentAvatar = $this->form->getData()->getAvatar();
         $this->form->handleRequest($this->request);
 
         if ($this->form->isSubmitted() && $this->form->isValid()) {
 
-            if($type === 'new') {
+            if ($type === 'new') {
                 $this->onSuccessNew();
-
-
                 $mailer->sendEmail($this->form);
-
 
                 return true;
             }
-            if($type === 'edit') {
+            if ($type === 'edit') {
                 $this->onSuccessEdit();
 
                 return true;
@@ -78,13 +76,12 @@ class UserHandler
         if ($userFormData->getAvatar() === null) {
             $imageName = $this->currentAvatar;
 
-            if($imageName === null) {
+            if ($imageName === null) {
                 $imageName = '';
             }
 
             $this->userManager->updateUserIntoDb($userFormData, $imageName);
-        }
-        else {
+        } else {
             $image = new File($userFormData->getAvatar());
             $imageName = $this->imageUploader->upload($image);
             $this->userManager->updateUserIntoDb($userFormData, $imageName);

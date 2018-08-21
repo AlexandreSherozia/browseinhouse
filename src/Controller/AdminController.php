@@ -31,6 +31,7 @@ class AdminController extends Controller
 
     /**
      * Delete an user from db in admin page
+     *
      * @Route("/admin/delete-user/{user_id}",
      *     name="delete_user")
      * @Security("has_role('ROLE_ADMIN')")

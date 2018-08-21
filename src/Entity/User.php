@@ -204,7 +204,7 @@ class User implements UserInterface
         return $this->avatar;
     }
 
-    public function setAvatar(string $avatar): self
+    public function setAvatar(?string $avatar): self
     {
         $this->avatar = $avatar;
 

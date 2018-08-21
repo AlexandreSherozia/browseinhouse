@@ -25,10 +25,9 @@ class UserController extends Controller
      * @param ImageUploader $imageUploader
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     * Registration form page and process of a new user after submit
-     * @Route("/register", name="register")
      */
-    public function userRegistration(UserManager $userManager, Request $request, ImageUploader $imageUploader, Mailer $mailer)
+    public function userRegistration(UserManager $userManager, Request $request,
+                                     ImageUploader $imageUploader, Mailer $mailer)
     {
         $user = new User();
 
@@ -36,25 +35,9 @@ class UserController extends Controller
 
         $formHandler = new UserHandler($form, $request, $userManager, $imageUploader);
 
-        if ($formHandler->process('new' , $mailer)) {
-
-           /* $message = (new \Swift_Message("Your registration on B'N'H"))
-                ->setFrom('browseinhouse@gmail.com')
-                ->setTo($form->get('email')->getData())
-                ->setBody(
-                    $this->renderView(
-                        'mail/registration.html.twig',
-                        array('name' => $form->get('pseudo')->getData())
-                    ),
-                    'text/html'
-                );
-
-            $swift_Mailer->send($message);*/
-
-
+        if ($formHandler->process('new', $mailer)) {
 
             return $this->redirectToRoute('waiting_for_confirmation');
-
         }
 
         return $this->render(
@@ -63,8 +46,11 @@ class UserController extends Controller
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Response
+     * Inform that a mail has been sent after registration
+     *
      * @Route("/waiting-for-confirmation", name="waiting_for_confirmation")
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function confirm()
     {
@@ -98,7 +84,8 @@ class UserController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function editProfileData(UserManager $userManager, Request $request, ImageUploader $imageUploader)
+    public function editProfileData(UserManager $userManager, Request $request,
+                                    ImageUploader $imageUploader)
     {
         $user = $this->getUser();
         $form = $this->createForm(UserType::class, $user);
@@ -109,14 +96,15 @@ class UserController extends Controller
 
             $this->addFlash('success', 'userprofile.edit.validation');
 
-            return $this->redirectToRoute('user_profile', [
-                'pseudo' => $user->getPseudo()
-            ]);
+            return $this->redirectToRoute(
+                'user_profile',
+                [
+                    'pseudo' => $user->getPseudo()
+                ]
+            );
         }
 
-        return $this->render('form/editprofile.html.twig', [
-            'form' => $form->createView(),
-        ]);
+        return $this->render('form/editprofile.html.twig', ['form' => $form->createView()]);
     }
 
     /**
@@ -144,6 +132,7 @@ class UserController extends Controller
      * @Route("/my-subscription-list", name="my_subscription_list")
      *
      * @param UserManager $userManager
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function mySubscriptionList(UserManager $userManager)
@@ -154,9 +143,11 @@ class UserController extends Controller
 
         $subscription = $userManager->getSubscriptionList($follower);
 
-        return $this->render('user/mySubscriptionList.html.twig', [
-            'my_subscription_list' => $subscription
-        ]);
+        return $this->render(
+            'user/mySubscriptionList.html.twig',
+            [
+                'my_subscription_list' => $subscription
+            ]
+        );
     }
-
 }
