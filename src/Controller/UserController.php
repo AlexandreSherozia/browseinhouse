@@ -14,23 +14,35 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class UserController extends Controller
 {
+    private $handler,
+            $manager;
+
+    /**
+     * UserController constructor.
+     */
+    public function __construct(UserHandler $userHandler, UserManager $userManager)
+    {
+        $this->handler = $userHandler;
+        $this->manager = $userManager;
+    }
+
+
     /**
      * Registration form page and process of a new user after submit
      *
      * @Route("/register", name="register")
      *
-     * @param UserHandler $userHandler
      * @param Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function userRegistration(UserHandler $userHandler, Request $request)
+    public function userRegistration(Request $request)
     {
         $user = new User();
 
         $form = $this->createForm(RegistrationUserType::class, $user);
 
-        if ($userHandler->process('new', $form, $request)) {
+        if ($this->handler->process('new', $form, $request)) {
 
            return $this->redirectToRoute('waiting_for_confirmation');
         }
@@ -72,15 +84,13 @@ class UserController extends Controller
      * @Route("/avatar-delete", name="avatar_delete")
      * @Security("has_role('ROLE_USER')")
      *
-     * @param UserManager $userManager
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAvatar(UserManager $userManager)
+    public function deleteAvatar()
     {
         $user = $this->getUser();
 
-        $userManager->removeAvatar($user->getId());
+        $this->manager->removeAvatar($user->getId());
 
         return $this->redirectToRoute('user_profile', [
             'pseudo' => $user->getPseudo()
@@ -94,17 +104,16 @@ class UserController extends Controller
      *
      * @Security("has_role('ROLE_USER')")
      *
-     * @param UserHandler $userHandler
      * @param Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function editProfileData(UserHandler $userHandler, Request $request)
+    public function editProfileData(Request $request)
     {
         $user = $this->getUser();
         $form = $this->createForm(EditionUserType::class, $user);
 
-        if ($userHandler->process('edit', $form, $request)) {
+        if ($this->handler->process('edit', $form, $request)) {
 
             $this->addFlash('success', 'userprofile.edit.validation');
 
@@ -132,13 +141,13 @@ class UserController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function mySubscriptionList(UserManager $userManager)
+    public function mySubscriptionList()
     {
         $this->denyAccessUnlessGranted(['ROLE_USER']);
 
         $follower = $this->getUser();
 
-        $subscription = $userManager->getSubscriptionList($follower);
+        $subscription = $this->manager->getSubscriptionList($follower);
 
         return $this->render(
             'user/mySubscriptionList.html.twig',

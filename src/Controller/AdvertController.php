@@ -23,11 +23,15 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AdvertController extends Controller
 {
-    private $manager, $flashBag;
+    private $manager,
+            $handler,
+            $flashBag;
 
-    public function __construct(AdvertManager $manager, FlashBagInterface $flashBag)
+    public function __construct(AdvertManager $manager, AdvertHandler $handler,
+                                FlashBagInterface $flashBag)
     {
         $this->manager = $manager;
+        $this->handler = $handler;
         $this->flashBag = $flashBag;
     }
 
@@ -39,26 +43,25 @@ class AdvertController extends Controller
      * @Security("has_role('ROLE_USER')")
      *
      * @param Request $request
-     * @param AdvertHandler $advertHandler
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function addNewAdvert(Request $request, AdvertHandler $advertHandler)
+    public function addNewAdvert(Request $request)
     {
         $form = $this->createForm(AdvertType::class, new Advert());
 
-        if ($advertHandler->process($form, $request)) {
+        if ($this->handler->process($form, $request)) {
 
             return $this->redirectToRoute(
                 'show_advert', [
-                    'advertslug' => $advertHandler->getForm()->getData()->getSlug()
+                    'advertslug' => $this->handler->getForm()->getData()->getSlug()
                 ]
             );
         }
 
         return $this->render(
             'form/createAdvertForm.html.twig', [
-                'form' => $advertHandler->getForm()->createView()
+                'form' => $this->handler->getForm()->createView()
             ]
         );
 
@@ -70,11 +73,11 @@ class AdvertController extends Controller
      * @Route("/show-advert/{advertslug}",
      *     name="show_advert")
      *
-     * @param string $advertslug
+     * @param $advertslug
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function showAdvert(string $advertslug)
+    public function showAdvert($advertslug)
     {
         $wishlists = $this->getDoctrine()->getRepository(Wishlist::class)->findAll();
         $advertData = $this->manager->getAdvertRepo()->findAdvertBySlug($advertslug);
@@ -95,22 +98,19 @@ class AdvertController extends Controller
      *
      * @param Request $request
      * @param string $advertslug The slug of the advert
-     * @param AdvertHandler $advertHandler
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function editAdvert(Request $request, $advertslug,
-                               AdvertHandler $advertHandler
-    )
+    public function editAdvert(Request $request, $advertslug)
     {
         $advert = $this->manager->findAdvert($advertslug);
         $form = $this->createForm(AdvertType::class, $advert);
 
-        if ($advertHandler->process($form, $request)) {
+        if ($this->handler->process($form, $request)) {
 
             return $this->redirectToRoute(
                 'show_advert', [
-                    'advertslug' => $advertHandler
+                    'advertslug' => $this->handler
                         ->getForm()->getData()->getSlug()
                 ]
             );
@@ -118,7 +118,7 @@ class AdvertController extends Controller
 
         return $this->render(
             'form/createAdvertForm.html.twig', [
-                'form' => $advertHandler->getForm()->createView()
+                'form' => $this->handler->getForm()->createView()
             ]
         );
     }

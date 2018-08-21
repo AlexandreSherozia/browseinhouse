@@ -15,7 +15,8 @@ class UserHandler
         $request,
         $userManager,
         $imageUploader,
-        $currentAvatar;
+        $currentAvatar,
+        $mailer;
 
     /**
      * UserHandler constructor.
@@ -35,12 +36,14 @@ class UserHandler
     /**
      * Processing the user form
      *
-     * @param string $type purpose of the form (registration or edition of a user profile)
-     * @param Mailer|null $mailer
+     * @param string $type purpose of the form
+     * (registration or edition of a user profile)
+     * @param Form $form
+     * @param Request $request
      *
      * @return bool
      */
-    public function process(string $type, Form $form, Request $request)
+    public function process(string $type, Form $form, Request $request): bool
     {
         $this->form = $form;
         $this->request = $request;
@@ -50,12 +53,14 @@ class UserHandler
         if ($this->form->isSubmitted() && $this->form->isValid()) {
 
             if ($type === 'new') {
+                // the process is for a registration
                 $this->onSuccessNew();
                 $this->mailer->sendEmail($this->form);
 
                 return true;
             }
             if ($type === 'edit') {
+                // the process is for edition
                 $this->onSuccessEdit();
 
                 return true;
