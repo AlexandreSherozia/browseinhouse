@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Advert;
 use App\Entity\Contact;
-use App\Entity\Section;
 use App\Entity\Subscription;
 use App\Entity\User;
 use App\Entity\Wishlist;
@@ -100,11 +99,10 @@ class AdvertController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function editAdvert(
-        Request $request, $advertslug, AdvertHandler $advertHandler
+    public function editAdvert(Request $request, $advertslug,
+                               AdvertHandler $advertHandler
     )
     {
-
         $advert = $this->manager->findAdvert($advertslug);
         $form = $this->createForm(AdvertType::class, $advert);
 
@@ -264,8 +262,10 @@ class AdvertController extends Controller
         $subscriptionStatus = $this->getDoctrine()
             ->getRepository(Subscription::class)
             ->subscriptionStatus($follower, $pseudo);
+
         $selectedUser = $this->getDoctrine()->getRepository(User::class)
             ->findOneByPseudo($pseudo);
+
         $userAdverts = $this->manager->getAdvertsByUser($selectedUser->getId());
 
         return $this->render(
@@ -306,7 +306,9 @@ class AdvertController extends Controller
     {
         $advert = $this->getDoctrine()->getRepository(Advert::class)
             ->findOneBySlug($slug);
+
         $contacter = $this->getUser();
+
         $contactedUser = $this->getDoctrine()->getRepository(User::class)
             ->find($advert->getUser());
 
@@ -348,7 +350,9 @@ class AdvertController extends Controller
     {
         $advertId = $this->getDoctrine()->getRepository(Advert::class)
             ->findOneBySlug($slug)->getId();
+
         $userId = $this->getUser()->getId();
+
         $manager->createNewWishlistRow($advertId, $userId);
 
         $wishlists = $this->getDoctrine()->getRepository(Wishlist::class)->findAll();
@@ -375,16 +379,12 @@ class AdvertController extends Controller
     {
         $user = $this->getUser();
 
-        /** @var Section $section */
-        foreach ($advertManager->getAllSections() as $section) {
-            $allSections[] = $section->getLabel();
-        }
-
         $userAdverts = $advertManager->getAdvertsByUser($user->getId());
 
         return $this->render(
-            'user/userprofile_adverts.html.twig', [
-                'advertList' => $userAdverts,
+            'user/userprofile_adverts.html.twig',
+            [
+                'advertList' => $userAdverts
             ]
         );
     }
@@ -406,11 +406,6 @@ class AdvertController extends Controller
         $advertManager->removeAdvert($advert_id);
 
         $user = $this->getUser();
-
-        /** @var Section $section */
-        foreach ($advertManager->getAllSections() as $section) {
-            $allSections[] = $section->getLabel();
-        }
 
         $userAdverts = $advertManager->getAdvertsByUser($user->getId());
 

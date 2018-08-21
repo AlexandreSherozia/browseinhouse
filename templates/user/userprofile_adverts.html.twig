@@ -42,7 +42,7 @@
                                     {% endif %}
                                     <td>
                                         <a href="{{ path('show_advert', {'advertslug':advert.slug }) }}">
-                                            <p>{{ advert.description | shorten_text }}</p>
+                                            <p>{{ advert.description | shorten_text | raw }}</p>
                                         </a>
                                     </td>
                                     <td>

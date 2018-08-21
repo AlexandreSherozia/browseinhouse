@@ -2,11 +2,9 @@
 
 namespace App\Service;
 
-
 use ApiPlatform\Core\Validator\ValidatorInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
-
 
 /**
  * Class AdvertPhotoUploader
@@ -28,9 +26,9 @@ class AdvertPhotoUploader
      */
     public function __construct(string $photoDirectory, FlashBagInterface $flashBag/*, ValidatorInterface $validator*/)
     {
-        $this->mimeTypes        = ['jpeg','png'];
-        $this->photoDirectory   = $photoDirectory;
-        $this->flashBag         = $flashBag;
+        $this->mimeTypes = ['jpeg', 'png'];
+        $this->photoDirectory = $photoDirectory;
+        $this->flashBag = $flashBag;
         /*$this->validator        = $validator;*/
     }
 
@@ -43,12 +41,11 @@ class AdvertPhotoUploader
     {
         //dump($photo->getSize());
         if ($this->filterFileSize($photo) && $this->filterMimesTypes($photo)) {
-            $fileName = $this->generateUniqueFileName() . '.' .$photo->guessExtension();
+            $fileName = $this->generateUniqueFileName() . '.' . $photo->guessExtension();
             $photo->move($this->getPhotoDirectory(), $fileName);
 
             return $fileName;
         }
-
         return false;
     }
 
@@ -58,23 +55,22 @@ class AdvertPhotoUploader
      * filters whether mimetypes are good and size of each file
      */
     private function filterMimesTypes($photo)//: bool
-    {dump($photo->guessExtension());
-            if (\in_array($photo->guessExtension(), $this->mimeTypes, true)&&
-                is_file($photo)) {
+    {
+        dump($photo->guessExtension());
+        if (\in_array($photo->guessExtension(), $this->mimeTypes, true) &&
+            is_file($photo)) {
 
-                /* if($this->validator->validate($photo, array(
-               new Image(array('mimeTypes'   => ['image/jpeg', 'image/png']))
-           ))){*/
+            /* if($this->validator->validate($photo, array(
+           new Image(array('mimeTypes'   => ['image/jpeg', 'image/png']))
+       ))){*/
 
-                return true;
-
+            return true;
         }
 
         $this->flashBag->set('error', 'Only jpeg. jpg. and png. files accepted');
 
         return false;
     }
-
 
 
     /**
@@ -89,7 +85,7 @@ class AdvertPhotoUploader
             new Image(array('maxSize'   => 1))
         ))){*/
         if ($photo->getSize() < 1000000 &&
-                is_file($photo)){
+            is_file($photo)) {
 
             return true;
         }
