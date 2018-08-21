@@ -22,7 +22,8 @@ class ContactHandler
         $this->twig = $twig;
     }
 
-    public function process(Form $form, Request $request, Advert $advert, User $contacter, User $contactedUser): bool
+    public function process(Form $form, Request $request, Advert $advert,
+                            User $contacter, User $contactedUser): bool
     {
         $form->handleRequest($request);
 

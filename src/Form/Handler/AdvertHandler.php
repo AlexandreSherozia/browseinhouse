@@ -37,7 +37,9 @@ class AdvertHandler
      * @param AdvertPhotoUploader $advertPhotoUploader
      * @param FlashBagInterface $flashBag
      */
-    public function __construct(AdvertManager $advertManager, AdvertPhotoUploader $advertPhotoUploader, FlashBagInterface $flashBag)
+    public function __construct(AdvertManager $advertManager,
+                                AdvertPhotoUploader $advertPhotoUploader,
+                                FlashBagInterface $flashBag)
     {
 
         $this->advertManager        = $advertManager;
