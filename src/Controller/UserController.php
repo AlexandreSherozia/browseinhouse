@@ -12,15 +12,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-
 class UserController extends Controller
 {
     /**
      * Registration form page and process of a new user after submit
+     *
      * @Route("/register", name="register")
+     *
      * @param UserManager $userManager
      * @param Request $request
      * @param ImageUploader $imageUploader
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function userRegistration(UserManager $userManager, Request $request, ImageUploader $imageUploader, \Swift_Mailer $swift_Mailer)
@@ -47,17 +49,17 @@ class UserController extends Controller
             $swift_Mailer->send($message);
 
             return $this->redirectToRoute('confirm');
-
         }
 
-        return $this->render('form/register.html.twig', [
-            'form' => $form->createView(),
-        ]);
+        return $this->render(
+            'form/register.html.twig', ['form' => $form->createView()]
+        );
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/confirm", name="confirm")
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function confirm()
     {
@@ -66,8 +68,11 @@ class UserController extends Controller
 
     /**
      * Get user personnal infos for his profile landing page
+     *
      * @Route("/user-profile/{pseudo}", name="user_profile")
+     *
      * @Security("has_role('ROLE_USER')")
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showProfileData()
@@ -76,12 +81,16 @@ class UserController extends Controller
     }
 
     /**
-     * let user modify or add infos in his personnal infos panel
+     * Let user modify or add infos in his personnal infos panel
+     *
      * @Route("/edit-profile/{pseudo}", name="edit_profile")
+     *
      * @Security("has_role('ROLE_USER')")
+     *
      * @param UserManager $userManager
      * @param Request $request
      * @param ImageUploader $imageUploader
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function editProfileData(UserManager $userManager, Request $request, ImageUploader $imageUploader)
@@ -105,11 +114,14 @@ class UserController extends Controller
         ]);
     }
 
-     /**
-     * user avatar deletion
+    /**
+     * User avatar deletion
+     *
      * @Route("/avatar-delete", name="avatar_delete")
      * @Security("has_role('ROLE_USER')")
+     *
      * @param UserManager $userManager
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAvatar(UserManager $userManager)
@@ -124,9 +136,10 @@ class UserController extends Controller
     }
 
     /**
+     * @Route("/my-subscription-list", name="my_subscription_list")
+     *
      * @param UserManager $userManager
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("/my-subscription-list", name="my_subscription_list")
      */
     public function mySubscriptionList(UserManager $userManager)
     {

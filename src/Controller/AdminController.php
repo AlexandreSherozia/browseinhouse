@@ -12,11 +12,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AdminController extends Controller
 {
-
     /**
-     * show the list of all users for an admin user
-     * @Route("/admin/user-list", name="user_list")
+     * Show the list of all users for an admin user
+     *
+     * @Route("/admin/user-list",
+     *     name="user_list")
      * @Security("has_role('ROLE_ADMIN')")
+     *
      * @param UserManager $userManager
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -24,17 +26,18 @@ class AdminController extends Controller
     {
         $userList = $userManager->getUserList();
 
-        return $this->render('admin/user_list.html.twig', [
-            'userList' => $userList
-        ]);
+        return $this->render('admin/user_list.html.twig', ['userList' => $userList]);
     }
 
     /**
-     * delete an user from db in admin page
-     * @Route("/admin/delete-user/{user_id}", name="delete_user")
+     * Delete an user from db in admin page
+     * @Route("/admin/delete-user/{user_id}",
+     *     name="delete_user")
      * @Security("has_role('ROLE_ADMIN')")
+     *
      * @param UserManager $userManager
      * @param int $user_id
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function adminDeleteUser(UserManager $userManager, int $user_id)
@@ -70,8 +73,8 @@ class AdminController extends Controller
 
         return $this->render(
             'admin/advert_list.html.twig', [
-            'advertList' => $allAdverts,
-            'sections' => $allSections
+                'advertList' => $allAdverts,
+                'sections' => $allSections
             ]
         );
     }

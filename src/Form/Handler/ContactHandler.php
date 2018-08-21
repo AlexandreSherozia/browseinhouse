@@ -49,23 +49,27 @@ class ContactHandler
     }
 
     /**
-     * create a mail and send it to as user with user contact form data
+     * Create a mail and send it to as user with user contact form data
+     *
      * @param Contact $contact
      */
-    public function sendMail(Contact $contact)
+    public function sendMail(Contact $contact): void
     {
         $message = new Swift_Message($contact->getMessageTitle());
 
         $message->setFrom($contact->getContactingEmail())
             ->setTo($contact->getContactedEmail())
             ->setBody(
-                $this->twig->render('mail/usercontact_mail.html.twig', [
+                $this->twig->render(
+                    'mail/usercontact_mail.html.twig', [
                     'contactedpseudo' => $contact->getContactedPseudo(),
                     'contactingpseudo' => $contact->getContactingPseudo(),
                     'advertTitle' => $contact->getAdvertTitle(),
                     'advertSlug' => $contact->getAdvertSlug(),
                     'message' => $contact->getMessageBody()
-                ]), 'text/html');
+                    ]
+                ), 'text/html'
+            );
 
         $this->mailer->send($message);
 

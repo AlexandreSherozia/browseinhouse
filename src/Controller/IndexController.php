@@ -18,9 +18,11 @@ class IndexController extends Controller
         $lastAdverts = $advertManager->getFiveLastAdverts();
         $categories = $advertManager->getAllCategories();
 
-        return $this->render('index/index.html.twig', [
-            'lastAdverts' => $lastAdverts,
-            'categories' => $categories
-        ]);
+        return $this->render(
+            'index/index.html.twig', [
+                'lastAdverts' => $lastAdverts,
+                'categories' => $categories
+            ]
+        );
     }
 }

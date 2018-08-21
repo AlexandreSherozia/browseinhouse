@@ -45,7 +45,6 @@ class AdvertController extends Controller
      */
     public function addNewAdvert(Request $request, AdvertHandler $advertHandler)
     {
-        $this->denyAccessUnlessGranted(['ROLE_USER']);
         $form = $this->createForm(AdvertType::class, new Advert());
 
         if ($advertHandler->process($form, $request)) {
