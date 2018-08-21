@@ -2,10 +2,22 @@
 
 namespace App\Tests;
 
+use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\Console\Input\StringInput;
 
 class UserRegistrationTest extends WebTestCase
 {
+    public static function setUpBeforeClass()
+    {
+        $client = self::createClient();
+        $application = new Application($client->getKernel());
+        $application->setAutoExit(false);
+        $application->run(new StringInput('doctrine:database:drop --env=test --force'));
+        $application->run(new StringInput('doctrine:database:create --env=test'));
+        $application->run(new StringInput('doctrine:schema:update --env=test --force'));
+    }
+
     public function testPseudoCannotBeBlankInForm()
     {
         $client = static::createClient();
@@ -13,8 +25,8 @@ class UserRegistrationTest extends WebTestCase
         $crawler = $client->getCrawler();
 
         $form = $crawler->selectButton('Register')->form();
-        $form['user[email]'] = 'unemail@valide.fr';
-        $form['user[password]'] = 'unmotdepasse';
+        $form['registration_user[email]'] = 'unemail@valide.fr';
+        $form['registration_user[password]'] = 'unmotdepasse';
 
         $crawler = $client->submit($form);
         $this->assertContains(
@@ -31,9 +43,9 @@ class UserRegistrationTest extends WebTestCase
         $crawler = $client->getCrawler();
 
         $form = $crawler->selectButton('Register')->form();
-        $form['user[pseudo]'] = 'user';
-        $form['user[email]'] = 'unmail@test.fr';
-        $form['user[password]'] = 'unmotdepasse';
+        $form['registration_user[pseudo]'] = 'user';
+        $form['registration_user[email]'] = 'unmail@test.fr';
+        $form['registration_user[password]'] = 'unmotdepasse';
 
         $crawler = $client->submit($form);
         $this->assertContains(
@@ -50,9 +62,9 @@ class UserRegistrationTest extends WebTestCase
         $crawler = $client->getCrawler();
 
         $form = $crawler->selectButton('Register')->form();
-        $form['user[pseudo]'] = 'pseudopseudopseudopse';
-        $form['user[email]'] = 'unmail@test.fr';
-        $form['user[password]'] = 'unmotdepasse';
+        $form['registration_user[pseudo]'] = 'pseudopseudopseudopse';
+        $form['registration_user[email]'] = 'unmail@test.fr';
+        $form['registration_user[password]'] = 'unmotdepasse';
 
         $crawler = $client->submit($form);
         $this->assertContains(
@@ -69,8 +81,8 @@ class UserRegistrationTest extends WebTestCase
         $crawler = $client->getCrawler();
 
         $form = $crawler->selectButton('Register')->form();
-        $form['user[pseudo]'] = 'unpseudo';
-        $form['user[password]'] = 'unmotdepasse';
+        $form['registration_user[pseudo]'] = 'unpseudo';
+        $form['registration_user[password]'] = 'unmotdepasse';
 
         $crawler = $client->submit($form);
         $this->assertContains(
@@ -87,9 +99,9 @@ class UserRegistrationTest extends WebTestCase
         $crawler = $client->getCrawler();
 
         $form = $crawler->selectButton('Register')->form();
-        $form['user[pseudo]'] = 'pseudo';
-        $form['user[email]'] = 'unmailunmailunmailunmailu@testtesttesttesttestts.fr';
-        $form['user[password]'] = 'unmotdepasse';
+        $form['registration_user[pseudo]'] = 'pseudo';
+        $form['registration_user[email]'] = 'unmailunmailunmailunmailu@testtesttesttesttestts.fr';
+        $form['registration_user[password]'] = 'unmotdepasse';
 
         $crawler = $client->submit($form);
         $this->assertContains(
@@ -106,9 +118,9 @@ class UserRegistrationTest extends WebTestCase
         $crawler = $client->getCrawler();
 
         $form = $crawler->selectButton('Register')->form();
-        $form['user[pseudo]'] = 'unpseudo';
-        $form['user[email]'] = 'unemailquimarchepas';
-        $form['user[password]'] = 'unmotdepasse';
+        $form['registration_user[pseudo]'] = 'unpseudo';
+        $form['registration_user[email]'] = 'unemailquimarchepas';
+        $form['registration_user[password]'] = 'unmotdepasse';
 
         $crawler = $client->submit($form);
         $this->assertContains(
@@ -125,8 +137,8 @@ class UserRegistrationTest extends WebTestCase
         $crawler = $client->getCrawler();
 
         $form = $crawler->selectButton('Register')->form();
-        $form['user[pseudo]'] = 'unpseudo';
-        $form['user[email]'] = 'unmail@test.fr';
+        $form['registration_user[pseudo]'] = 'unpseudo';
+        $form['registration_user[email]'] = 'unmail@test.fr';
 
         $crawler = $client->submit($form);
         $this->assertContains(
@@ -143,9 +155,9 @@ class UserRegistrationTest extends WebTestCase
         $crawler = $client->getCrawler();
 
         $form = $crawler->selectButton('Register')->form();
-        $form['user[pseudo]'] = 'unpseudo';
-        $form['user[email]'] = 'unmail@test.fr';
-        $form['user[password]'] = 'passwor';
+        $form['registration_user[pseudo]'] = 'unpseudo';
+        $form['registration_user[email]'] = 'unmail@test.fr';
+        $form['registration_user[password]'] = 'passwor';
 
         $crawler = $client->submit($form);
         $this->assertContains(
@@ -162,9 +174,9 @@ class UserRegistrationTest extends WebTestCase
         $crawler = $client->getCrawler();
 
         $form = $crawler->selectButton('Register')->form();
-        $form['user[pseudo]'] = 'pseudo';
-        $form['user[email]'] = 'unmail@test.fr';
-        $form['user[password]'] =
+        $form['registration_user[pseudo]'] = 'pseudo';
+        $form['registration_user[email]'] = 'unmail@test.fr';
+        $form['registration_user[password]'] =
             '$2y$13$MIZXcVUKh9au30Xrk.zUX.zdkh95bKwOnWCJfC1ZQJ4gZKSSxfXVm2';
 
         $crawler = $client->submit($form);
@@ -182,9 +194,9 @@ class UserRegistrationTest extends WebTestCase
         $crawler = $client->getCrawler();
 
         $form = $crawler->selectButton('Register')->form();
-        $form['user[pseudo]'] = 'unpseudo';
-        $form['user[email]'] = 'unemail@valide.fr';
-        $form['user[password]'] = 'unmotdepasse';
+        $form['registration_user[pseudo]'] = 'unpseudo';
+        $form['registration_user[email]'] = 'unemail@valide.fr';
+        $form['registration_user[password]'] = 'unmotdepasse';
 
         $client->submit($form);
         $crawler = $client->followRedirect();
@@ -202,9 +214,9 @@ class UserRegistrationTest extends WebTestCase
         $crawler = $client->getCrawler();
 
         $form = $crawler->selectButton('Register')->form();
-        $form['user[pseudo]'] = 'unpseudo';
-        $form['user[email]'] = 'unemail2@valide.fr';
-        $form['user[password]'] = 'unmotdepasse';
+        $form['registration_user[pseudo]'] = 'unpseudo';
+        $form['registration_user[email]'] = 'unemail2@valide.fr';
+        $form['registration_user[password]'] = 'unmotdepasse';
 
         $crawler = $client->submit($form);
         $this->assertContains(
@@ -220,9 +232,9 @@ class UserRegistrationTest extends WebTestCase
         $crawler = $client->getCrawler();
 
         $form = $crawler->selectButton('Register')->form();
-        $form['user[pseudo]'] = 'unpseudo2';
-        $form['user[email]'] = 'unemail@valide.fr';
-        $form['user[password]'] = 'unmotdepasse';
+        $form['registration_user[pseudo]'] = 'unpseudo2';
+        $form['registration_user[email]'] = 'unemail@valide.fr';
+        $form['registration_user[password]'] = 'unmotdepasse';
 
         $crawler = $client->submit($form);
         $this->assertContains(
