@@ -5,8 +5,6 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Form\Handler\UserHandler;
-use App\Service\ImageUploader;
-use App\Service\Mailer;
 use App\Service\UserManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -20,22 +18,18 @@ class UserController extends Controller
      *
      * @Route("/register", name="register")
      *
-     * @param UserManager $userManager
+     * @param UserHandler $userHandler
      * @param Request $request
-     * @param ImageUploader $imageUploader
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function userRegistration(UserManager $userManager, Request $request,
-                                     ImageUploader $imageUploader, Mailer $mailer)
+    public function userRegistration(UserHandler $userHandler, Request $request)
     {
         $user = new User();
 
         $form = $this->createForm(UserType::class, $user);
 
-        $formHandler = new UserHandler($form, $request, $userManager, $imageUploader);
-
-        if ($formHandler->process('new', $mailer)) {
+        if ($userHandler->process('new', $form, $request)) {
 
             return $this->redirectToRoute('waiting_for_confirmation');
         }
@@ -58,41 +52,23 @@ class UserController extends Controller
     }
 
     /**
-     * Get user personnal infos for his profile landing page
-     *
-     * @Route("/user-profile/{pseudo}", name="user_profile")
-     *
-     * @Security("has_role('ROLE_USER')")
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function showProfileData()
-    {
-        return $this->render('user/userprofile.html.twig');
-    }
-
-    /**
      * Let user modify or add infos in his personnal infos panel
      *
      * @Route("/edit-profile/{pseudo}", name="edit_profile")
      *
      * @Security("has_role('ROLE_USER')")
      *
-     * @param UserManager $userManager
+     * @param UserHandler $userHandler
      * @param Request $request
-     * @param ImageUploader $imageUploader
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function editProfileData(UserManager $userManager, Request $request,
-                                    ImageUploader $imageUploader)
+    public function editProfileData(UserHandler $userHandler, Request $request)
     {
         $user = $this->getUser();
         $form = $this->createForm(UserType::class, $user);
 
-        $formHandler = new UserHandler($form, $request, $userManager, $imageUploader);
-
-        if ($formHandler->process('edit')) {
+        if ($userHandler->process('edit', $form, $request)) {
 
             $this->addFlash('success', 'userprofile.edit.validation');
 
@@ -105,6 +81,20 @@ class UserController extends Controller
         }
 
         return $this->render('form/editprofile.html.twig', ['form' => $form->createView()]);
+    }
+
+    /**
+     * Get user personnal infos for his profile landing page
+     *
+     * @Route("/user-profile/{pseudo}", name="user_profile")
+     *
+     * @Security("has_role('ROLE_USER')")
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function showProfileData()
+    {
+        return $this->render('user/userprofile.html.twig');
     }
 
     /**

@@ -87,5 +87,4 @@ class AdvertTest extends TestCase
         $this->assertSame($advert, $advert->addPhoto($photo));
         $this->assertContainsOnlyInstancesOf(Photo::class, $advert->getPhotos());
     }
-
 }
