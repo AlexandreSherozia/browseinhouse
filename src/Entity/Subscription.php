@@ -37,7 +37,7 @@ class Subscription
     /**
      * @param mixed $follower
      */
-    public function setFollower($follower): void
+    public function setFollower(User $follower): void
     {
         $this->follower = $follower;
     }
@@ -58,7 +58,7 @@ class Subscription
     /**
      * @param mixed $subscribed
      */
-    public function setSubscribed($subscribed): void
+    public function setSubscribed(User $subscribed): void
     {
         $this->subscribed = $subscribed;
     }

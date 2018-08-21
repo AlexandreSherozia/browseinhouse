@@ -24,38 +24,25 @@ class UserController extends Controller
      * @param UserManager $userManager
      * @param Request $request
      * @param ImageUploader $imageUploader
-     * @param \Swift_Mailer $swift_Mailer
+     * @param Mailer $mailer
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * Registration form page and process of a new user after submit
      * @Route("/register", name="register")
      */
-    public function userRegistration(UserManager $userManager, Request $request, ImageUploader $imageUploader, Mailer $mailer)
-    {
+    public function userRegistration(
+        UserManager $userManager,
+        Request $request,
+        ImageUploader $imageUploader,
+        Mailer $mailer
+    ) {
         $user = new User();
 
         $form = $this->createForm(UserType::class, $user);
 
         $formHandler = new UserHandler($form, $request, $userManager, $imageUploader);
 
-        if ($formHandler->process('new' , $mailer)) {
-
-           /* $message = (new \Swift_Message("Your registration on B'N'H"))
-                ->setFrom('browseinhouse@gmail.com')
-                ->setTo($form->get('email')->getData())
-                ->setBody(
-                    $this->renderView(
-                        'mail/registration.html.twig',
-                        array('name' => $form->get('pseudo')->getData())
-                    ),
-                    'text/html'
-                );
-
-            $swift_Mailer->send($message);*/
-
-
-
+        if ($formHandler->process('new', $mailer)) {
             return $this->redirectToRoute('waiting_for_confirmation');
-
         }
 
         return $this->render('form/register.html.twig', [
@@ -106,7 +93,6 @@ class UserController extends Controller
         $formHandler = new UserHandler($form, $request, $userManager, $imageUploader);
 
         if ($formHandler->process('edit')) {
-
             $this->addFlash('success', 'userprofile.edit.validation');
 
             return $this->redirectToRoute('user_profile', [

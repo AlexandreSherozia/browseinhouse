@@ -8,8 +8,6 @@
 
 namespace App\Service;
 
-
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\Form;
 
 class Mailer
@@ -19,7 +17,8 @@ class Mailer
 
     /**
      * Mailer constructor.
-     * @param $mailer
+     * @param \Twig_Environment $templating
+     * @param \Swift_Mailer $swift_Mailer
      */
     public function __construct(\Twig_Environment $templating, \Swift_Mailer $swift_Mailer)
     {
@@ -38,10 +37,10 @@ class Mailer
                 $this->templating->render(
                     'mail/registration.html.twig',
                     array('name' => $form->get('pseudo')->getData())
-                ), 'text/html'
+                ),
+                'text/html'
             );
 
         $this->swift_mailer->send($message);
     }
-
 }

@@ -40,7 +40,10 @@ class Photo
     private $imageFile;
 
 
-    public function setImageFile(File $imageFile )
+    /**
+     * @param File $imageFile
+     */
+    public function setImageFile(File $imageFile): void
     {
         $this->imageFile = $imageFile;
     }
@@ -91,7 +94,7 @@ class Photo
      * @param mixed $advert
      * @return Photo
      */
-    public function setAdvert(Advert $advert)
+    public function setAdvert(Advert $advert): Advert
     {
         $this->advert = $advert;
 

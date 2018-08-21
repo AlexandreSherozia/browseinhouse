@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-
 use App\Entity\Advert;
 use App\Entity\Subscription;
 use App\Entity\User;
@@ -29,8 +28,8 @@ class UserManager
     }
 
     /**
-     * Encode password and insert new user in db
      * @param User $user
+     * @return User
      */
     public function addNewUserToDb(User $user): User
     {
@@ -56,7 +55,7 @@ class UserManager
         $this->em->flush();
     }
 
-    public function getUserList()
+    public function getUserList(): array
     {
         return $this->em->getRepository(User::class)->findAll();
     }
@@ -67,12 +66,11 @@ class UserManager
     }
 
     public function removeUser($user_id): void
-
     {
         $user = $this->em->getRepository(User::class)->find($user_id);
         $adverts = $this->em->getRepository(Advert::class)->findBy(['user'=>$user_id]);
 
-        foreach($adverts as $advert) {
+        foreach ($adverts as $advert) {
             $this->em->remove($advert);
         }
 

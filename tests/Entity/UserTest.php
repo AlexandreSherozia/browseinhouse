@@ -23,13 +23,13 @@ class UserTest extends TestCase
     {
         $user = new User();
 
-        $this->assertEquals(['ROLE_USER'], $user->getRoles());
+        $this->assertEquals([''], $user->getRoles());
     }
 
     public function testUserCanSetNewRoleInsteadOfDefaultRole()
     {
         $user = new User();
-        $user->setRoles('ROLE_ADMIN');
+        $user->addRole('ROLE_ADMIN');
 
         $this->assertEquals(['ROLE_ADMIN'], $user->getRoles());
     }
@@ -37,7 +37,7 @@ class UserTest extends TestCase
     public function testUserCanAddANewRole()
     {
         $user = new User();
-        $user->addRoles('ROLE_ADMIN');
+        $user->addRole('ROLE_ADMIN');
 
         $this->assertEquals(['ROLE_USER','ROLE_ADMIN'], $user->getRoles());
     }
