@@ -11,8 +11,10 @@ namespace App\Form\Handler;
 
 use App\Entity\Advert;
 use App\Entity\Photo;
+use App\Form\AdvertType;
 use App\Service\AdvertManager;
 use App\Service\AdvertPhotoUploader;
+use Symfony\Bundle\FrameworkBundle\Controller\ControllerTrait;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
@@ -27,7 +29,6 @@ class AdvertHandler
                 $advertManager,
                 $advertPhotoUploader;
 
-
     /**
      * AdvertHandler constructor.
      * @param Form $form
@@ -36,10 +37,9 @@ class AdvertHandler
      * @param AdvertPhotoUploader $advertPhotoUploader
      * @param FlashBagInterface $flashBag
      */
-    public function __construct(Form $form, Request $request, AdvertManager $advertManager, AdvertPhotoUploader $advertPhotoUploader, FlashBagInterface $flashBag)
+    public function __construct(AdvertManager $advertManager, AdvertPhotoUploader $advertPhotoUploader, FlashBagInterface $flashBag)
     {
-        $this->form                 = $form;
-        $this->request              = $request;
+
         $this->advertManager        = $advertManager;
         $this->advertPhotoUploader  = $advertPhotoUploader;
         $this->flashBag             = $flashBag;
@@ -49,29 +49,32 @@ class AdvertHandler
     /**
      * @return bool
      */
-    public function process()
+    public function process(Form $form, Request $request)
     {
+        $this->form = $form;
+        $this->request = $request;
+
         $this->form->handleRequest($this->request);
         if ($this->form->isSubmitted() && $this->form->isValid()) {
             $this->currentPhoto = $this->form->get('photos')->getData();
 
-            if($this->currentPhoto){
+            if ($this->currentPhoto) {
 
-                if ($this->threePhotosAtMost($this->currentPhoto)){
+                if ($this->threePhotosAtMost($this->currentPhoto)) {
 
-                    foreach($this->currentPhoto as $key => $fileBrut){
+                    foreach ($this->currentPhoto as $key => $fileBrut) {
 
 
                         $file = $this->advertPhotoUploader->uploadPhoto($fileBrut);
 
-                        if ($file)
-                        {
+                        if ($file){
                             $photo = new Photo();
                             $photo->setUrl($file);
-                            $photo->setName($this->form->get('title')->getData() . '-'. ($key+1) );
+                            $photo->setName(
+                                $this->form->get('title')->getData() . '-'. ($key+1)
+                            );
                             $photo->setAdvert($this->form->getData());
                             $this->onSubmittedWithPhoto($photo);
-
                         } else {
 
                             return false;
@@ -79,20 +82,17 @@ class AdvertHandler
                     }
 
                     return true;
-
                 }
 
                 return false;
             }
-
-            /*Si on veut rendre la photo obligatoire, effacer les 2 lignes(retourner false) d'en bas et générer un message*/
+            /*Si on veut rendre la photo obligatoire, effacer les 2 lignes
+            (retourner false) d'en bas et générer un message*/
                 $this->onSubmitted();
                 return true;
-
         }
 
         return false;
-
     }
 
     /**

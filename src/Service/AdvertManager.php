@@ -120,9 +120,9 @@ class AdvertManager extends PaginatorAware
         return $this->advertRepository->findAdvertsCategoriesInSections();
     }
 
-    public function getAdvertsNumberInCategoryAndSection($sectionLabel, $categorylabel)
-    {
-        return intval($this->advertRepository->findAdvertsNumberinCategoryAndSection($sectionLabel, $categorylabel));
-    }
+//    public function getAdvertsNumberInCategoryAndSection($sectionLabel, $categorylabel)
+//    {
+//        return intval($this->advertRepository->findAdvertsNumberinCategoryAndSection($sectionLabel, $categorylabel));
+//    }
 
 }

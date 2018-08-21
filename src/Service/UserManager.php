@@ -18,11 +18,13 @@ class UserManager
 
     /**
      * UserManager constructor.
+     *
      * @param EntityManagerInterface $em
      * @param UserPasswordEncoderInterface $encoder
      */
-    public function __construct(EntityManagerInterface $em, UserPasswordEncoderInterface $encoder)
-    {
+    public function __construct(EntityManagerInterface $em,
+        UserPasswordEncoderInterface $encoder
+    ) {
         $this->em = $em;
         $this->repository = $em->getRepository(User::class);
         $this->encoder = $encoder;
@@ -30,11 +32,16 @@ class UserManager
 
     /**
      * Encode password and insert new user in db
+     *
      * @param User $user
+     *
+     * @return User
      */
     public function addNewUserToDb(User $user): User
     {
-        $user->setPassword($this->encoder->encodePassword($user, $user->getPassword()));
+        $user->setPassword(
+            $this->encoder->encodePassword($user, $user->getPassword())
+        );
         $this->em->persist($user);
         $this->em->flush();
 
@@ -63,7 +70,8 @@ class UserManager
 
     public function getSubscriptionList($follower): array
     {
-        return $this->em->getRepository(Subscription::class)->findBy(['follower' => $follower]);
+        return $this->em->getRepository(Subscription::class)
+            ->findBy(['follower' => $follower]);
     }
 
     public function removeUser($user_id): void
