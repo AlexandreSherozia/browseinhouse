@@ -221,6 +221,11 @@ class User implements UserInterface
         $this->roles[] = $role;
     }
 
+    public function setFixtureRole(string $role): void
+    {
+        $this->roles[0] = $role;
+    }
+
     /**
      * Returns the salt that was originally used to encode the password.
      *
