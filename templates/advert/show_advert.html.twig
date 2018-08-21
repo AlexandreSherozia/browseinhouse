@@ -46,7 +46,7 @@
                     <div class="panel-body col-md-6">
 
                         <h2 class="text-center">{{ advert.title }}</h2>
-                        <p class="well well-lg">{{ advert.description }}</p>
+                        <div class="well">{{ advert.description | raw }}</div>
                         <div class="col-md-6">
                             <p class="badge">{{ advert.price }} €</p>
                             {% if (wishlists | length) != 0 %}
@@ -68,7 +68,7 @@
 
                         <div class="col-md-6">
                             <p class="text-right">{{ advert.creationDate | date('Y-m-d') ~' '~ advert.creationDate | date('H:i:s') }}</p>
-                            <p class="text-right"><a href="{{ path('show_public_profile', {'pseudo': advert.user.pseudo}) }}">{{ advert.user.pseudo }}</a></p>
+                            <p class="text-right"><a href="{{ path('show_public_profile', {'pseudo': advert.user.pseudo}) }}">by {{ advert.user.pseudo }}</a></p>
                         </div>
 
                         <div class="text-center">

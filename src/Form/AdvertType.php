@@ -6,6 +6,7 @@ use App\Entity\Advert;
 use App\Entity\Category;
 use App\Entity\Photo;
 use App\Entity\Section;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -35,7 +36,10 @@ class AdvertType extends AbstractType
                     'data-default-file' => $this->image_url
                 ]
             ])
-            ->add('description', TextareaType::class)
+            ->add('description', CKEditorType::class, [
+                'required'  =>true,
+                'label'     => false
+            ])
             ->add('price', NumberType::class)
             ->add('section', EntityType::class, [
                'class' => Section::class,

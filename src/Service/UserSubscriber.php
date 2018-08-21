@@ -43,6 +43,7 @@ class UserSubscriber
         $subscriber = $this->security->getUser();
 
         if ($request->isXmlHttpRequest()) {
+
             $star = $this->manager->getRepository(User::class)->findOneBy(['pseudo' => $request->get('pseudo')]);
 
             if (!$this->subscriptionRepository->ifFollowingExists($subscriber, $star)) {

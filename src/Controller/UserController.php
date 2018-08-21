@@ -9,6 +9,7 @@ use App\Form\UserType;
 use App\Form\Handler\UserHandler;
 use App\Service\AdvertManager;
 use App\Service\ImageUploader;
+use App\Service\Mailer;
 use App\Service\UserManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -20,14 +21,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends Controller
 {
     /**
-     * Registration form page and process of a new user after submit
-     * @Route("/register", name="register")
      * @param UserManager $userManager
      * @param Request $request
      * @param ImageUploader $imageUploader
+     * @param \Swift_Mailer $swift_Mailer
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * Registration form page and process of a new user after submit
+     * @Route("/register", name="register")
      */
-    public function userRegistration(UserManager $userManager, Request $request, ImageUploader $imageUploader, \Swift_Mailer $swift_Mailer)
+    public function userRegistration(UserManager $userManager, Request $request, ImageUploader $imageUploader, Mailer $mailer)
     {
         $user = new User();
 
@@ -35,9 +37,9 @@ class UserController extends Controller
 
         $formHandler = new UserHandler($form, $request, $userManager, $imageUploader);
 
-        if ($formHandler->process('new')) {
+        if ($formHandler->process('new' , $mailer)) {
 
-            $message = (new \Swift_Message("Your registration on B'N'H"))
+           /* $message = (new \Swift_Message("Your registration on B'N'H"))
                 ->setFrom('browseinhouse@gmail.com')
                 ->setTo($form->get('email')->getData())
                 ->setBody(
@@ -48,9 +50,11 @@ class UserController extends Controller
                     'text/html'
                 );
 
-            $swift_Mailer->send($message);
+            $swift_Mailer->send($message);*/
 
-            return $this->redirectToRoute('confirm');
+
+
+            return $this->redirectToRoute('waiting_for_confirmation');
 
         }
 
@@ -61,7 +65,7 @@ class UserController extends Controller
 
     /**
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("/confirm", name="confirm")
+     * @Route("/waiting-for-confirmation", name="waiting_for_confirmation")
      */
     public function confirm()
     {
