@@ -23,8 +23,9 @@ class UserManager
      * @param UserPasswordEncoderInterface $encoder
      */
     public function __construct(EntityManagerInterface $em,
-        UserPasswordEncoderInterface $encoder
-    ) {
+                                UserPasswordEncoderInterface $encoder
+    )
+    {
         $this->em = $em;
         $this->repository = $em->getRepository(User::class);
         $this->encoder = $encoder;
@@ -55,6 +56,11 @@ class UserManager
         $this->em->flush();
     }
 
+    /**
+     * Set user avatar url to null in db
+     *
+     * @param int $user_id
+     */
     public function removeAvatar(int $user_id): void
     {
         $user = $this->repository->find($user_id);
@@ -65,27 +71,30 @@ class UserManager
 
     public function getUserList()
     {
-        return $this->em->getRepository(User::class)->findAll();
+        return $this->repository->findAll();
     }
 
-    public function getSubscriptionList($follower): array
+    /**
+     * @param $follower
+     * @return array
+     */
+    public function getSubscriptionList(User $follower): array
     {
         return $this->em->getRepository(Subscription::class)
             ->findBy(['follower' => $follower]);
     }
 
-    public function removeUser($user_id): void
+    public function removeUser(int $user_id): void
 
     {
-        $user = $this->em->getRepository(User::class)->find($user_id);
-        $adverts = $this->em->getRepository(Advert::class)->findBy(['user'=>$user_id]);
+        $user = $this->repository->find($user_id);
+        $adverts = $this->em->getRepository(Advert::class)->findBy(['user' => $user_id]);
 
-        foreach($adverts as $advert) {
+        foreach ($adverts as $advert) {
             $this->em->remove($advert);
         }
 
         $this->em->remove($user);
-
         $this->em->flush();
     }
 
