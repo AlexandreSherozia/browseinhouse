@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -63,7 +64,10 @@ class User implements UserInterface
      * @Assert\Length(min="8", minMessage="asserts.password.tooshort",
      *                max="60", maxMessage="asserts.password.toolong")
      */
-    private $password;
+    private $password; //* @Assert\Regex(
+      //pattern="/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/",
+      //message="Use 1 upper case letter, 1 lower case letter, and 1 number"
+ //)
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
@@ -102,10 +106,10 @@ class User implements UserInterface
      */
     private $adverts;
 
-    public function __construct(string $role = 'ROLE_USER')
+    public function __construct()
     {
         $this->registrationDate = new \DateTime;
-        $this->roles[] = $role;
+        $this->roles[] = '';
     }
 
     public function getId(): ?int
@@ -212,16 +216,9 @@ class User implements UserInterface
         return $this->roles;
     }
 
-    public function setRoles(string $roles): self
+    public function addRole(string $role): void
     {
-        $this->roles = [$roles];
-
-        return $this;
-    }
-
-    public function addRoles(string $roles): void
-    {
-        $this->roles[] = $roles;
+        $this->roles[] = $role;
     }
 
     /**
@@ -255,6 +252,14 @@ class User implements UserInterface
     public function eraseCredentials(): void
     {
         return;
+    }
+
+    public function isNotEnabled(): bool
+    {
+        $roles = $this->getRoles();
+
+        return \in_array('', $roles, true);
+
     }
 
 }

@@ -3,6 +3,7 @@
 namespace App\Form\Handler;
 
 use App\Service\ImageUploader;
+use App\Service\Mailer;
 use App\Service\UserManager;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\File\File;
@@ -32,10 +33,12 @@ class UserHandler
     }
 
     /**
-     * form submission verification
+     * @param string $type
+     * @param Mailer $mailer
+     * @param \Swift_Message $swift_Message
      * @return bool
      */
-    public function process(string $type)
+    public function process(string $type, Mailer $mailer)
     {
         $this->currentAvatar = $this->form->getData()->getAvatar();
         $this->form->handleRequest($this->request);
@@ -45,9 +48,13 @@ class UserHandler
             if($type === 'new') {
                 $this->onSuccessNew();
 
+
+                $mailer->sendEmail($this->form);
+
+
                 return true;
             }
-            elseif($type === 'edit') {
+            if($type === 'edit') {
                 $this->onSuccessEdit();
 
                 return true;
