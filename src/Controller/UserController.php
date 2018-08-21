@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\EditionUserType;
+use App\Form\RegistrationUserType;
 use App\Form\UserType;
 use App\Form\Handler\UserHandler;
 use App\Service\UserManager;
@@ -27,7 +29,7 @@ class UserController extends Controller
     {
         $user = new User();
 
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(RegistrationUserType::class, $user);
 
         if ($userHandler->process('new', $form, $request)) {
 
@@ -49,38 +51,6 @@ class UserController extends Controller
     public function confirm()
     {
         return $this->render('mail/confirm.html.twig');
-    }
-
-    /**
-     * Let user modify or add infos in his personnal infos panel
-     *
-     * @Route("/edit-profile/{pseudo}", name="edit_profile")
-     *
-     * @Security("has_role('ROLE_USER')")
-     *
-     * @param UserHandler $userHandler
-     * @param Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     */
-    public function editProfileData(UserHandler $userHandler, Request $request)
-    {
-        $user = $this->getUser();
-        $form = $this->createForm(UserType::class, $user);
-
-        if ($userHandler->process('edit', $form, $request)) {
-
-            $this->addFlash('success', 'userprofile.edit.validation');
-
-            return $this->redirectToRoute(
-                'user_profile',
-                [
-                    'pseudo' => $user->getPseudo()
-                ]
-            );
-        }
-
-        return $this->render('form/editprofile.html.twig', ['form' => $form->createView()]);
     }
 
     /**
@@ -117,6 +87,40 @@ class UserController extends Controller
             'pseudo' => $user->getPseudo()
         ]);
     }
+
+    /**
+     * Let user modify or add infos in his personnal infos panel
+     *
+     * @Route("/edit-profile/{pseudo}", name="edit_profile")
+     *
+     * @Security("has_role('ROLE_USER')")
+     *
+     * @param UserHandler $userHandler
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function editProfileData(UserHandler $userHandler, Request $request)
+    {
+        $user = $this->getUser();
+        $form = $this->createForm(EditionUserType::class, $user);
+
+        if ($userHandler->process('edit', $form, $request)) {
+
+            $this->addFlash('success', 'userprofile.edit.validation');
+
+            return $this->redirectToRoute(
+                'user_profile',
+                [
+                    'pseudo' => $user->getPseudo()
+                ]
+            );
+        }
+
+        return $this->render('form/editprofile.html.twig', ['form' => $form->createView()]);
+    }
+
+
 
     /**
      * @Route("/my-subscription-list", name="my_subscription_list")

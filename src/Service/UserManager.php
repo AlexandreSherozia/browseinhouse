@@ -75,8 +75,9 @@ class UserManager
     }
 
     /**
-     * @param $follower
-     * @return array
+     * @param User $follower
+     *
+     * @return array User[] users followed by this follower
      */
     public function getSubscriptionList(User $follower): array
     {
@@ -85,7 +86,6 @@ class UserManager
     }
 
     public function removeUser(int $user_id): void
-
     {
         $user = $this->repository->find($user_id);
         $adverts = $this->em->getRepository(Advert::class)->findBy(['user' => $user_id]);
@@ -97,5 +97,4 @@ class UserManager
         $this->em->remove($user);
         $this->em->flush();
     }
-
 }

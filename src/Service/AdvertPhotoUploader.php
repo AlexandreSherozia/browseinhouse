@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-use ApiPlatform\Core\Validator\ValidatorInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
@@ -17,29 +16,25 @@ class AdvertPhotoUploader
     protected $validator;
     protected $photoDirectory;
 
-
     /**
      * AdvertPhotoUploader constructor.
+     *
      * @param string $photoDirectory
      * @param FlashBagInterface $flashBag
-     * @param ValidatorInterface $validator
      */
-    public function __construct(string $photoDirectory, FlashBagInterface $flashBag/*, ValidatorInterface $validator*/)
+    public function __construct(string $photoDirectory, FlashBagInterface $flashBag)
     {
         $this->mimeTypes = ['jpeg', 'png'];
         $this->photoDirectory = $photoDirectory;
         $this->flashBag = $flashBag;
-        /*$this->validator        = $validator;*/
     }
 
     /**
      * @param File $photo
-     * @return string
-     * @throws \Exception
+     * @return null|string
      */
     public function uploadPhoto(File $photo): ?string
     {
-        //dump($photo->getSize());
         if ($this->filterFileSize($photo) && $this->filterMimesTypes($photo)) {
             $fileName = $this->generateUniqueFileName() . '.' . $photo->guessExtension();
             $photo->move($this->getPhotoDirectory(), $fileName);
@@ -54,15 +49,11 @@ class AdvertPhotoUploader
      * @return bool
      * filters whether mimetypes are good and size of each file
      */
-    private function filterMimesTypes($photo)//: bool
+    private function filterMimesTypes($photo): bool
     {
         dump($photo->guessExtension());
         if (\in_array($photo->guessExtension(), $this->mimeTypes, true) &&
             is_file($photo)) {
-
-            /* if($this->validator->validate($photo, array(
-           new Image(array('mimeTypes'   => ['image/jpeg', 'image/png']))
-       ))){*/
 
             return true;
         }
@@ -80,10 +71,6 @@ class AdvertPhotoUploader
      */
     public function filterFileSize($photo): bool
     {
-        /*$validator = Validation::createValidator();
-        if($validator->validate($photo, array(
-            new Image(array('maxSize'   => 1))
-        ))){*/
         if ($photo->getSize() < 1000000 &&
             is_file($photo)) {
 
@@ -105,6 +92,4 @@ class AdvertPhotoUploader
     {
         return md5(uniqid('photo', true));
     }
-
-
 }
