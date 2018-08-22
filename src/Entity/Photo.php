@@ -94,7 +94,7 @@ class Photo
      * @param mixed $advert
      * @return Photo
      */
-    public function setAdvert(Advert $advert): Advert
+    public function setAdvert($advert): self
     {
         $this->advert = $advert;
 

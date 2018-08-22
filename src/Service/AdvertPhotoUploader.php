@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-
 use ApiPlatform\Core\Validator\ValidatorInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
@@ -24,7 +23,6 @@ class AdvertPhotoUploader
      * AdvertPhotoUploader constructor.
      * @param string $photoDirectory
      * @param FlashBagInterface $flashBag
-     * @param ValidatorInterface $validator
      */
     public function __construct(string $photoDirectory, FlashBagInterface $flashBag/*, ValidatorInterface $validator*/)
     {
@@ -40,9 +38,7 @@ class AdvertPhotoUploader
      */
     public function uploadPhoto(File $photo): ?string
     {
-        //dump($photo->getSize());
-        if($this->filterFileSize($photo) && $this->filterMimesTypes($photo)){
-
+        if ($this->filterFileSize($photo) && $this->filterMimesTypes($photo)) {
                 $fileName = $this->generateUniqueFileName() . '.' .$photo->guessExtension();
 
                 $photo->move($this->getPhotoDirectory(), $fileName);
@@ -50,7 +46,6 @@ class AdvertPhotoUploader
             //return false; //for dump debug
 
               return  $fileName;
-
         }
 
         return false;
@@ -61,17 +56,19 @@ class AdvertPhotoUploader
      * @return bool
      * filters whether mimetypes are good and size of each file
      */
-    private function filterMimesTypes($photo)//: bool
-    {dump($photo->guessExtension());
-            if (\in_array($photo->guessExtension(), $this->mimeTypes, true)&&
-                is_file($photo)) {
-
-                /* if($this->validator->validate($photo, array(
-               new Image(array('mimeTypes'   => ['image/jpeg', 'image/png']))
-           ))){*/
-
-                return true;
-
+    private function filterMimesTypes(File $photo): bool
+    {
+        if (\in_array(
+            $photo->guessExtension(),
+            $this->mimeTypes,
+            true
+        )
+            && is_file($photo)
+        ) {
+            /* if($this->validator->validate($photo, array(
+           new Image(array('mimeTypes'   => ['image/jpeg', 'image/png']))
+       ))){*/
+            return true;
         }
 
         $this->flashBag->set('error', 'Only jpeg. jpg. and png. files accepted');
@@ -86,33 +83,29 @@ class AdvertPhotoUploader
      * @return bool
      * Filter greater than 1Mo files
      */
-    public function filterFileSize($photo): bool
+    public function filterFileSize(File $photo): bool
     {
         /*$validator = Validation::createValidator();
         if($validator->validate($photo, array(
             new Image(array('maxSize'   => 1))
         ))){*/
-        if ($photo->getSize() < 1000000 &&
-                is_file($photo)){
-
+        if ($photo->getSize() < 1000000 && is_file($photo)) {
             return true;
         }
+        #http://sebsauvage.net/comprendre/unites/index.html
 
         $this->flashBag->set('error', 'You can only upload 1MB per file');
 
         return false;
-
     }
 
-    private function getPhotoDirectory()
+    private function getPhotoDirectory(): string
     {
         return $this->photoDirectory;
     }
 
-    private function generateUniqueFileName()
+    private function generateUniqueFileName(): string
     {
         return md5(uniqid('photo', true));
     }
-
-
 }
