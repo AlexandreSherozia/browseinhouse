@@ -101,7 +101,7 @@ class AdvertController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function editAdvert(Request $request, $advertslug)
+    public function editAdvert(Request $request, string $advertslug)
     {
         $advert = $this->manager->findAdvert($advertslug);
         $form = $this->createForm(AdvertType::class, $advert);

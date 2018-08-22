@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-use ApiPlatform\Core\Validator\ValidatorInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
@@ -14,7 +13,7 @@ class AdvertPhotoUploader
 {
     protected $flashBag;
     protected $mimeTypes;
-    protected $validator;
+//    protected $validator;
     protected $photoDirectory;
 
     /**

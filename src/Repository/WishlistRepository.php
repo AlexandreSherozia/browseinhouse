@@ -16,17 +16,6 @@ class WishlistRepository  extends ServiceEntityRepository
 
         public function findAdvertsLinkedByUser($userId)
     {
-//        return $this->createQueryBuilder('w')
-//            ->select('a', 'c', 's', 'u')
-//            ->leftJoin('\App\Entity\Advert', 'a', 'a.id = w.advertId')
-//            ->leftjoin('a.category', 'c')
-//            ->leftjoin('a.section', 's')
-//            ->leftjoin('a.user', 'u')
-//            ->where('w.userId = :userId')
-//            ->setParameter('userId', $userId)
-//            ->getQuery()
-//            ->getResult();
-
             $conn = $this->getEntityManager()->getConnection();
             $sql = "SELECT w.user_id, a.title, a.description, a.price, a.creation_date, a.slug, 
                     c.label AS category, 

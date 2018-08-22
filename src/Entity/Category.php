@@ -17,7 +17,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          "get" = {"method"="GET"}
  *     }
  * )
- * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
+ * @ORM\Entity()
  */
 class Category
 {

@@ -21,6 +21,11 @@ class AdvertFixtures extends Fixture implements OrderedFixtureInterface
     private $om;
     private $photoUrl = 'advert_placeholder.jpg';
 
+    /**
+     * AdvertFixtures constructor.
+     *
+     * @param ObjectManager $manager
+     */
     public function __construct(ObjectManager $manager)
     {
         $this->om = $manager;
@@ -31,7 +36,9 @@ class AdvertFixtures extends Fixture implements OrderedFixtureInterface
 
     /**
      * pick a random Id in db from a table linked to a Doctrine entity
+     *
      * @param string $entity the entity required
+     *
      * @return int an Id of the entity
      */
     public function getRandomEntityId(string $entity): int
@@ -61,7 +68,9 @@ class AdvertFixtures extends Fixture implements OrderedFixtureInterface
     }
 
     /**
-     * builds an adverts table with random values from previously created fixtures : sections, categories and users
+     * builds an adverts table with random values from previously created
+     * fixtures : sections, categories and users
+     *
      * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)

@@ -12,6 +12,11 @@ use Doctrine\Common\Persistence\ObjectManager;
 class SectionFixtures extends Fixture implements OrderedFixtureInterface
 {
 
+    /**
+     * Generate a table with all sections
+     *
+     * @param ObjectManager $manager
+     */
     public function load(ObjectManager $manager)
     {
         $section1 = new Section();
