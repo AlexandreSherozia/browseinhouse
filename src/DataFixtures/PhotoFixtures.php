@@ -22,7 +22,8 @@ class PhotoFixtures extends Fixture implements OrderedFixtureInterface
     }
 
     /**
-     * set a default photo for each advert in db
+     * Set a default photo for each advert in db
+     *
      * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)

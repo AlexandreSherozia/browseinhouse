@@ -24,6 +24,8 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
 
     /**
      * UserFixtures constructor.
+     *
+     * @param UserPasswordEncoderInterface $encoder
      */
     public function __construct(UserPasswordEncoderInterface $encoder)
     {
@@ -32,6 +34,7 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
 
     /**
      * create a random user adapting firstnames & avatars according to a random gender
+     * using arrays of data and avatars name wich pictures are precharged in public/images/avatars
      *
      * @param ObjectManager $manager
      */
@@ -59,15 +62,16 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
             $randomAvatar = $this->{'avatars'.$gender}[$key];
             $user->setAvatar($randomAvatar);
 
-            $phones     =  '0' . mt_rand(0, 9) . mt_rand(0, 9) . mt_rand(0, 9) . mt_rand(0, 9) .mt_rand(0, 9) . mt_rand(0, 9) . mt_rand(0, 9) . mt_rand(0, 9) . mt_rand(0, 9);
+            $phones     =  '0' . mt_rand(0, 9) . mt_rand(0, 9) . mt_rand(0, 9)
+                . mt_rand(0, 9) .mt_rand(0, 9) . mt_rand(0, 9) . mt_rand(0, 9)
+                . mt_rand(0, 9) . mt_rand(0, 9);
+
             $user->setPhone($phones);
 
             $pass = $this->encoder->encodePassword($user, 'pepiniere');
 
             $user->setPassword($pass);
-
             $user->setFixtureRole('ROLE_USER');
-
             $manager->persist($user);
         }
 
