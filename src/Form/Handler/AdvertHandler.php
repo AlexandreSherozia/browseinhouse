@@ -9,12 +9,9 @@
 namespace App\Form\Handler;
 
 
-use App\Entity\Advert;
 use App\Entity\Photo;
-use App\Form\AdvertType;
 use App\Service\AdvertManager;
 use App\Service\AdvertPhotoUploader;
-use Symfony\Bundle\FrameworkBundle\Controller\ControllerTrait;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
@@ -31,8 +28,7 @@ class AdvertHandler
 
     /**
      * AdvertHandler constructor.
-     * @param Form $form
-     * @param Request $request
+     *
      * @param AdvertManager $advertManager
      * @param AdvertPhotoUploader $advertPhotoUploader
      * @param FlashBagInterface $flashBag
@@ -41,17 +37,18 @@ class AdvertHandler
                                 AdvertPhotoUploader $advertPhotoUploader,
                                 FlashBagInterface $flashBag)
     {
-
         $this->advertManager        = $advertManager;
         $this->advertPhotoUploader  = $advertPhotoUploader;
         $this->flashBag             = $flashBag;
-
     }
 
     /**
+     * @param Form $form
+     * @param Request $request
+     *
      * @return bool
      */
-    public function process(Form $form, Request $request)
+    public function process(Form $form, Request $request): ?bool
     {
         $this->form = $form;
         $this->request = $request;
@@ -82,10 +79,8 @@ class AdvertHandler
                             return false;
                         }
                     }
-
                     return true;
                 }
-
                 return false;
             }
             /*Si on veut rendre la photo obligatoire, effacer les 2 lignes
@@ -93,18 +88,18 @@ class AdvertHandler
                 $this->onSubmitted();
                 return true;
         }
-
         return false;
     }
 
     /**
+     * Checks files count
+     *
      * @param array $currentPhoto
      * @return bool
-     * Checks files count
+     *
      */
     private function threePhotosAtMost(array $currentPhoto): bool
     {
-
         if (\count($currentPhoto) <= 3)
         {
             return true;
@@ -113,24 +108,25 @@ class AdvertHandler
         $this->flashBag->set('error', '3 pictures at most');
 
         return false;
-
     }
 
-
     /**
+     * Provides AdvertController with the advert creation form
+     *
      * @return Form
-     * Advert controller doesn't have "form" anymore to build the form by
-     * "form->createview", "getFrom" method provides him with it
      */
-    public function getForm()
+    public function getForm():Form
     {
         return $this->form;
     }
 
-    protected function onSubmittedWithPhoto($photo)
+    /**
+     * @param Photo $photo
+     */
+    protected function onSubmittedWithPhoto(Photo $photo)
     {
         $advert = $this->form->getData();
-        $this->advertManager->myPersistWithPhoto($advert, $photo);
+        $this->advertManager->createWithPhoto($advert, $photo);
     }
 
     /**
@@ -141,7 +137,7 @@ class AdvertHandler
     protected function onSubmitted() //onSuccess
     {
         $advert = $this->form->getData();
-        $this->advertManager->myPersist($advert);
+        $this->advertManager->create($advert);
     }
 
 

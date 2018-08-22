@@ -3,7 +3,6 @@
 namespace App\Service;
 
 
-
 use Symfony\Component\HttpFoundation\File\File;
 
 class AvatarUploader
@@ -25,7 +24,7 @@ class AvatarUploader
      *
      * @return string
      */
-    public function upload(File $avatar)
+    public function upload(File $avatar):string
     {
         $fileName = time(). '_' . rand(0, 100) . '.' . $avatar->guessExtension();
 

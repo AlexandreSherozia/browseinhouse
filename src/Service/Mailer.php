@@ -28,10 +28,11 @@ class Mailer
         $this->swift_mailer = $swift_Mailer;
     }
 
-
-    public function sendEmail(Form $form): void
+    /**
+     * @param Form $form
+     */
+    public function sendEmail(Form $form)
     {
-
         $message = (new \Swift_Message("Your registration on B'N'H"))
             ->setFrom('browseinhouse@gmail.com')
             ->setTo($form->get('email')->getData())

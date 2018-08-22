@@ -17,7 +17,7 @@ class WishlistManager
      */
     public function __construct(EntityManagerInterface $em)
     {
-        $this->em               = $em;
+        $this->em = $em;
     }
 
     /**
@@ -43,7 +43,7 @@ class WishlistManager
     }
 
     /**
-     * retreive adverts from an user's wishlist
+     * retrieve adverts from an user's wishlist
      *
      * @param int $userId
      *
