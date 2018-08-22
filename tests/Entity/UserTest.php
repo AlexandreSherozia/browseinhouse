@@ -18,27 +18,19 @@ class UserTest extends TestCase
         $this->assertInstanceOf(\DateTime::class, $user->getRegistrationDate());
     }
 
-    public function testUserHasAUserRoleByDefaultAndCanGetIt()
+    public function testUserHasARoleByDefault()
     {
         $user = new User();
 
         $this->assertEquals(['ROLE_USER'], $user->getRoles());
     }
 
-    public function testUserCanSetNewRoleInsteadOfDefaultRole()
+    public function testUserCanAddARoleAndGetIt()
     {
         $user = new User();
-        $user->setRoles('ROLE_ADMIN');
+        $user->addRole('ROLE_ADMIN');
 
-        $this->assertEquals(['ROLE_ADMIN'], $user->getRoles());
-    }
-
-    public function testUserCanAddANewRole()
-    {
-        $user = new User();
-        $user->addRoles('ROLE_ADMIN');
-
-        $this->assertEquals(['ROLE_USER','ROLE_ADMIN'], $user->getRoles());
+        $this->assertEquals(['ROLE_USER', 'ROLE_ADMIN'], $user->getRoles());
     }
 
     public function testUserCanSetAndGetAnEmail()
@@ -96,5 +88,5 @@ class UserTest extends TestCase
 
         $this->assertEquals('pictureName.jpg', $user->getAvatar());
     }
-
 }
+
