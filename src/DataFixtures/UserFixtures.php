@@ -24,13 +24,20 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
 
     /**
      * UserFixtures constructor.
+     *
+     * @param UserPasswordEncoderInterface $encoder
      */
     public function __construct(UserPasswordEncoderInterface $encoder)
     {
         $this->encoder = $encoder;
     }
 
-
+    /**
+     * create a random user adapting firstnames & avatars according to a random gender
+     * using arrays of data and avatars name wich pictures are precharged in public/images/avatars
+     *
+     * @param ObjectManager $manager
+     */
     public function load(ObjectManager $manager)
     {
         for ($i = 0; $i < $this->numberOfIterations; $i++)
@@ -39,51 +46,32 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
             $user->setEmail('user' .$i . '@gmail.com');
 
             $number = rand(1,2);
+            $gender = ($number < 1.51) ? 'F' : 'M';
 
-            if($number < 1.51) {
+            $key = array_rand($this->{'firstNames'.$gender});
+            $randomFirstName = $this->{'firstNames'.$gender}[$key];
+            $user->setPseudo($randomFirstName .$i);
 
-                $key = array_rand($this->firstNamesF);
-                $randomFirstName = $this->firstNamesF[$key];
-                $user->setPseudo($randomFirstName .$i);
+            $user->setFirstname($randomFirstName);
 
-                $user->setFirstname($randomFirstName);
+            $key = array_rand($this->lastNames);
+            $randomLastName = $this->lastNames[$key];
+            $user->setLastname($randomLastName);
 
-                $key = array_rand($this->lastNames);
-                $randomLastName = $this->lastNames[$key];
-                $user->setLastname($randomLastName);
+            $key = array_rand($this->{'avatars'.$gender});
+            $randomAvatar = $this->{'avatars'.$gender}[$key];
+            $user->setAvatar($randomAvatar);
 
-                $key = array_rand($this->avatarsF);
-                $randomAvatar = $this->avatarsF[$key];
-                $user->setAvatar($randomAvatar);
+            $phones     =  '0' . mt_rand(0, 9) . mt_rand(0, 9) . mt_rand(0, 9)
+                . mt_rand(0, 9) .mt_rand(0, 9) . mt_rand(0, 9) . mt_rand(0, 9)
+                . mt_rand(0, 9) . mt_rand(0, 9);
 
-            }
-
-            else {
-
-                $key = array_rand($this->firstNamesM);
-                $randomFirstName = $this->firstNamesM[$key];
-                $user->setPseudo($randomFirstName . $i);
-
-                $user->setFirstname($randomFirstName);
-
-                $key = array_rand($this->lastNames);
-                $randomLastName = $this->lastNames[$key];
-                $user->setLastname($randomLastName);
-
-                $key = array_rand($this->avatarsM);
-                $randomAvatar = $this->avatarsM[$key];
-                $user->setAvatar($randomAvatar);
-            }
-
-            $phones     =  '0' . mt_rand(0, 9) . mt_rand(0, 9) . mt_rand(0, 9) . mt_rand(0, 9) .mt_rand(0, 9) . mt_rand(0, 9) . mt_rand(0, 9) . mt_rand(0, 9) . mt_rand(0, 9);
             $user->setPhone($phones);
 
             $pass = $this->encoder->encodePassword($user, 'pepiniere');
 
             $user->setPassword($pass);
-
-            $user->setRoles('ROLE_USER');
-
+            $user->setFixtureRole('ROLE_USER');
             $manager->persist($user);
         }
 

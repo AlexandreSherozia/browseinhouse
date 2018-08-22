@@ -9,7 +9,6 @@
 namespace App\Form\Handler;
 
 
-use App\Entity\Advert;
 use App\Entity\Photo;
 use App\Service\AdvertManager;
 use App\Service\AdvertPhotoUploader;
@@ -27,30 +26,33 @@ class AdvertHandler
                 $advertManager,
                 $advertPhotoUploader;
 
-
     /**
      * AdvertHandler constructor.
-     * @param Form $form
-     * @param Request $request
+     *
      * @param AdvertManager $advertManager
      * @param AdvertPhotoUploader $advertPhotoUploader
      * @param FlashBagInterface $flashBag
      */
-    public function __construct(Form $form, Request $request, AdvertManager $advertManager, AdvertPhotoUploader $advertPhotoUploader, FlashBagInterface $flashBag)
+    public function __construct(AdvertManager $advertManager,
+                                AdvertPhotoUploader $advertPhotoUploader,
+                                FlashBagInterface $flashBag)
     {
-        $this->form                 = $form;
-        $this->request              = $request;
         $this->advertManager        = $advertManager;
         $this->advertPhotoUploader  = $advertPhotoUploader;
         $this->flashBag             = $flashBag;
-
     }
 
     /**
+     * @param Form $form
+     * @param Request $request
+     *
      * @return bool
      */
-    public function process()
+    public function process(Form $form, Request $request): ?bool
     {
+        $this->form = $form;
+        $this->request = $request;
+
         $this->form->handleRequest($this->request);
         if ($this->form->isSubmitted() && $this->form->isValid()) {
             $this->currentPhoto = $this->form->get('photos')->getData();
@@ -60,44 +62,40 @@ class AdvertHandler
                     foreach ($this->currentPhoto as $key => $fileBrut) {
                         $file = $this->advertPhotoUploader->uploadPhoto($fileBrut);
 
-                        if ($file)
-                        {
+                        if ($file){
                             $photo = new Photo();
                             $photo->setUrl($file);
-                            $photo->setName($this->form->get('title')->getData() . '-'. ($key+1) );
+                            $photo->setName(
+                                $this->form->get('title')->getData() . '-'. ($key+1)
+                            );
                             $photo->setAdvert($this->form->getData());
                             $this->onSubmittedWithPhoto($photo);
-
                         } else {
 
                             return false;
                         }
                     }
-
                     return true;
                 }
-
                 return false;
             }
-
-            /*Si on veut rendre la photo obligatoire, effacer les 2 lignes(retourner false) d'en bas et générer un message*/
+            /*Si on veut rendre la photo obligatoire, effacer les 2 lignes
+            (retourner false) d'en bas et générer un message*/
                 $this->onSubmitted();
                 return true;
-
         }
-
         return false;
-
     }
 
     /**
+     * Checks files count
+     *
      * @param array $currentPhoto
      * @return bool
-     * Checks files count
+     *
      */
     private function threePhotosAtMost(array $currentPhoto): bool
     {
-
         if (\count($currentPhoto) <= 3)
         {
             return true;
@@ -106,24 +104,25 @@ class AdvertHandler
         $this->flashBag->set('error', '3 pictures at most');
 
         return false;
-
     }
 
-
     /**
+     * Provides AdvertController with the advert creation form
+     *
      * @return Form
-     * Advert controller doesn't have "form" anymore to build the form by
-     * "form->createview", "getFrom" method provides him with it
      */
-    public function getForm()
+    public function getForm():Form
     {
         return $this->form;
     }
 
-    protected function onSubmittedWithPhoto($photo): void
+    /**
+     * @param Photo $photo
+     */
+    protected function onSubmittedWithPhoto(Photo $photo)
     {
         $advert = $this->form->getData();
-        $this->advertManager->myPersistWithPhoto($advert, $photo);
+        $this->advertManager->createWithPhoto($advert, $photo);
     }
 
     /**
@@ -134,6 +133,6 @@ class AdvertHandler
     protected function onSubmitted() //onSuccess
     {
         $advert = $this->form->getData();
-        $this->advertManager->myPersist($advert);
+        $this->advertManager->create($advert);
     }
 }

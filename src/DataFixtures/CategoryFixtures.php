@@ -15,6 +15,11 @@ class CategoryFixtures extends Fixture implements OrderedFixtureInterface
     private $categories = ['Real Estate', 'Vehicle', 'Mobiles', 'Accessories', 'Electronics', 'Music',
        'Fourniture', 'Jobs', 'Pets', 'Fashion', 'Miscellaneous', 'Informatics'];
 
+    /**
+     * Generate a table with all categories
+     *
+     * @param ObjectManager $manager
+     */
     public function load(ObjectManager $manager)
     {
         for ($i = 0; $i < count($this->categories); $i++)

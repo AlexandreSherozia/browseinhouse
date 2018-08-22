@@ -88,7 +88,7 @@
                                         </a>
                                     </p>
                                     <p class="col-md-10">
-                                        {{ advert.description | shorten_text }} -
+                                        {{ advert.description | shorten_text | raw }}
                                     </p>
                                     <h4 class="text-right col-md-1 badge">{{ advert.price | text_trim }} </h4>
                                 </div>

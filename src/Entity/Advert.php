@@ -67,7 +67,8 @@ class Advert
     private $slug;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Photo", mappedBy="advert", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Photo",
+     *     mappedBy="advert", cascade={"persist"}, orphanRemoval=true)
      * @ORM\JoinColumn(nullable=false)
      */
     private $photos;
@@ -109,7 +110,6 @@ class Advert
     {
         return $this->photos;
     }
-
 
     /**
      * @param Photo $photo
@@ -179,7 +179,6 @@ class Advert
         return $this->creationDate;
     }
 
-
     public function getSlug(): ?string
     {
         return $this->slug;
@@ -187,7 +186,6 @@ class Advert
 
     public function setSlug(string $slug): self
     {
-
         $this->slug = $slug;
 
         return $this;
@@ -228,7 +226,6 @@ class Advert
         $this->section = $section;
         return $this;
     }
-
 
     /**
      * @param mixed $user

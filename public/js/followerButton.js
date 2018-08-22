@@ -7,6 +7,7 @@ $(document).ready(function () {
         $.ajax({
             method: 'POST',
             url: '/public-profile/'+$(this).data('pseudo'),
+            //url: '/follow/'+$(this).data('pseudo'),
 
             data: 'pseudo='+$(this).data('pseudo')
 

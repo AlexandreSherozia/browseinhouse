@@ -21,7 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          "get" = {"method"="GET"}
  *     }
  * )
- * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\Entity()
  * @UniqueEntity(fields="email",
  *     message="asserts.email.alreadyused")
  * @UniqueEntity(fields="pseudo",
@@ -109,7 +109,7 @@ class User implements UserInterface
     public function __construct()
     {
         $this->registrationDate = new \DateTime;
-        $this->roles[] = '';
+        $this->roles[] = 'ROLE_USER';
     }
 
     public function getId(): ?int
@@ -204,7 +204,7 @@ class User implements UserInterface
         return $this->avatar;
     }
 
-    public function setAvatar(string $avatar): self
+    public function setAvatar(?string $avatar): self
     {
         $this->avatar = $avatar;
 
