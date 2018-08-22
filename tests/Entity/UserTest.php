@@ -22,7 +22,7 @@ class UserTest extends TestCase
     {
         $user = new User();
 
-        $this->assertEquals(['ROLE_USER'], $user->getRoles());
+        $this->assertEquals([''], $user->getRoles());
     }
 
     public function testUserCanAddARoleAndGetIt()
@@ -89,4 +89,3 @@ class UserTest extends TestCase
         $this->assertEquals('pictureName.jpg', $user->getAvatar());
     }
 }
-

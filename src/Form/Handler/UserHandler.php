@@ -49,7 +49,6 @@ class UserHandler
         $this->request = $request;
         $this->currentAvatar = $this->form->getData()->getAvatar();
         $this->form->handleRequest($this->request);
-
         if ($this->form->isSubmitted() && $this->form->isValid()) {
 
             if ($type === 'new') {
@@ -70,7 +69,7 @@ class UserHandler
         return false;
     }
 
-    protected function onSuccessNew()
+    protected function onSuccessNew(): void
     {
         $userFormData = $this->form->getData();
         $this->userManager->addNewUserToDb($userFormData);

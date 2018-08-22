@@ -30,7 +30,7 @@ class UserEditionTest extends WebTestCase
         $this->assertContains(
             'Login',
             $crawler->filter('div > h2')->text()
-        );
+        );*/
     }
 
     public function testUserCanAccessToProfileEditionInHisProfile()

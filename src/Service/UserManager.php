@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-
 use App\Entity\Advert;
 use App\Entity\Subscription;
 use App\Entity\User;
@@ -68,7 +67,7 @@ class UserManager
         $this->em->flush();
     }
 
-    public function getUserList()
+    public function getUserList(): array
     {
         return $this->repository->findAll();
     }

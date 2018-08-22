@@ -21,21 +21,15 @@ class UserChecker implements UserCheckerInterface
      *
      * @param UserInterface $user
      */
-    public function checkPreAuth(UserInterface $user)
+    public function checkPreAuth(UserInterface $user): void
     {
         if (!$user instanceof AppUser) {
             return;
         }
 
         if ($user->isNotEnabled()) {
-
             throw new \RuntimeException("You haven't enabled your account yet");
-
-
         }
-
-
-
     }
 
     /**
@@ -45,13 +39,5 @@ class UserChecker implements UserCheckerInterface
      */
     public function checkPostAuth(UserInterface $user)
     {
-        /*if (!$user instanceof AppUser) {
-            return;
-        }
-
-        // user account is expired, the user may be notified
-        if ($user->isExpired()) {
-            throw new AccountExpiredException('...');
-        }*/
     }
 }

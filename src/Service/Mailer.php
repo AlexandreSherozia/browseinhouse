@@ -18,7 +18,6 @@ class Mailer
 
     /**
      * Mailer constructor.
-     *
      * @param \Twig_Environment $templating
      * @param \Swift_Mailer $swift_Mailer
      */
@@ -40,10 +39,10 @@ class Mailer
                 $this->templating->render(
                     'mail/registration.html.twig',
                     array('name' => $form->get('pseudo')->getData())
-                ), 'text/html'
+                ),
+                'text/html'
             );
 
         $this->swift_mailer->send($message);
     }
-
 }
