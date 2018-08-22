@@ -95,7 +95,7 @@ class User implements UserInterface
     private $avatar;
 
     /**
-     * @ORM\Column(type="array", nullable=true)
+     * @ORM\Column(type="json_array", nullable=true)
      */
     private $roles;
 
@@ -259,7 +259,5 @@ class User implements UserInterface
         $roles = $this->getRoles();
 
         return \in_array('', $roles, true);
-
     }
-
 }

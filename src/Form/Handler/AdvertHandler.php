@@ -58,12 +58,8 @@ class AdvertHandler
             $this->currentPhoto = $this->form->get('photos')->getData();
 
             if ($this->currentPhoto) {
-
                 if ($this->threePhotosAtMost($this->currentPhoto)) {
-
                     foreach ($this->currentPhoto as $key => $fileBrut) {
-
-
                         $file = $this->advertPhotoUploader->uploadPhoto($fileBrut);
 
                         if ($file){
@@ -139,6 +135,4 @@ class AdvertHandler
         $advert = $this->form->getData();
         $this->advertManager->create($advert);
     }
-
-
 }

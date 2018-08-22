@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-
 use App\Entity\Advert;
 use App\Entity\Category;
 use App\Entity\Photo;
