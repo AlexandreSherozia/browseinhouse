@@ -21,7 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          "get" = {"method"="GET"}
  *     }
  * )
- * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\Entity()
  * @UniqueEntity(fields="email",
  *     message="asserts.email.alreadyused")
  * @UniqueEntity(fields="pseudo",
