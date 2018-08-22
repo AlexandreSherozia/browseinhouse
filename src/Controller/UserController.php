@@ -2,73 +2,75 @@
 
 namespace App\Controller;
 
-use App\Entity\Subscription;
 use App\Entity\User;
-use App\Entity\Section;
-use App\Form\UserType;
+use App\Form\EditionUserType;
+use App\Form\RegistrationUserType;
 use App\Form\Handler\UserHandler;
-use App\Service\AdvertManager;
-use App\Service\ImageUploader;
-use App\Service\Mailer;
 use App\Service\UserManager;
-use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-
 class UserController extends Controller
 {
+    private $handler,
+            $manager;
+
     /**
-     * @param UserManager $userManager
-     * @param Request $request
-     * @param ImageUploader $imageUploader
-     * @param Mailer $mailer
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     * Registration form page and process of a new user after submit
-     * @Route("/register", name="register")
+     * UserController constructor.
      */
-    public function userRegistration(
-        UserManager $userManager,
-        Request $request,
-        ImageUploader $imageUploader,
-        Mailer $mailer
-    ) {
+    public function __construct(UserHandler $userHandler, UserManager $userManager)
+    {
+        $this->handler = $userHandler;
+        $this->manager = $userManager;
+    }
+
+
+    /**
+     * Registration form page and process of a new user after submit
+     *
+     * @Route("/register", name="register")
+     *
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function userRegistration(Request $request)
+    {
         $user = new User();
 
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(RegistrationUserType::class, $user);
 
-        $formHandler = new UserHandler($form, $request, $userManager, $imageUploader);
+        if ($this->handler->process('new', $form, $request)) {
 
-        if ($formHandler->process('new', $mailer)) {
-            return $this->redirectToRoute('waiting_for_confirmation');
+           return $this->redirectToRoute('waiting_for_confirmation');
         }
 
-        return $this->render('form/register.html.twig', [
-            'form' => $form->createView(),
-        ]);
+        return $this->render(
+            'form/register.html.twig', ['form' => $form->createView()]
+        );
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Response
+     * Inform that a mail has been sent after registration
+     *
      * @Route("/waiting-for-confirmation", name="waiting_for_confirmation")
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function confirm()
     {
         return $this->render('mail/confirm.html.twig');
     }
 
-
-
-    /****************************************************************************
-     *                       USER PROFILE PERSONAL PANEL                        *
-     ****************************************************************************/
-
     /**
      * Get user personnal infos for his profile landing page
+     *
      * @Route("/user-profile/{pseudo}", name="user_profile")
+     *
      * @Security("has_role('ROLE_USER')")
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showProfileData()
@@ -77,46 +79,18 @@ class UserController extends Controller
     }
 
     /**
-     * let user modify or add infos in his personnal infos panel
-     * @Route("/edit-profile/{pseudo}", name="edit_profile")
-     * @Security("has_role('ROLE_USER')")
-     * @param UserManager $userManager
-     * @param Request $request
-     * @param ImageUploader $imageUploader
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     */
-    public function editProfileData(UserManager $userManager, Request $request, ImageUploader $imageUploader)
-    {
-        $user = $this->getUser();
-        $form = $this->createForm(UserType::class, $user);
-
-        $formHandler = new UserHandler($form, $request, $userManager, $imageUploader);
-
-        if ($formHandler->process('edit')) {
-            $this->addFlash('success', 'userprofile.edit.validation');
-
-            return $this->redirectToRoute('user_profile', [
-                'pseudo' => $user->getPseudo()
-            ]);
-        }
-
-        return $this->render('form/editprofile.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
-
-     /**
-     * user avatar deletion
+     * User avatar deletion
+     *
      * @Route("/avatar-delete", name="avatar_delete")
      * @Security("has_role('ROLE_USER')")
-     * @param UserManager $userManager
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAvatar(UserManager $userManager)
+    public function deleteAvatar()
     {
         $user = $this->getUser();
 
-        $userManager->removeAvatar($user->getId());
+        $this->manager->removeAvatar($user->getId());
 
         return $this->redirectToRoute('user_profile', [
             'pseudo' => $user->getPseudo()
@@ -124,60 +98,62 @@ class UserController extends Controller
     }
 
     /**
-     * @param UserManager $userManager
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("/my-subscription-list", name="my_subscription_list")
+     * Let user modify or add infos in his personnal infos panel
+     *
+     * @Route("/edit-profile/{pseudo}", name="edit_profile")
+     *
+     * @Security("has_role('ROLE_USER')")
+     *
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function mySubscriptionList(UserManager $userManager)
+    public function editProfileData(Request $request)
+    {
+        $user = $this->getUser();
+        $form = $this->createForm(EditionUserType::class, $user);
+
+        if ($this->handler->process('edit', $form, $request)) {
+
+            $this->addFlash('success', 'userprofile.edit.validation');
+
+            return $this->redirectToRoute(
+                'user_profile',
+                [
+                    'pseudo' => $user->getPseudo()
+                ]
+            );
+        }
+
+        return $this->render('form/editprofile.html.twig',
+            [
+                'form' => $form->createView()
+            ]
+        );
+    }
+
+
+
+    /**
+     * @Route("/my-subscription-list", name="my_subscription_list")
+     *
+     * @param UserManager $userManager
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function mySubscriptionList()
     {
         $this->denyAccessUnlessGranted(['ROLE_USER']);
 
         $follower = $this->getUser();
 
-        $subscription = $userManager->getSubscriptionList($follower);
+        $subscription = $this->manager->getSubscriptionList($follower);
 
-        return $this->render('user/mySubscriptionList.html.twig', [
-            'my_subscription_list' => $subscription
-        ]);
+        return $this->render(
+            'user/mySubscriptionList.html.twig',
+            [
+                'my_subscription_list' => $subscription
+            ]
+        );
     }
-
-
-
-    /****************************************************************************
-     *                              ADMINISTRATOR PANEL                         *
-     ****************************************************************************/
-
-    /**
-     * show the list of all users for an admin user
-     * @Route("/admin/user-list", name="user_list")
-     * @Security("has_role('ROLE_ADMIN')")
-     * @param UserManager $userManager
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function adminShowUserList(UserManager $userManager)
-    {
-        $userList = $userManager->getUserList();
-
-        return $this->render('admin/user_list.html.twig', [
-            'userList' => $userList
-        ]);
-    }
-
-    /**
-     * delete an user from db in admin page
-     * @Route("/admin/delete-user/{user_id}", name="delete_user")
-     * @Security("has_role('ROLE_ADMIN')")
-     * @param UserManager $userManager
-     * @param int $user_id
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function adminDeleteUser(UserManager $userManager, int $user_id)
-    {
-        $userManager->removeUser($user_id);
-
-        $this->addFlash('success', 'admin.deleteUser.validation');
-
-        return $this->redirectToRoute('user_list');
-    }
-
 }

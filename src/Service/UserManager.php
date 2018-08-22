@@ -7,7 +7,6 @@ use App\Entity\Subscription;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Core\Security;
 
 class UserManager
 {
@@ -17,10 +16,13 @@ class UserManager
 
     /**
      * UserManager constructor.
+     *
      * @param EntityManagerInterface $em
      * @param UserPasswordEncoderInterface $encoder
      */
-    public function __construct(EntityManagerInterface $em, UserPasswordEncoderInterface $encoder)
+    public function __construct(EntityManagerInterface $em,
+                                UserPasswordEncoderInterface $encoder
+    )
     {
         $this->em = $em;
         $this->repository = $em->getRepository(User::class);
@@ -28,12 +30,17 @@ class UserManager
     }
 
     /**
+     * Encode password and insert new user in db
+     *
      * @param User $user
+     *
      * @return User
      */
     public function addNewUserToDb(User $user): User
     {
-        $user->setPassword($this->encoder->encodePassword($user, $user->getPassword()));
+        $user->setPassword(
+            $this->encoder->encodePassword($user, $user->getPassword())
+        );
         $this->em->persist($user);
         $this->em->flush();
 
@@ -47,6 +54,11 @@ class UserManager
         $this->em->flush();
     }
 
+    /**
+     * Set user avatar url to null in db
+     *
+     * @param int $user_id
+     */
     public function removeAvatar(int $user_id): void
     {
         $user = $this->repository->find($user_id);
@@ -57,26 +69,30 @@ class UserManager
 
     public function getUserList(): array
     {
-        return $this->em->getRepository(User::class)->findAll();
+        return $this->repository->findAll();
     }
 
-    public function getSubscriptionList($follower): array
+    /**
+     * @param User $follower
+     *
+     * @return array User[] users followed by this follower
+     */
+    public function getSubscriptionList(User $follower): array
     {
-        return $this->em->getRepository(Subscription::class)->findBy(['follower' => $follower]);
+        return $this->em->getRepository(Subscription::class)
+            ->findBy(['follower' => $follower]);
     }
 
-    public function removeUser($user_id): void
+    public function removeUser(int $user_id): void
     {
-        $user = $this->em->getRepository(User::class)->find($user_id);
-        $adverts = $this->em->getRepository(Advert::class)->findBy(['user'=>$user_id]);
+        $user = $this->repository->find($user_id);
+        $adverts = $this->em->getRepository(Advert::class)->findBy(['user' => $user_id]);
 
         foreach ($adverts as $advert) {
             $this->em->remove($advert);
         }
 
         $this->em->remove($user);
-
         $this->em->flush();
     }
-
 }

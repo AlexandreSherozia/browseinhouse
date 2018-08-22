@@ -1,17 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: pc
- * Date: 16/08/2018
- * Time: 21:39
- */
 
 namespace App\Service;
 
 use App\Entity\Subscription;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 

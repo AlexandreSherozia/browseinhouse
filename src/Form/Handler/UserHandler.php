@@ -2,7 +2,7 @@
 
 namespace App\Form\Handler;
 
-use App\Service\ImageUploader;
+use App\Service\AvatarUploader;
 use App\Service\Mailer;
 use App\Service\UserManager;
 use Symfony\Component\Form\Form;
@@ -11,45 +11,55 @@ use Symfony\Component\HttpFoundation\Request;
 
 class UserHandler
 {
-    protected $form;
-    protected $request;
-    protected $userManager;
-    protected $imageUploader;
-    protected $currentAvatar;
+    protected $form,
+        $request,
+        $userManager,
+        $imageUploader,
+        $currentAvatar,
+        $mailer;
 
     /**
      * UserHandler constructor.
-     * @param Form $form
-     * @param Request $request
+     *
      * @param UserManager $userManager
-     * @param ImageUploader $imageUploader
+     * @param AvatarUploader $avatarUploader
+     * @param Mailer $mailer
      */
-    public function __construct(Form $form, Request $request, UserManager $userManager, ImageUploader $imageUploader)
+    public function __construct(UserManager $userManager,
+                                AvatarUploader $avatarUploader, Mailer $mailer)
     {
-        $this->form             = $form;
-        $this->request          = $request;
-        $this->userManager      = $userManager;
-        $this->imageUploader    = $imageUploader;
+        $this->userManager = $userManager;
+        $this->imageUploader = $avatarUploader;
+        $this->mailer = $mailer;
     }
 
     /**
-     * @param string $type
-     * @param Mailer $mailer
+     * Processing the user form
+     *
+     * @param string $type purpose of the form
+     * (registration or edition of a user profile)
+     * @param Form $form
+     * @param Request $request
+     *
      * @return bool
      */
-    public function process(string $type, Mailer $mailer = null)
+    public function process(string $type, Form $form, Request $request): bool
     {
+        $this->form = $form;
+        $this->request = $request;
         $this->currentAvatar = $this->form->getData()->getAvatar();
         $this->form->handleRequest($this->request);
         if ($this->form->isSubmitted() && $this->form->isValid()) {
-            if ($type === 'new') {
-                $this->onSuccessNew();
 
-                $mailer->sendEmail($this->form);
+            if ($type === 'new') {
+                // the process is for a registration
+                $this->onSuccessNew();
+                $this->mailer->sendEmail($this->form);
 
                 return true;
             }
             if ($type === 'edit') {
+                // the process is for edition
                 $this->onSuccessEdit();
 
                 return true;
@@ -65,23 +75,25 @@ class UserHandler
         $this->userManager->addNewUserToDb($userFormData);
     }
 
-    protected function onSuccessEdit():void
+    /**
+     * @var File $avatar the avatar image of the user
+     */
+    protected function onSuccessEdit()
     {
         $userFormData = $this->form->getData();
-        //dump($userFormData->getAvatar());
-        /** @var File $image */
-        if ($userFormData->getAvatar() === null) {
-            $imageName = $this->currentAvatar;
 
-            if ($imageName === null) {
-                $imageName = '';
+        if ($userFormData->getAvatar() === null) {
+            $avatarName = $this->currentAvatar;
+
+            if ($avatarName === null) {
+                $avatarName = '';
             }
 
-            $this->userManager->updateUserIntoDb($userFormData, $imageName);
+            $this->userManager->updateUserIntoDb($userFormData, $avatarName);
         } else {
-            $image = new File($userFormData->getAvatar());
-            $imageName = $this->imageUploader->upload($image);
-            $this->userManager->updateUserIntoDb($userFormData, $imageName);
+            $avatar = new File($userFormData->getAvatar());
+            $avatarName = $this->imageUploader->upload($avatar);
+            $this->userManager->updateUserIntoDb($userFormData, $avatarName);
         }
     }
 }

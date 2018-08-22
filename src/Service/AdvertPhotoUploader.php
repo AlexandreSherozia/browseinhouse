@@ -6,7 +6,6 @@ use ApiPlatform\Core\Validator\ValidatorInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
-
 /**
  * Class AdvertPhotoUploader
  * @package App\Service
@@ -18,36 +17,31 @@ class AdvertPhotoUploader
     protected $validator;
     protected $photoDirectory;
 
-
     /**
      * AdvertPhotoUploader constructor.
+     *
      * @param string $photoDirectory
      * @param FlashBagInterface $flashBag
      */
-    public function __construct(string $photoDirectory, FlashBagInterface $flashBag/*, ValidatorInterface $validator*/)
+    public function __construct(string $photoDirectory, FlashBagInterface $flashBag)
     {
-        $this->mimeTypes        = ['jpeg','png'];
-        $this->photoDirectory   = $photoDirectory;
-        $this->flashBag         = $flashBag;
-        /*$this->validator        = $validator;*/
+        $this->mimeTypes = ['jpeg', 'png'];
+        $this->photoDirectory = $photoDirectory;
+        $this->flashBag = $flashBag;
     }
 
     /**
      * @param File $photo
-     * @return string
+     * @return null|string
      */
     public function uploadPhoto(File $photo): ?string
     {
         if ($this->filterFileSize($photo) && $this->filterMimesTypes($photo)) {
-                $fileName = $this->generateUniqueFileName() . '.' .$photo->guessExtension();
+            $fileName = $this->generateUniqueFileName() . '.' . $photo->guessExtension();
+            $photo->move($this->getPhotoDirectory(), $fileName);
 
-                $photo->move($this->getPhotoDirectory(), $fileName);
-
-            //return false; //for dump debug
-
-              return  $fileName;
+            return $fileName;
         }
-
         return false;
     }
 
@@ -75,7 +69,6 @@ class AdvertPhotoUploader
 
         return false;
     }
-
 
 
     /**
