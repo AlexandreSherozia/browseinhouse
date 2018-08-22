@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-
 use App\Entity\Advert;
 use App\Entity\Category;
 use App\Entity\Section;
@@ -26,12 +25,12 @@ class AdvertManager extends PaginatorAware
     }
 
 
-    public function getEm()
+    public function getEm(): EntityManagerInterface
     {
         return $this->em;
     }
 
-    public function myPersist(Advert $advert)
+    public function myPersist(Advert $advert): Advert
     {
         $advert->setUser($this->connected_User);
         $this->em->persist($advert);
@@ -39,7 +38,7 @@ class AdvertManager extends PaginatorAware
         return $advert;
     }
 
-    public function myPersistWithPhoto(Advert $advert, $photo)
+    public function myPersistWithPhoto(Advert $advert, $photo): Advert
     {
 
         $advert->setUser($this->connected_User);
@@ -90,7 +89,7 @@ class AdvertManager extends PaginatorAware
         return $this->advertRepository->joinAdvertCategorySectionUser();
     }
 
-    public function removeAdvert($advertid)
+    public function removeAdvert($advertid): void
     {
         $advert = $this->advertRepository->find($advertid);
         $this->em->remove($advert);

@@ -59,6 +59,11 @@ class UserController extends Controller
         return $this->render('mail/confirm.html.twig');
     }
 
+    public function validateAccount()
+    {
+
+    }
+
 
 
     /****************************************************************************

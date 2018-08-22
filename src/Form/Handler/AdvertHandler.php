@@ -55,13 +55,9 @@ class AdvertHandler
         if ($this->form->isSubmitted() && $this->form->isValid()) {
             $this->currentPhoto = $this->form->get('photos')->getData();
 
-            if($this->currentPhoto){
-
-                if ($this->threePhotosAtMost($this->currentPhoto)){
-
-                    foreach($this->currentPhoto as $key => $fileBrut){
-
-
+            if ($this->currentPhoto) {
+                if ($this->threePhotosAtMost($this->currentPhoto)) {
+                    foreach ($this->currentPhoto as $key => $fileBrut) {
                         $file = $this->advertPhotoUploader->uploadPhoto($fileBrut);
 
                         if ($file)
@@ -79,7 +75,6 @@ class AdvertHandler
                     }
 
                     return true;
-
                 }
 
                 return false;
@@ -125,7 +120,7 @@ class AdvertHandler
         return $this->form;
     }
 
-    protected function onSubmittedWithPhoto($photo)
+    protected function onSubmittedWithPhoto($photo): void
     {
         $advert = $this->form->getData();
         $this->advertManager->myPersistWithPhoto($advert, $photo);
@@ -141,6 +136,4 @@ class AdvertHandler
         $advert = $this->form->getData();
         $this->advertManager->myPersist($advert);
     }
-
-
 }

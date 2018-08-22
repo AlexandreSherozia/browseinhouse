@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-
 use App\Service\AdvertManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
