@@ -46,7 +46,7 @@
                         <li class="list-group-item">{{ 'userprofile.phone' | trans }} : {{ app.user.phone }}</li>
                         <li class="list-group-item">{{ 'userprofile.avatar' | trans }} :
                             {% if app.user.avatar %}
-                                <img src="{{ asset('images/avatars/'~app.user.avatar) }}" alt="{{ 'userprofile.alt.avatar' | trans }}{{ ' '~ app.user.pseudo }}" class="center-block img-circle">
+                                <img src="{{ asset('images/avatars/'~app.user.avatar) }}" alt="{{ 'userprofile.alt.avatar' | trans }}{{ ' '~ app.user.pseudo }}" class="center-block img-circle" height="128px">
                                 <div class="text-center">
                                     <a href="{{ path('avatar_delete') }}">
                                         <i class="la la-close"></i><span>{{ 'userprofile.avatar.delete' | trans }}</span>

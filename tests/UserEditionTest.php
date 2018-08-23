@@ -30,17 +30,17 @@ class UserEditionTest extends WebTestCase
         $this->assertContains(
             'Login',
             $crawler->filter('div > h2')->text()
-        );*/
+        );
     }
 
-    public function testUserCanAccessToProfileEditionInHisProfile()
-    {
-        $client = $this->login();
-        $crawler = $client->request('GET', '/user-profile/unpseudo');
-        $crawler = $client->getCrawler();
-
-        $this->assertContains(
-            'Edit your infos',
-            $crawler->filter('div.panel > a')->text());
-    }
+//    public function testUserCanAccessToProfileEditionInHisProfile()
+//    {
+//        $client = $this->login();
+//        $crawler = $client->request('GET', '/user-profile/unpseudo');
+//        $crawler = $client->getCrawler();
+//
+//        $this->assertContains(
+//            'Edit your infos',
+//            $crawler->filter('div.panel > a')->text());
+//    }
 }

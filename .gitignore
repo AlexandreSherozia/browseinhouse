@@ -4,7 +4,6 @@
 /public/bundles/
 /var/
 /vendor/
-public/images/advertphotos/
 ###< symfony/framework-bundle ###
 
 ###> symfony/web-server-bundle ###
@@ -20,6 +19,6 @@ public/images/advertphotos/
 
 /rapport.html
 /public/coverage
-
+/src/Migrations
 
 
