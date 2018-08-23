@@ -71,7 +71,6 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
             $pass = $this->encoder->encodePassword($user, 'pepiniere');
 
             $user->setPassword($pass);
-            $user->setFixtureRole('ROLE_USER');
             $manager->persist($user);
         }
 

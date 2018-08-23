@@ -22,7 +22,7 @@ class UserTest extends TestCase
     {
         $user = new User();
 
-        $this->assertEquals([''], $user->getRoles());
+        $this->assertEquals(['ROLE_USER'], $user->getRoles());
     }
 
     public function testUserCanAddARoleAndGetIt()

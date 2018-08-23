@@ -95,7 +95,7 @@ class User implements UserInterface
     private $avatar;
 
     /**
-     * @ORM\Column(type="json_array", nullable=true)
+     * @ORM\Column(type="array", nullable=true)
      */
     private $roles;
 

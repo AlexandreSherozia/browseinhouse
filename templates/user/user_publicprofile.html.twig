@@ -15,7 +15,7 @@
         <div class="col-md-10 col-md-offset-1">
             <div class="col-md-2">
             {% if user_public.avatar %}
-            <img src="{{ asset('images/avatars/' ~user_public.avatar) }}" alt="{{ user_public.pseudo }}">
+            <img src="{{ asset('images/avatars/' ~user_public.avatar) }}" alt="{{ user_public.pseudo }}" height="128px">
             {% else %}<div class="col-md-2"></div>
             {% endif %}
             </div>
