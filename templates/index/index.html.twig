@@ -1,0 +1,119 @@
+{% extends 'layout.html.twig' %}
+{% trans_default_domain 'home' %}
+
+{% block title %}{{ parent() }}Home{% endblock %}
+
+{% block content %}
+
+    <div class="slideshow owl-carousel">
+        <div class="item">
+
+            <section class="banner-1" style="background: linear-gradient(
+                    rgba(0, 0, 0, 0.05),
+                    rgba(0, 0, 0, 0.60)
+                    ), url({{ asset('images/banner2.jpg') }}) no-repeat center; background-size: cover">
+                {#<img src="{{ asset('images/banner2.jpg') }}" alt="banner" title="banner" />#}
+                <h2 class="text-center" style="color:white">{{ 'home.banner1.title1' | trans }}</h2>
+                <h2 class="text-center" style="color:white">{{ 'home.banner1.title2' | trans }}</h2>
+
+                {#<a href="" class="btn btn-default">About us</a>#}
+
+                {#<h1 class="text-center">Remplir le truc</h1>#}
+
+            </section>
+        </div>
+        {#<div class="item">#}
+            {#<img src="{{ asset('images/banner.jpg') }}" alt="banner" title="banner" class="img-responsive"/>#}
+        {#</div>#}
+        {#<div class="item">#}
+            {#<img src="{{ asset('images/banner.jpg') }}" alt="banner" title="banner" class="img-responsive"/>#}
+        {#</div>#}
+    </div>
+    <!-- slider ends here -->
+
+
+    <!-- browse starts here -->
+    <div class="browse">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2>{{ 'home.section.Title' | trans }}</h2>
+                    <hr/>
+                    <ul class="list-inline">
+                        <li style="width: 280px"><a href="{{ path('show_adverts_by_section',{'label' : 'Shopping' }) }}"><img src="{{ asset('images/shopping.png') }}" alt="icon" title="icon" class="img-responsive" /><p>Shopping</p></a></li>
+                        <li style="width: 280px"><a href="{{ path('show_adverts_by_section',{'label' : 'Jobs' }) }}"><img src="{{ asset('images/selling.png') }}" alt="icon" title="icon" class="img-responsive" /><p>Jobs</p></a></li>
+                        <li style="width: 280px"><a href="{{ path('show_adverts_by_section',{'label' : 'Rent' }) }}"><img src="{{ asset('images/Rental.png') }}" alt="icon" title="icon" class="img-responsive" /><p>Rent</p></a></li>
+                        <li style="width: 280px"><a href="{{ path('show_adverts_by_section',{'label' : 'Services' }) }}"><img src="{{ asset('images/service.png') }}" alt="icon" title="icon" class="img-responsive" /><p>Service</p></a></li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- browse ends here -->
+
+    <!-- last adverts -->
+    <div class="browse">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2>{{ 'home.lastAdverts.Title' | trans }}</h2>
+                    <hr/>
+                    {% if lastAdverts %}
+                    <div class="list-group">
+
+                    {% for advert in lastAdverts %}
+                        <div class="list-group-item">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    {% if advert.photos is not empty %}
+                                            <img src="{{ asset('images/advertphotos/'~advert.photos|first.url ) }}" class="thumbnail">
+                                    {% else %}
+                                            <img src="{{ asset('images/advertphotos/bnh.jpg' ) }}" class="thumbnail">
+                                    {% endif %}
+
+                                </div>
+                                <div class="col-md-10">
+                                    <a href="{{ path('show_advert', {'advertslug': advert.slug }) }}"><h3 class="col-md-6">{{ advert.title }}</h3></a>
+
+                                    <p class="text-left col-md-3">posted by
+                                        <a href="{{ path('show_public_profile', {'pseudo': advert.user.pseudo}) }}">{{ advert.user.pseudo }}</a> on {{ advert.creationDate | date('d-m-Y H:m:s') }}
+                                    </p>
+                                    <p class="text-right col-md-3">
+                                        <a class="btn btn-default" href="{{ path('filter_adverts_by_category', {'categorylabel' : advert.category.label}) }}">
+                                            {{ advert.category.label }}
+                                        </a> in
+                                        <a class="btn btn-default" href="{{ path('show_adverts_by_section', {'label' : advert.section.label}) }}">
+                                            {{ advert.section.label }}
+                                        </a>
+                                    </p>
+                                    <p class="col-md-10">
+                                        {{ advert.description | shorten_text | raw }}
+                                    </p>
+                                    <h4 class="text-right col-md-1 badge">{{ advert.price | text_trim }} </h4>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    </div>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end of last adverts -->
+
+    <!-- banner starts here -->
+    <div class="banner">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <img src="{{ asset('images/ads.jpg') }}" class="img-responsive" alt="image" title="title"  />
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

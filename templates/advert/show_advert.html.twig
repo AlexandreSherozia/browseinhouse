@@ -1,0 +1,126 @@
+{% extends "layout.html.twig" %}
+
+{% trans_default_domain 'showAdvert' %}
+
+{% block title %}
+
+    {{ parent() }}{{ 'showAdvert.title' | trans }}
+
+{% endblock %}
+
+{% block content %}
+
+    {% for message in app.flashes('success') %}
+        <div class="row">
+            <div class="alert alert-success alert-dismissible  col-xs-6 col-xs-offset-3 text-center" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                {{ message  | trans }}
+            </div>
+        </div>
+    {% endfor %}
+    <div class="container">
+        <div class="panel panel-default">
+            {% for advert in advertdata %}
+
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6">
+                            <div class="slideshow owl-carousel">
+                                {% if advert.photos %}
+                                    {% for photo in advert.photos %}
+
+                                        {#{{ dump(photo.url) }}#}
+                                        <div class="item">
+                                            <img src="{{ asset('images/advertphotos/'~photo.url ) }}" alt="{{ photo.name }}" title="{{ photo.name }}" class="img-responsive">
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-3"></div>
+                    </div>
+
+                <div class="row">
+                    <div class="col-md-3"></div>
+
+                    <div class="panel-body col-md-6">
+
+                        <h2 class="text-center">{{ advert.title }}</h2>
+                        <div class="well">{{ advert.description | raw }}</div>
+                        <div class="col-md-6">
+                            <p class="badge">{{ advert.price }} €</p>
+                            {#{% if (wishlists | length) != 0 %}#}
+                                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                    {% if is_granted('ROLE_USER')  %}
+                                        {% set advertNb = 0 %}
+                                        {% for wishlist in wishlists if wishlist.advertId == advert.id and wishlist.userId == app.user.id %}
+                                            {% set advertNb = 1 %}
+                                        {% endfor %}
+                                        {% if advertNb == 1 %}
+                                            <p style="color: deeppink"><i class="la la-heart" ></i>{{ 'showAdvert.inWhishlist.mention' | trans }}<i class="la la-heart"></i></p>
+                                        {% else %}
+                                            <p><a href="{{ path('add_to_wishlist', {'slug': advert.slug}) }}" id="wishlist1" class="badge alert-danger">{{ 'advert.button.wishlist' | trans }}</a></p>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endif %}
+                            {#{% endif %}#}
+                        </div>
+
+                        <div class="col-md-6">
+                            <p class="text-right">{{ advert.creationDate | date('Y-m-d') ~' '~ advert.creationDate | date('H:i:s') }}</p>
+                            <p class="text-right"><a href="{{ path('show_public_profile', {'pseudo': advert.user.pseudo}) }}">by {{ advert.user.pseudo }}</a></p>
+                        </div>
+
+                        <div class="text-center">
+                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+
+                            {#N'affiche pas l'envoi de mail sur son propre profil#}
+                            {% if is_granted('ROLE_USER') and app.user.id != advert.user.id %}
+                                <a href="{{ path('user_contact', {'slug': advert.slug}) }}">
+                                    <button class="btn btn-primary btn-lg alert-warning">{{ 'advert.button.contactUser' | trans }}</button>
+                                </a>
+                            {% endif %}
+                        {% else %}
+                            <button class="btn btn-primary btn-lg" disabled="disabled">{{ 'advert.button.contactUser' | trans }}</button>
+                            <p>{{ 'advert.disabledbutton.info1' | trans }}
+                                <a href="{{ path('login') }}">{{ 'advert.login.link' | trans }}</a>
+                                {{ 'advert.disabledbutton.info2' | trans }}
+                                <a href="{{ path('register') }}">{{ 'advert.register.link' | trans }}</a>.</p>
+                        {% endif %}
+
+                        </div>
+                    </div>
+
+                    {#Si la session existe bien ( - l'utilisateur est connecté )#}
+                    {% if app.user %}
+                        {#Si l'annonce appartient à l'utilisateur courrant, on lui affiche les boutons "suppr" et "edition"#}
+                        {% if app.user.id == advert.user.id %}
+                            <div class="row">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-6 col-md-offset-3 text-center">
+
+                                    <div class="panel-body">
+                                        <a href="{{ path('advert_edit', {'advertslug' : advert.slug }) }}" class="col-sm-2 btn btn-default">
+                                            Edit
+                                        </a>
+
+                                        <a href="{{ path('delete_advert', {'id': advert.id }) }}" class="col-sm-2 col-sm-push-1 btn btn-danger">
+                                            Delete
+                                        </a>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-3"></div>
+                            </div>
+                        {% endif %}
+
+                    {% endif %}
+
+                </div>
+
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}
+

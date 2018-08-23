@@ -1,0 +1,62 @@
+{% extends 'layout.html.twig' %}
+{% trans_default_domain 'userprofile' %}
+
+{% block title %}{{ parent() }} | {{ 'userprofile.pagename' | trans }}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6 col-md-push-4">
+            <h2 class="text-center">{{ 'userprofile.title' | trans }}</h2>
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success alert-dismissible text-center" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    {{ message | trans }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row">
+        {% include 'includes/_userprofilesidebar.html.twig' %}
+        <div class="col-md-6 col-xs-6 col-md-push-1">
+            <div class="panel panel-warning">
+                <div class="panel-heading"><h4>{{ 'userprofile.login.data' | trans }}</h4></div>
+                <div class="text-right">
+                    <a href="{{ path('edit_profile', {'pseudo' : app.user.pseudo}) }}">
+                        {{ 'userprofile.edit' | trans }}
+                    </a>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item">{{ 'userprofile.pseudo' | trans }} : {{ app.user.pseudo }}</li>
+                        <li class="list-group-item">{{ 'userprofile.email' | trans }} : {{ app.user.email }}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="panel panel-warning">
+                <div class="panel-heading"><h4>{{ 'userprofile.personnal.data' | trans }}</h4></div>
+                <div class="text-right">
+                    <a href="{{ path('edit_profile', {'pseudo' : app.user.pseudo}) }}">
+                        {{ 'userprofile.edit' | trans }}
+                    </a>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item">{{ 'userprofile.firstname' | trans }} : {{ app.user.firstname }}</li>
+                        <li class="list-group-item">{{ 'userprofile.lastname' | trans }} : {{ app.user.lastname }}</li>
+                        <li class="list-group-item">{{ 'userprofile.phone' | trans }} : {{ app.user.phone }}</li>
+                        <li class="list-group-item">{{ 'userprofile.avatar' | trans }} :
+                            {% if app.user.avatar %}
+                                <img src="{{ asset('images/avatars/'~app.user.avatar) }}" alt="{{ 'userprofile.alt.avatar' | trans }}{{ ' '~ app.user.pseudo }}" class="center-block img-circle" height="128px">
+                                <div class="text-center">
+                                    <a href="{{ path('avatar_delete') }}">
+                                        <i class="la la-close"></i><span>{{ 'userprofile.avatar.delete' | trans }}</span>
+                                    </a>
+                                </div>
+                            {% endif %}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

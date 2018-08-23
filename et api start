@@ -1,0 +1,836 @@
+[33mcommit 52a38c611b2a5195a9b46701f1c0a98e4c6d5942[m[33m ([m[1;36mHEAD -> [m[1;32mapi_start[m[33m)[m
+Author: alexandresherozia <alexandresherozia@yahoo.fr>
+Date:   Wed Aug 8 11:07:44 2018 +0200
+
+    refresh
+
+[33mcommit 2b96f8c9b0a303943ad5143bcbfa72f080eeeb5f[m
+Author: alexandresherozia <alexandresherozia@yahoo.fr>
+Date:   Wed Aug 8 10:54:32 2018 +0200
+
+    install api platform, basic requests
+
+[33mcommit 228315ef9789bacbf939d997b107f5e7de68619a[m
+Author: alexandresherozia <alexandresherozia@yahoo.fr>
+Date:   Tue Aug 7 10:11:42 2018 +0200
+
+    install api platform
+
+[33mcommit 6ac1d0e4f325154e97b04ad473441d03141e53c5[m[33m ([m[1;31morigin/dev[m[33m, [m[1;32mdev[m[33m)[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Wed Aug 8 10:44:42 2018 +0200
+
+    switching from userController to advertController for userContact module
+
+[33mcommit 829fe7d67e62ec49db2a6bc78ae89f0b4ded6db4[m
+Merge: b74d2c9 21973a1
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Wed Aug 8 08:30:03 2018 +0000
+
+    Merge branch 'contact_user' into 'dev'
+    
+    Contact user
+    
+    See merge request Stephwf3/browseinhouse!28
+
+[33mcommit 21973a152eeb4e37c46afe0a804a36c4f61af8f8[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Wed Aug 8 10:28:58 2018 +0200
+
+    completing user contact page + translation
+
+[33mcommit e489b467c5ad0c5f7ee251cf7474224f1e2c52b0[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Wed Aug 8 10:17:24 2018 +0200
+
+    adding translation to contact form
+
+[33mcommit 6561fc50ac2c11059f47264cce5bf38476709f0e[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Wed Aug 8 10:03:30 2018 +0200
+
+    tweaking showAdvert template + translation
+
+[33mcommit 346acdde9ab2d6b0ffe9d4c222b73c68cd79666b[m
+Author: stephwf3 <steph.wbf3@gmail.com>
+Date:   Tue Aug 7 23:08:06 2018 +0200
+
+    cleaning up user controller and dispatch tasks to ContactHandler
+
+[33mcommit 4b003ab2bf29867e7db4be8d5ab018a00cb4a5f6[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Tue Aug 7 17:38:39 2018 +0200
+
+     refactoring controller in progress
+
+[33mcommit 1c174744b8efad4cfaffc6b9b51becdc83d954a1[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Tue Aug 7 16:55:00 2018 +0200
+
+    render mail with more infos
+
+[33mcommit f3a9a5ff8d6ea102a66fef85f7446f84668e41b1[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Tue Aug 7 15:59:12 2018 +0200
+
+    sending an email with ContactHandler & SwiftMailer ok, all in one controller method...
+
+[33mcommit f6bb7c3f60dbfc22cce9d91fb2127d2f5835794f[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Tue Aug 7 15:22:16 2018 +0200
+
+    form creation and data collection for a contact entity before sending mail
+
+[33mcommit 209f04804b5c9b7660b6c9e37dab9e7c3e5ce431[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Tue Aug 7 14:10:58 2018 +0200
+
+    swiftmailer installation, add a contact button to an advert
+
+[33mcommit b74d2c9dd470a3f24428779e47e4860f54f445e7[m
+Merge: 55a84a5 759d377
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Mon Aug 6 15:27:58 2018 +0000
+
+    Merge branch 'public_user_profile' into 'dev'
+    
+    Public user profile
+    
+    See merge request Stephwf3/browseinhouse!27
+
+[33mcommit 759d377a888e6c2362e1b96fdfbbda784e598f2a[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Mon Aug 6 17:25:01 2018 +0200
+
+    various little modifications on adverts templates
+
+[33mcommit a8f07acc0d4f353d6e6348de64599b0d14bf6921[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Mon Aug 6 16:35:41 2018 +0200
+
+    add a link to pseudo and wishlist button
+
+[33mcommit 0fc5e0b75a76b4021a5c9523173a88c1abc86790[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Mon Aug 6 16:28:37 2018 +0200
+
+    route and template creation, adding link to user public page from pseudo in adverts
+
+[33mcommit 55a84a555a3c569b9226d9d66add4fbdad9ed630[m
+Merge: a77050b 94f53e6
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Mon Aug 6 13:01:10 2018 +0000
+
+    Merge branch 'advert_tile' into 'dev'
+    
+    Advert tile
+    
+    See merge request Stephwf3/browseinhouse!26
+
+[33mcommit 94f53e626be441da4af8331ae363e9176135a79a[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Mon Aug 6 14:59:19 2018 +0200
+
+    user edition password bug : user registration tests fix
+
+[33mcommit c146c744c78b16da6d7e587eeb84fe0d3e4e67a6[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Mon Aug 6 14:56:07 2018 +0200
+
+    user edition password bug fix
+
+[33mcommit a77050b4d8c8414bb83b238502fc2411596699a8[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Mon Aug 6 12:57:48 2018 +0200
+
+    fix paginator on index.html
+
+[33mcommit ae9e581d59387beeb0e3c65d3ae955e36b1920e1[m
+Merge: 2aa3f93 70b8cd2
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Mon Aug 6 10:51:29 2018 +0000
+
+    Merge branch 'fixtures_complements' into 'dev'
+    
+    add sections and categories fixtures + tweaks on adverts fixtures
+    
+    See merge request Stephwf3/browseinhouse!25
+
+[33mcommit 70b8cd208d075c60a26eabd1e678ff9bbe80ea9a[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Mon Aug 6 12:50:22 2018 +0200
+
+    add sections and categories fixtures + tweaks on adverts fixtures
+
+[33mcommit 2aa3f932aa7252e5491a53c1c8b6cc0c5c8daa24[m
+Merge: f9bef12 bffd352
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Mon Aug 6 08:35:44 2018 +0000
+
+    Merge branch 'api_start' into 'dev'
+    
+    first commit api start
+    
+    See merge request Stephwf3/browseinhouse!24
+
+[33mcommit bffd352a13e65446f68964b4d09f4c4dfc00b853[m
+Author: alexandresherozia <alexandresherozia@yahoo.fr>
+Date:   Mon Aug 6 10:34:35 2018 +0200
+
+    first commit api start
+
+[33mcommit f9bef1260445dc5221c6503d0036c354ba7d82b5[m
+Merge: 8465656 d380408
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Mon Aug 6 08:22:22 2018 +0000
+
+    Merge branch 'advert_tile' into 'dev'
+    
+    Advert tile
+    
+    See merge request Stephwf3/browseinhouse!23
+
+[33mcommit d3804088efa72f289870dcd5b04e7ace428e8be9[m
+Merge: e7998d5 8465656
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Mon Aug 6 08:22:08 2018 +0000
+
+    Merge branch 'dev' into 'advert_tile'
+    
+    # Conflicts:
+    #   templates/index/index.html.twig
+
+[33mcommit 8465656beb60fbc408e330c3de866dd7c9d6fd0b[m
+Merge: 010e410 436d682
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Mon Aug 6 10:16:27 2018 +0200
+
+    resolution of merging conflicts
+
+[33mcommit 010e410d2d77413f691ffd9c0d1f4f3238fe25df[m
+Merge: 5a06650 6cf7b2e
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Mon Aug 6 07:54:11 2018 +0000
+
+    Merge branch 'advert_asserts' into 'dev'
+    
+    advert asserts & filters finished
+    
+    See merge request Stephwf3/browseinhouse!21
+
+[33mcommit 6cf7b2ee2c8cb60d51a0fe5c9fd038969dbf236f[m
+Merge: 78e4e06 5a06650
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Mon Aug 6 07:53:55 2018 +0000
+
+    Merge branch 'dev' into 'advert_asserts'
+    
+    # Conflicts:
+    #   src/DataFixtures/AdvertFixtures.php
+    #   src/DataFixtures/UserFixtures.php
+
+[33mcommit 436d682d640234936a8ddeaff26ce0dd2f62308f[m[33m ([m[1;31morigin/paginator[m[33m, [m[1;32mpaginator[m[33m)[m
+Author: alexandresherozia <alexandresherozia@yahoo.fr>
+Date:   Sun Aug 5 22:32:45 2018 +0200
+
+    paginator installed|finished /this branch is without fixtures
+
+[33mcommit 78e4e06dd4250c753ee5ab46729e5f746efd8fe6[m[33m ([m[1;31morigin/advert_asserts[m[33m, [m[1;32madvert_tile[m[33m, [m[1;32madvert_asserts[m[33m)[m
+Author: alexandresherozia <alexandresherozia@yahoo.fr>
+Date:   Sat Aug 4 18:45:56 2018 +0200
+
+    advert asserts & filters finished
+
+[33mcommit e7998d5f54167184165214d72d9ab3f6de0dbb32[m[33m ([m[1;31morigin/advert_tile[m[33m)[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Fri Aug 3 17:12:29 2018 +0200
+
+    call to repository query from index and template modifications for advert tiles
+
+[33mcommit 60fdbb73bd0f2a681ea07333e4af1c6b5db31f75[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Fri Aug 3 15:27:00 2018 +0200
+
+    User registration functional test ok
+
+[33mcommit 5a0665088c8b884516e9e3751a2bb447c430e8bf[m
+Merge: d7ae66e f4236f4
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Fri Aug 3 12:58:44 2018 +0000
+
+    Merge branch 'fixtures_fixed' into 'dev'
+    
+    correction on fixtures malfunctions
+    
+    See merge request Stephwf3/browseinhouse!20
+
+[33mcommit f4236f4cdab28924ce14b0d57ffaf89f7ad0d5e1[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Fri Aug 3 14:57:50 2018 +0200
+
+    correction on fixtures malfunctions
+
+[33mcommit d7ae66ec8a4ab27b73c3b8aaafc6c9b000d43741[m
+Merge: 3dcc71b ce2f742
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Fri Aug 3 10:27:05 2018 +0000
+
+    Merge branch 'tests' into 'dev'
+    
+    Tests
+    
+    See merge request Stephwf3/browseinhouse!19
+
+[33mcommit 3dcc71b1c8515f57da2b8b30fddb065774e2d390[m
+Merge: 1359ecc 45a7b53
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Fri Aug 3 10:25:32 2018 +0000
+
+    Merge branch 'fixtures' into 'dev'
+    
+    Fixtures
+    
+    See merge request Stephwf3/browseinhouse!18
+
+[33mcommit 45a7b53f28d93361f06ebfa68e40c35ecd658ff3[m
+Merge: a26485f 1359ecc
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Fri Aug 3 10:24:44 2018 +0000
+
+    Merge branch 'dev' into 'fixtures'
+    
+    # Conflicts:
+    #   src/Controller/AdvertController.php
+
+[33mcommit ce2f7421ca110ca1abb82959181c263e44e3917e[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Fri Aug 3 12:21:29 2018 +0200
+
+    tests... again
+
+[33mcommit a26485fdcf154171ad169d221118307073c90432[m[33m ([m[1;31morigin/fixtures[m[33m, [m[1;32mfixtures[m[33m)[m
+Author: alexandresherozia <alexandresherozia@yahoo.fr>
+Date:   Fri Aug 3 02:44:02 2018 +0200
+
+    Randomized userFixtures and AdvertFixtures finished
+
+[33mcommit 6f286ab193144f956c347b6a878b884b9127eada[m
+Author: alexandresherozia <alexandresherozia@yahoo.fr>
+Date:   Thu Aug 2 17:35:11 2018 +0200
+
+    finished randomized fixtures
+
+[33mcommit 74c59d8aa4484afb6a47ad2379545b7f92e5e935[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Thu Aug 2 17:28:31 2018 +0200
+
+    more user registration tests
+
+[33mcommit d9ad28fa80a3f14420f88ed358e2a9bf15c30c53[m
+Author: alexandresherozia <alexandresherozia@yahoo.fr>
+Date:   Thu Aug 2 16:34:33 2018 +0200
+
+    creation of Advert_fixtures
+
+[33mcommit 1359ecc149044438b8879afe31535852141c67c9[m
+Merge: a9b7cdb d7781f8
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Thu Aug 2 14:13:49 2018 +0000
+
+    Merge branch 'user_admin' into 'dev'
+    
+    User admin
+    
+    See merge request Stephwf3/browseinhouse!17
+
+[33mcommit d7781f8e8b860cb7745c2df99a4982c48e87ea10[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Thu Aug 2 16:05:06 2018 +0200
+
+    delete user advert bug correction
+
+[33mcommit 4eb277a29d5f1310e3de5cb4ad6a867034b6b78f[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Thu Aug 2 14:50:01 2018 +0200
+
+    show adverts on user profile page
+
+[33mcommit a9b7cdb4f93662f5065bf15b8ea353602e9afe8b[m
+Merge: 4779f9a c5708ce
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Thu Aug 2 10:14:55 2018 +0000
+
+    Merge branch 'ending_slug' into 'dev'
+    
+    slugs finished
+    
+    See merge request Stephwf3/browseinhouse!16
+
+[33mcommit c5708cece942f2cab03b9df9dac17f4b552b6ce5[m[33m ([m[1;31morigin/ending_slug[m[33m, [m[1;32mending_slug[m[33m)[m
+Author: alexandresherozia <alexandresherozia@yahoo.fr>
+Date:   Thu Aug 2 12:10:49 2018 +0200
+
+    slugs finished
+
+[33mcommit 030859a23014aef83f4bd7ef62866b9f81e8400d[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Thu Aug 2 12:03:22 2018 +0200
+
+    setting unique email & pseudo, admin adverts list query correction
+
+[33mcommit 4779f9a8e5e34ba2f1795e543ef4dbd269875de9[m
+Merge: 7217e33 5ae6a48
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Thu Aug 2 08:26:03 2018 +0000
+
+    Merge branch 'user_admin' into 'dev'
+    
+    User admin
+    
+    See merge request Stephwf3/browseinhouse!15
+
+[33mcommit 5ae6a48d8bfd13e94d336bf8372a579e2122277c[m
+Merge: 5821da9 7217e33
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Thu Aug 2 08:25:41 2018 +0000
+
+    Merge branch 'dev' into 'user_admin'
+    
+    # Conflicts:
+    #   src/Repository/AdvertRepository.php
+    #   src/Service/AdvertManager.php
+
+[33mcommit 7217e333277ef17fafbb6db340373776b74b7885[m
+Merge: e417ac0 d1ec5ec
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Thu Aug 2 08:13:12 2018 +0000
+
+    Merge branch 'advert_crud' into 'dev'
+    
+    crud finished / statrting slugifier setup
+    
+    See merge request Stephwf3/browseinhouse!14
+
+[33mcommit d1ec5ec058948a155b4987441e946bca9651a891[m[33m ([m[1;31morigin/advert_crud[m[33m, [m[1;32madvert_crud[m[33m)[m
+Author: alexandresherozia <alexandresherozia@yahoo.fr>
+Date:   Thu Aug 2 10:09:42 2018 +0200
+
+    crud finished / statrting slugifier setup
+
+[33mcommit 5821da9cac41da850499f8d91a962f9ef2f14352[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Thu Aug 2 09:41:53 2018 +0200
+
+    password encrypt mistake correction
+
+[33mcommit c2e471ddd5e78534756a238e0b54c2a67f79814a[m
+Author: stephwf3 <steph.wbf3@gmail.com>
+Date:   Wed Aug 1 23:28:15 2018 +0200
+
+    adverts list in admin profile - work in progress near finish
+
+[33mcommit 57b11f7b162ae4b45702f1b0d195e9e5beac0d93[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Wed Aug 1 17:40:30 2018 +0200
+
+    work in progress advert list
+
+[33mcommit ab93255f945a513b4ba08a38907974a8adb7b0ab[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Wed Aug 1 13:01:47 2018 +0200
+
+    admin userlist page and suppression of an user with linked adverts
+
+[33mcommit 6c998605d80ba3754cf5c41b1d6ca2b94b4839ad[m
+Merge: 8c5faad e417ac0
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Wed Aug 1 10:29:19 2018 +0200
+
+    Merge branch 'dev' of gitlab.com:Stephwf3/browseinhouse into user_admin
+
+[33mcommit e417ac0535ca281097a2f08da1fd6e162aec72ab[m
+Merge: 35d28bd 1766b0e
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Wed Aug 1 08:27:15 2018 +0000
+
+    Merge branch 'user_edit' into 'dev'
+    
+    User edit
+    
+    See merge request Stephwf3/browseinhouse!13
+
+[33mcommit 8c5faada85df653c6c6da9f64e2cbb6633141222[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Wed Aug 1 10:26:03 2018 +0200
+
+    seting admin rights and adjusting profile templates
+
+[33mcommit 1766b0e9cdf6559fc21e459ecc9cd28383439b84[m
+Author: stephwf3 <steph.wbf3@gmail.com>
+Date:   Tue Jul 31 22:38:45 2018 +0200
+
+    prep for an admin menu in user profile
+
+[33mcommit 09693d5b9eae901acf8678e652d2b46dcddc6cd9[m
+Author: stephwf3 <steph.wbf3@gmail.com>
+Date:   Tue Jul 31 21:41:45 2018 +0200
+
+    adding a sidebar menu to the user profile
+
+[33mcommit 89c06ec0878c5d31bea41dc92708e6661d9375bb[m
+Author: stephwf3 <steph.wbf3@gmail.com>
+Date:   Tue Jul 31 21:06:58 2018 +0200
+
+    deleting user's avatar successful !
+
+[33mcommit 1d8e125cad48f291feb5b43ac51178439aee61d4[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Tue Jul 31 17:35:04 2018 +0200
+
+    early process of avatar suppression
+
+[33mcommit feb846268138aece3bf442ae78bc63a0ad76d69f[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Tue Jul 31 16:06:43 2018 +0200
+
+    add an avatar to user profile
+
+[33mcommit 35d28bde02fe093d17f39123b7ac5926053cecc2[m
+Merge: e083e7a 2e3d548
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Tue Jul 31 10:18:46 2018 +0200
+
+    merge to dev conflicts resolved
+
+[33mcommit e083e7a94c1551d1f77fd9ca1a5b3427653a0b78[m
+Merge: d40a166 027f010
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Tue Jul 31 08:03:37 2018 +0000
+
+    Merge branch 'advert_crud' into 'dev'
+    
+    Advert crud
+    
+    See merge request Stephwf3/browseinhouse!10
+
+[33mcommit 027f0105d6d1ecfa34be250b36d5c9bdddc4183c[m
+Author: alexandresherozia <alexandresherozia@yahoo.fr>
+Date:   Tue Jul 31 10:00:01 2018 +0200
+
+    Ending basic routes / finalisation des routes basiques
+
+[33mcommit 2e3d548bd6b3f5570d6eb1f5b2b262144c6a3677[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Tue Jul 31 09:54:25 2018 +0200
+
+    minor changes user edit template
+
+[33mcommit c94e83a61b7f855d25ca3cc1eb43378d9adb03a9[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Mon Jul 30 17:26:18 2018 +0200
+
+    avatar upload attempt (creating an uploader service)
+
+[33mcommit 72aa83f6e5043d6608d10abcaf8a7ea127d1ce43[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Mon Jul 30 12:51:15 2018 +0200
+
+    add a eventFormListener for user edition
+
+[33mcommit 878d3a153dbbc6f7e53b7ff12ebcd74734b149d0[m
+Author: alexandresherozia <alexandresherozia@yahoo.fr>
+Date:   Mon Jul 30 00:58:34 2018 +0200
+
+    banner template to finish, show_advert finished
+
+[33mcommit 9d2ba1b2b0abc207f303e12dabda04ae849ce1be[m
+Author: alexandresherozia <alexandresherozia@yahoo.fr>
+Date:   Sun Jul 29 22:23:23 2018 +0200
+
+     1) user registered, 2) show categories by section, 3) filter adverts by categories finished
+
+[33mcommit d40a1669f2f50c593326a1d50ca7c90cd7a1bb6b[m[33m ([m[1;32mmaster[m[33m)[m
+Merge: 15e8748 3c90531
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Fri Jul 27 15:45:56 2018 +0000
+
+    Merge branch 'advert_crud' into 'dev'
+    
+    Advert crud
+    
+    See merge request Stephwf3/browseinhouse!9
+
+[33mcommit 3c9053128d068a4cd0a0f6437459b90500f4e56d[m
+Merge: 0e8f5c6 15e8748
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Fri Jul 27 15:45:41 2018 +0000
+
+    Merge branch 'dev' into 'advert_crud'
+    
+    # Conflicts:
+    #   src/Form/AdvertType.php
+
+[33mcommit 0e8f5c61dcf19d3495bdb37dc9f0128c4716f16c[m
+Author: alexandresherozia <alexandresherozia@yahoo.fr>
+Date:   Fri Jul 27 17:41:42 2018 +0200
+
+    working
+
+[33mcommit 15738ea201f68d0bc8a06f9ae5e74a35c2b3b574[m[33m ([m[1;31morigin/user_login[m[33m)[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Fri Jul 27 17:35:01 2018 +0200
+
+    edit profile page form
+
+[33mcommit 5fbdcdb99bb092714e1a9683c58f27f42673baf4[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Fri Jul 27 16:41:48 2018 +0200
+
+    generate personnify profile link
+
+[33mcommit 997336e3466082142110184e4892f1ffda16449d[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Fri Jul 27 16:18:57 2018 +0200
+
+    user profile access and browsing user datas
+
+[33mcommit df319137db091964653a6eba57798e58f0957fce[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Fri Jul 27 14:08:04 2018 +0200
+
+    moving template files
+
+[33mcommit 15e874850bda50cce2961c84f98795705e4561b1[m
+Merge: 2bb36ac 7d0bd60
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Fri Jul 27 10:39:54 2018 +0000
+
+    Merge branch 'user_login' into 'dev'
+    
+    User login
+    
+    See merge request Stephwf3/browseinhouse!8
+
+[33mcommit 7d0bd60e544a77987405a5c055391607ba0c8d6d[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Fri Jul 27 12:37:21 2018 +0200
+
+    login/logout ok, header template modif, forms & head translations english
+
+[33mcommit 6750cf4209d5a96697d0f03fc956066ccd0576d5[m
+Author: alexandresherozia <alexandresherozia@yahoo.fr>
+Date:   Thu Jul 26 17:34:17 2018 +0200
+
+    working on advert crud
+
+[33mcommit 062cb199f446222254d88a5ddb8051f03d929d4e[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Thu Jul 26 17:31:50 2018 +0200
+
+    preparation of login form
+
+[33mcommit 2bb36acd19cc98fa3011271d47daf486116b1ef9[m
+Merge: f1bb1d1 d725d99
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Thu Jul 26 15:05:34 2018 +0000
+
+    Merge branch 'user_test' into 'dev'
+    
+    User test
+    
+    See merge request Stephwf3/browseinhouse!7
+
+[33mcommit d725d996c364416a92b95f70f358146f3448eda0[m
+Merge: b1dc74d f1bb1d1
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Thu Jul 26 15:05:06 2018 +0000
+
+    Merge branch 'dev' into 'user_test'
+    
+    # Conflicts:
+    #   src/Controller/AdvertController.php
+
+[33mcommit b1dc74d5f8db82777627fe1b5ca8cdccee63952e[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Thu Jul 26 17:02:52 2018 +0200
+
+    add doc in user classes, refactoring + tests
+
+[33mcommit f1bb1d19a50db8cd503f1bc910ca37b995f65f69[m
+Merge: 0d9ac94 3624f57
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Thu Jul 26 13:24:36 2018 +0000
+
+    Merge branch 'advert_crud' into 'dev'
+    
+    refactoring advert
+    
+    See merge request Stephwf3/browseinhouse!6
+
+[33mcommit 3624f57c99b85a477d68bd6f4985aa4ccf6a176f[m
+Merge: a246484 0d9ac94
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Thu Jul 26 13:23:36 2018 +0000
+
+    Merge branch 'dev' into 'advert_crud'
+    
+    # Conflicts:
+    #   src/Entity/Advert.php
+
+[33mcommit a2464844da61dbdda43f58ab5d5b6a8b64e2393a[m
+Author: alexandresherozia <alexandresherozia@yahoo.fr>
+Date:   Thu Jul 26 15:19:59 2018 +0200
+
+    refactoring advert
+
+[33mcommit 8d604d232c468b711f1c61bb0e1a4307a5dda7e3[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Thu Jul 26 14:57:02 2018 +0200
+
+    user registration test ok + refactoring UserController / UserManager / UserHandler
+
+[33mcommit 47900ee331d91443acfd95c57e8a70a1707bb2f6[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Thu Jul 26 12:51:24 2018 +0200
+
+    functionnal testing of an user registration
+
+[33mcommit 0d9ac946b3faa247541cbd349d968e347b1e2a78[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Thu Jul 26 10:40:20 2018 +0200
+
+    integrity control ok
+
+[33mcommit 17c7fac01e3ce2cc59f7b5d04537e69a2751a2b3[m
+Merge: 86fde88 839c8ee
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Thu Jul 26 07:51:51 2018 +0000
+
+    Merge branch 'form_advertType_version_1' into 'dev'
+    
+    Form advert type version 1
+    
+    See merge request Stephwf3/browseinhouse!5
+
+[33mcommit 839c8eecc88e1b4f8a5b8724e4baa415db836d25[m
+Merge: 2b1d312 86fde88
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Thu Jul 26 07:51:33 2018 +0000
+
+    Merge branch 'dev' into 'form_advertType_version_1'
+    
+    # Conflicts:
+    #   src/Entity/Advert.php
+
+[33mcommit 86fde885eb2b45404c6c4b5b81702027b909c6dc[m
+Merge: 1422175 c330847
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Thu Jul 26 07:42:27 2018 +0000
+
+    Merge branch 'user_registration' into 'dev'
+    
+    User registration
+    
+    See merge request Stephwf3/browseinhouse!3
+
+[33mcommit 2b1d3126294958bd16bcfedf3a60c5c723fb34d5[m
+Author: alexandresherozia <alexandresherozia@yahoo.fr>
+Date:   Thu Jul 26 07:41:13 2018 +0200
+
+    Coworking between AdvertController, AdvertHandler & AdvertManager finished, persist works well
+
+[33mcommit 5e72aa82eb2a7532af9a4224bbf00b0733b2c640[m
+Author: alexandresherozia <alexandresherozia@yahoo.fr>
+Date:   Wed Jul 25 17:32:20 2018 +0200
+
+    advertHandler & advertManager creation, to finish
+
+[33mcommit c33084746c0dba0ccd5bce06ba63775ee67a7416[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Wed Jul 25 17:21:54 2018 +0200
+
+    use of UserInterface and password encoding
+
+[33mcommit 1b1aa267d520d6c2423f96166a703c3a3236d787[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Wed Jul 25 14:49:39 2018 +0200
+
+    add phpunit, redirection correction, asserts on registration
+
+[33mcommit 8735120483e35dee81035c0e2cc62700309705d3[m
+Author: stephwf3 <steph.wbf3@gmail.com>
+Date:   Tue Jul 24 23:24:48 2018 +0200
+
+    new user persist & flush with UserManager
+
+[33mcommit 2d2b5ec4ca3eb3bf1e782840200b03a28a2d5bdf[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Tue Jul 24 17:26:41 2018 +0200
+
+    UserManager, UserType, UserController creation
+
+[33mcommit 2430f4eac13430715f0348f37a5c4e5885a518dd[m
+Merge: 98413fa 1422175
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Tue Jul 24 16:41:46 2018 +0200
+
+    Merge branch 'dev' of gitlab.com:Stephwf3/browseinhouse into user_registration
+
+[33mcommit 14221753e48de7abb177f013e14ee75a58f02be0[m
+Merge: d1961c9 f469894
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Tue Jul 24 14:40:52 2018 +0000
+
+    Merge branch 'sandro' into 'dev'
+    
+    template setup
+    
+    See merge request Stephwf3/browseinhouse!2
+
+[33mcommit d1961c9c595691d5a20c74b0c918610530899c31[m
+Merge: 113f53b eff1b1f
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Tue Jul 24 14:21:16 2018 +0000
+
+    Merge branch 'doctrine_setup' into 'dev'
+    
+    Doctrine setup
+    
+    See merge request Stephwf3/browseinhouse!1
+
+[33mcommit 98413fa2ab37f459de37807e2a72fec3f8cbbacf[m
+Merge: eff1b1f f469894
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Tue Jul 24 15:01:49 2018 +0200
+
+    Merge branch 'sandro' of gitlab.com:Stephwf3/browseinhouse into doctrine_setup
+
+[33mcommit f4698948499e9dec0285562bb5c799d1f0a47d59[m
+Author: alexandresherozia <alexandresherozia@yahoo.fr>
+Date:   Tue Jul 24 15:00:48 2018 +0200
+
+    template setup
+
+[33mcommit eff1b1f18e788908346835a29b67f9946dfb627c[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Tue Jul 24 14:31:35 2018 +0200
+
+    Photo entity creation + ManyToOnes links. Schema validate ok !
+
+[33mcommit 48397a856d598c754a9dcbe0e3c74e77e1a96a69[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Tue Jul 24 14:03:39 2018 +0200
+
+    Entities creation
+
+[33mcommit 113f53b60fe0f7ff6fa1ca325b8f380a3a042afb[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Tue Jul 24 12:10:48 2018 +0200
+
+    initial symfony setup
+
+[33mcommit c249e9fcc53d74ef90a1612357ddbe096467be9a[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Stéphane Bizollon <steph.bizollon@protonmail.com>
+Date:   Tue Jul 24 11:35:57 2018 +0200
+
+    initial commit

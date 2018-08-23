@@ -1,0 +1,38 @@
+{% extends "base.html.twig" %}
+
+{% block title  %}
+    {{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+    <link href="{{ asset('bootstrap/css/bootstrap.css') }}" rel="stylesheet">
+    <!-- font -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Chela+One" rel="stylesheet">
+    <!-- stylesheet -->
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('css/responsive.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('css/ele-style.css') }}" rel="stylesheet" type="text/css"/>
+    <!-- font-awesome -->
+    <link href="{{ asset('font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
+    <!-- line-awesome -->
+    <link href="{{ asset('line-awesome/css/line-awesome.min.css') }}" rel="stylesheet" type="text/css" />
+    <!-- crousel css -->
+    <link href="{{ asset('js/owl-carousel/owl.carousel.css') }}" rel="stylesheet" type="text/css" />
+    <!--bootstra-->
+    <link href="{{ asset('js/dist/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" />
+{% endblock stylesheets %}
+
+{% block body %}
+
+    {% include 'includes/_header.html.twig' %}
+
+    {% block content '' %}
+
+    {% include 'includes/_footer.html.twig' %}
+
+{% endblock body %}
+
+
+
+

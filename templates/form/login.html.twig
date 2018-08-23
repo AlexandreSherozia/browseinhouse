@@ -1,0 +1,35 @@
+{% extends 'layout.html.twig' %}
+{% trans_default_domain 'login' %}
+
+
+{% block title %}{{ parent() }} | {{ 'login.pagename' | trans }}{% endblock %}
+
+{% block content %}
+    {#{{ accountNotEnabled }}#}
+    <div class="row">
+        <div class="col-xs-6 col-xs-push-3">
+            <h2 class="text-center">
+                Login
+            </h2>
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success alert-dismissible  col-xs-6 col-xs-offset-3 text-center" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    {{ message  | trans }}
+                </div>
+            {% endfor %}
+
+            {#{{ dump(test) }}#}
+
+            {% if errorMessage %}
+                <div class="alert alert-danger">
+                    {{ errorMessage.messageKey|trans(errorMessage.messageData, 'security') }}
+                </div>
+            {% endif %}
+
+            {% form_theme form 'bootstrap_3_layout.html.twig' %}
+            {{ form(form, {attr: {novalidate: 'novalidate'}}) }}
+
+        </div>
+    </div>
+
+{% endblock %}

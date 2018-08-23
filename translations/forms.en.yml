@@ -1,0 +1,16 @@
+form.register.placeholder.pseudo: 'Your pseudo'
+form.register.placeholder.email: 'Your email'
+form.register.placeholder.password: 'Your password'
+form.register.submit: Register
+form.edit.placeholder.firstname: 'Your firstname'
+form.edit.placeholder.lastname: 'Your lastname'
+form.edit.placeholder.phone: 'Your phone number'
+form.edit.avatar: 'Avatar :'
+form.edit: Edit
+form.login.placeholder.email: 'Your email'
+form.login.placeholder.password: 'Your password'
+form.login.submit: 'Sign up'
+form.contact.placeholder.messagetitle: 'Give a title to your message'
+form.contact.placeholder.messagebody: 'Type here your message'
+form.contact.submit: 'Send your message'
+advert.photo.uploader:  "Select 3 photos at most"

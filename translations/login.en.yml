@@ -1,0 +1,3 @@
+login.pagename: Login
+login.registration.validation: 'Welcome, you have been registered! You can sign up below :'
+login.account.not.enabled: 'Your account is waiting for being enabled via email, that has been sent to you'

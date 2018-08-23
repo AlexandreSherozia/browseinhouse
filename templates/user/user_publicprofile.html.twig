@@ -1,0 +1,89 @@
+{% extends 'layout.html.twig' %}
+{% trans_default_domain 'userprofile' %}
+
+{% block title %}{{ parent() }} | {{ 'userprofile.public'~user_public.pseudo | trans }}{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <h2 class="text-center">{{ 'userprofile.publictitle' | trans }}</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="col-md-2">
+            {% if user_public.avatar %}
+            <img src="{{ asset('images/avatars/' ~user_public.avatar) }}" alt="{{ user_public.pseudo }}" height="128px">
+            {% else %}<div class="col-md-2"></div>
+            {% endif %}
+            </div>
+            <div class="col-md-4">
+                <p>{{ user_public.pseudo }}</p>
+                <p>{{ 'userprofile.registeredsince' | trans }}{{ user_public.registrationDate | date('d-m-Y') }}</p>
+                {#<button class="btn btn-default"></button>#}
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+
+                    {% if is_granted('ROLE_USER') %}
+
+                        <button class="{% if subscription %}btn btn-success{% else %}btn btn-default{% endif %}" id="btn-ajax" data-pseudo="{{ user_public.pseudo }}">{% if subscription %}{#{{ 'userprofile.subscribed' | trans }}#}You're subscribed{% else %}Subscribe to {{ user_public.pseudo }}{#{{ 'userprofile.follow' | trans }}#}{% endif %}</button>
+
+                    {% endif %}
+
+                {% else %}
+
+                    <a href="{{ path('login') }}"><button class="btn btn-block">{{ 'userprofile.loginforfollowing' | trans }}</button></a>
+
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <h2 class="text-center">{{ 'userprofile.advertstitle' | trans }}</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            {% if user_adverts %}
+            <div class="list-group">
+
+                {% for advert in user_adverts %}
+                    <div class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-2">
+                                {% if advert.photos is not empty %}
+                                    <img src="{{ asset('images/advertphotos/'~advert.photos|first.url ) }}" class="thumbnail">
+                                {% else %}
+                                    <img src="{{ asset('images/advertphotos/bnh.jpg' ) }}" class="thumbnail">
+                                {% endif %}
+                            </div>
+                            <div class="col-md-10">
+                                <a href="{{ path('show_advert', {'advertslug': advert.slug }) }}"><h3 class="col-md-6">{{ advert.title }}</h3></a>
+
+                                <p class="text-left col-md-3">posted by
+                                    <a href="{{ path('show_public_profile', {'pseudo': advert.user.pseudo}) }}">{{ advert.user.pseudo }}</a> on {{ advert.creationDate | date('d-m-Y H:m:s') }}
+                                </p>
+                                <p class="text-right col-md-3">
+                                    <a class="btn btn-default" href="{{ path('filter_adverts_by_category', {'categorylabel' : advert.category.label}) }}">
+                                        {{ advert.category.label }}
+                                    </a> in
+                                    <a class="btn btn-default" href="{{ path('show_adverts_by_section', {'label' : advert.section.label}) }}">
+                                        {{ advert.section.label }}
+                                    </a>
+                                </p>
+                                <p class="col-md-10">
+                                    {{ advert.description | shorten_text }} -
+                                </p>
+                                <h4 class="text-right col-md-1 badge">{{ advert.price | text_trim }} </h4>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

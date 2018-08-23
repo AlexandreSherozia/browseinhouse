@@ -1,0 +1,69 @@
+{% extends "layout.html.twig" %}
+
+{% trans_default_domain 'showAdvert' %}
+
+{% block title %}
+
+    {% for advert in adverts %}
+
+        {#{{ parent() }} #}{{ advert.title }}
+
+    {% endfor %}
+{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <h2 class="text-center">All {{ category }}</h2>
+    </div>
+
+    {#{% include 'includes/_categories.html.twig' %}#}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="list-group">
+                    {% for advert in adverts %}
+                        <div class="list-group-item">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    {% if advert.photos is not empty %}
+                                        <img src="{{ asset('images/advertphotos/'~advert.photos|first.url ) }}" class="thumbnail">
+                                    {% else %}
+                                        <img src="{{ asset('images/advertphotos/bnh.jpg' ) }}" class="thumbnail">
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-10">
+                                    <a href="{{ path('show_advert', {'advertslug': advert.slug }) }}"><h3 class="col-md-6">{{ advert.title }}</h3></a>
+
+                                    <p class="text-left col-md-3">posted by
+                                        <a href="{{ path('show_public_profile', {'pseudo': advert.user.pseudo}) }}">{{ advert.user.pseudo }}</a> on {{ advert.creationDate | date('d-m-Y H:m:s') }}
+                                    </p>
+                                    <p class="text-right col-md-3">
+                                        <a class="btn btn-default" href="{{ path('filter_adverts_by_category', {'categorylabel' : advert.category.label}) }}">
+                                            {{ advert.category.label }}
+                                        </a> in
+                                        <a class="btn btn-default" href="{{ path('show_adverts_by_section', {'label' : advert.section.label}) }}">
+                                            {{ advert.section.label }}
+                                        </a>
+                                    </p>
+                                    <p class="col-md-10">
+                                        {{ advert.description | shorten_text }} -
+                                    </p>
+                                    <h4 class="text-right col-md-1 badge">{{ advert.price | text_trim }} </h4>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+        <div class="text-center">
+            <ul class="pagination">
+                {{ knp_pagination_render(adverts) }}
+            </ul>
+        </div>
+    </div>
+
+{% endblock %}
