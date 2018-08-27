@@ -98,7 +98,7 @@ class UserHandler
         }
     }
 
-    public function tokenMakerForAccountValidation()
+    public function tokenizerForAccountValidation()
     {
         return md5(uniqid('token', true));
     }
