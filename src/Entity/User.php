@@ -106,10 +106,31 @@ class User implements UserInterface
      */
     private $adverts;
 
+    /**
+     * @return mixed
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param mixed $token
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
+    }
+
+    /**
+     * @ORM\Column(type="string", length=80)
+     */
+    private $token;
+
     public function __construct()
     {
         $this->registrationDate = new \DateTime;
-        $this->roles[] = 'ROLE_USER';
+        $this->roles[] = 'ROLE_VISITOR';
     }
 
     public function getId(): ?int
@@ -254,10 +275,10 @@ class User implements UserInterface
         return;
     }
 
-    public function isNotEnabled(): bool
+    public function isEnabled(): bool
     {
         $roles = $this->getRoles();
 
-        return \in_array('', $roles, true);
+        return \in_array('ROLE_USER', $roles, true);
     }
 }

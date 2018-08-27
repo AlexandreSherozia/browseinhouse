@@ -27,7 +27,7 @@ class UserChecker implements UserCheckerInterface
             return;
         }
 
-        if ($user->isNotEnabled()) {
+        if (!$user->isEnabled()) {
             throw new \RuntimeException("You haven't enabled your account yet");
         }
     }
@@ -35,7 +35,7 @@ class UserChecker implements UserCheckerInterface
     /**
      * Checks the user account after authentication.
      *
-     * @throws AccountStatusException
+     * @param UserInterface $user
      */
     public function checkPostAuth(UserInterface $user)
     {

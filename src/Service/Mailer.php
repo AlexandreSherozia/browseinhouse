@@ -30,8 +30,9 @@ class Mailer
 
     /**
      * @param Form $form
+     * @param string $token
      */
-    public function sendEmail(Form $form)
+    public function sendEmail(Form $form, string $token)
     {
         $message = (new \Swift_Message("Your registration on B'N'H"))
             ->setFrom('browseinhouse@gmail.com')
@@ -39,7 +40,9 @@ class Mailer
             ->setBody(
                 $this->templating->render(
                     'mail/registration.html.twig',
-                    array('name' => $form->get('pseudo')->getData())
+                    array(  'name'  => $form->get('pseudo')->getData(),
+                            'token' => $token
+                    )
                 ),
                 'text/html'
             );
@@ -47,3 +50,4 @@ class Mailer
         $this->swift_mailer->send($message);
     }
 }
+

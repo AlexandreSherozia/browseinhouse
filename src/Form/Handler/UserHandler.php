@@ -53,8 +53,9 @@ class UserHandler
 
             if ($type === 'new') {
                 // the process is for a registration
-                $this->onSuccessNew();
-                $this->mailer->sendEmail($this->form);
+                $token = $this->tokenMakerForAccountValidation();
+                $this->onSuccessNew($token);
+                $this->mailer->sendEmail($this->form, $token);
 
                 return true;
             }
@@ -69,10 +70,10 @@ class UserHandler
         return false;
     }
 
-    protected function onSuccessNew(): void
+    protected function onSuccessNew($token): void
     {
         $userFormData = $this->form->getData();
-        $this->userManager->addNewUserToDb($userFormData);
+        $this->userManager->addNewUserToDb($userFormData, $token);
     }
 
     /**
@@ -95,5 +96,10 @@ class UserHandler
             $avatarName = $this->imageUploader->upload($avatar);
             $this->userManager->updateUserIntoDb($userFormData, $avatarName);
         }
+    }
+
+    public function tokenMakerForAccountValidation()
+    {
+        return md5(uniqid('token', true));
     }
 }

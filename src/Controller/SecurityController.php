@@ -43,6 +43,20 @@ class SecurityController extends Controller
         );
     }
 
+
+    /**
+     * @Route("/account-validation-page", name="account_validation_page")
+     */
+    public function accountValidationPage()
+    {
+        return $this->render('form/account_validation.html.twig');
+    }
+
+    public function accountValidationAction()
+    {
+
+    }
+
     /**
      * @Route("/logout", name="logout")
      */

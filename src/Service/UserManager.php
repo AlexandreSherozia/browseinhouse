@@ -30,17 +30,16 @@ class UserManager
     }
 
     /**
-     * Encode password and insert new user in db
-     *
      * @param User $user
-     *
+     * @param string $token
      * @return User
      */
-    public function addNewUserToDb(User $user): User
+    public function addNewUserToDb(User $user, string $token): User
     {
         $user->setPassword(
             $this->encoder->encodePassword($user, $user->getPassword())
         );
+        $user->setToken($token);
         $this->em->persist($user);
         $this->em->flush();
 
