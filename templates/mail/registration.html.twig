@@ -4,8 +4,9 @@
 Hi {{ name }}! You're successfully registered.
 
 {# example, assuming you have a route named "login" #}
-<p>To login, go to: <a href="{{ url('account_validation_page') }}">this link</a>.</p>
-<p>{{ token }}</p>
+<p>To validate, go to: <a href="{{ url('account_validation_page', {'token' : token }) }}">this link</a>.</p>
+
+<p>Your security token: <strong>{{ token }}</strong></p>
 
 <p>Thanks!</p>
 

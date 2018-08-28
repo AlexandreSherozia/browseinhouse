@@ -53,7 +53,7 @@ class UserHandler
 
             if ($type === 'new') {
                 // the process is for a registration
-                $token = $this->tokenMakerForAccountValidation();
+                $token = $this->tokenizerForAccountValidation();
                 $this->onSuccessNew($token);
                 $this->mailer->sendEmail($this->form, $token);
 

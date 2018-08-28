@@ -19,6 +19,8 @@ class UserController extends Controller
 
     /**
      * UserController constructor.
+     * @param UserHandler $userHandler
+     * @param UserManager $userManager
      */
     public function __construct(UserHandler $userHandler, UserManager $userManager)
     {
@@ -133,13 +135,10 @@ class UserController extends Controller
     }
 
 
-
     /**
-     * @Route("/my-subscription-list", name="my_subscription_list")
-     *
-     * @param UserManager $userManager
-     *
      * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @Route("/my-subscription-list", name="my_subscription_list")
      */
     public function mySubscriptionList()
     {

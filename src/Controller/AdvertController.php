@@ -277,15 +277,6 @@ class AdvertController extends Controller
         );
     }
 
-//    /**
-//     * Endpoint to follow an user.
-//     *
-//     * @Route("/follow/{pseudo}", name="follow_public_user")
-//     */
-//    public function followUser()
-//    {
-//
-//    }
 
     /**
      * Allows an user to contact another user through an advert by sending him
