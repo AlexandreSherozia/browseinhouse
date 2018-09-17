@@ -17,6 +17,7 @@ class UserChecker implements UserCheckerInterface
 {
 
     /**
+     *
      * Checks the user account before authentication.
      *
      * @param UserInterface $user

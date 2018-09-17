@@ -31,8 +31,11 @@ class Mailer
     /**
      * @param Form $form
      * @param string $token
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      */
-    public function sendEmail(Form $form, string $token)
+    public function sendEmail(Form $form, string $token): void
     {
         $message = (new \Swift_Message("Your registration on B'N'H"))
             ->setFrom('browseinhouse@gmail.com')
