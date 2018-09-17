@@ -67,8 +67,8 @@ class CreateUserCommand extends Command
 
             $output->writeln([
                 '======================================================',
-                'Great, ' . $userPseudo,
-                'has been succesfully promoted ADMIN',
+                'Great' ,
+                 $userPseudo . 'has been successfully promoted ADMIN',
                 '======================================================'
                 ]);
         } else {
